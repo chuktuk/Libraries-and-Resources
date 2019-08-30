@@ -1,2 +1,4 @@
 # Libraries-and-Resources
-This repo contains computer science notes and resources as a backup
+This repo contains computer science notes and resources.
+
+Updates will arrive periodically.
