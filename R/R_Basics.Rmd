@@ -66,6 +66,7 @@ print(length(a))
 Single line comments # just like python
 Multi-line comments in R studio Ctrl + Shift + C
 `c(....)` concatenates objects separated by commas
+`1:9` is the same as `c(1, 2, 3, 4, 5, 6, 7, 8, 9)`
 ```{r}
 # this is a single line comment
 ```
@@ -137,6 +138,7 @@ if (b > c) {
 - can use as a selection mask just like python
 `T` is used for True
 `F` is used for False
+`TRUE` OR `FALSE` also works, must be all caps
 ```{r}
 sel <- c(T, T, F, T, T)
 print(a[sel])
@@ -144,8 +146,10 @@ sel2 <- c(1, 1, 0, 1, 1)
 print(a[sel2])
 sel3 <- c('True', 'True', 'False', 'True', 'True')
 print(a[sel3])
-sel4 <- c(True, True, False, True, False)
+sel4 <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
 print(a[sel4])
+sel5 <- c(True, True, False, True, False)
+print(a[sel5])
 ```
 
 can use complex masks
@@ -154,3 +158,17 @@ mask <- (iris[,2] > 3) & (iris[,5] == 'setosa')
 iris[mask,]
 ```
 
+# Matrix function
+matrix(e, byrow=True, nrow=3)
+- e defines the elements to be used in the matrix (array-like)
+- byrow tells the function to fill by rows rather than cols
+- nrow is the number of rows
+
+`colnames(matrix_name) <- array` and `rownames(matrix_name) <- array` can be used to name the cols/rows, passing an array-like object
+
+`rowSums(matrix_name)` will return a sum for each row
+`colSums(matrix_name)` will sum each column
+
+`big.matrix <- cbind(m1, m2)` merges matrices together by column
+
+`rbind()` works the same way to merge matrices row-wise
