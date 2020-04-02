@@ -1,0 +1,156 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+```{r}
+
+```
+
+# Variables
+You can use '=' or the assignment operator <- to define variables.
+Variable names can include `.` in them
+```{r}
+c <- 4
+b = 2
+d = c * b
+d
+```
+
+# Logical operators are the same as python
+`==`
+`!=`
+`>`
+`<`
+`>=`
+`<=`
+```{r}
+b > c
+```
+# Strings
+```{r}
+s <- 'This is a string.'
+t <- "So is this."
+print(s)
+print(t)
+```
+
+
+
+# Mathematical operations
+`sqrt(x)` -- if multiple items, will sqrt all of them
+`log(x)`
+`sum(x, y)` -- sums all numbers within
+`mean(x, y,...)`
+`length(x, y, ...)` returns the number of objects in ()
+```{r}
+a <- c(1, 2, 3, 4, 5)
+print(length(a))
+```
+
+
+# Basic Commands
+Single line comments # just like python
+Multi-line comments in R studio Ctrl + Shift + C
+`c(....)` concatenates objects separated by commas
+```{r}
+# this is a single line comment
+```
+
+# IMPORTANT
+R is 1 indexed!
+```{r}
+print(a[3])
+```
+
+# Dataframes
+Access columns using `$` e.g. `df.name$column.name`
+`rownames(df)` will return all of the row names in a df
+
+`data()` can be used to load a dataframe that comes with R
+- `data(iris)` for example
+
+## Selecting df elements
+Like python (except 1 indexed)
+`df[1, 2]` gets the first row, second column
+- can also use this to assign values `df[1, 2] <- 100`
+`df[4,]` selects entire 4th row, same idea for columns, but usually would just use column name for that
+
+## Basic exploratory functions
+`names(df)` lists all of the column names
+`unique(selection)` will list all of the unique items in the specified selection `unique(df[,2])`
+
+## Basic plots
+`plot(df)` will do a pairplot of all of the variables
+`plot(df$y.var ~ df$x.var)` for basic plots
+
+```{r}
+
+```
+
+
+# Lattice Library
+`library(lattice)` to load libraries
+
+See example plot below
+
+```{r}
+data(iris)
+library(lattice)
+scatter1 <- xyplot(Sepal.Length ~ Sepal.Width, group=Species, data=iris)
+print(scatter1)
+```
+
+
+# Missing Values
+`na.rm = True` works for many functions, and this just omits those values
+
+
+
+# Conditionals
+
+syntax is below
+```{r}
+if (b > c) {
+  print('B is greater')
+} else if (b == c) {
+  print('B equals C')
+} else if (c > b) {
+  print('C is greater')
+} else print('Nonsense')
+```
+
+# Conditionals as selectors
+- can use as a selection mask just like python
+`T` is used for True
+`F` is used for False
+```{r}
+sel <- c(T, T, F, T, T)
+print(a[sel])
+sel2 <- c(1, 1, 0, 1, 1)
+print(a[sel2])
+sel3 <- c('True', 'True', 'False', 'True', 'True')
+print(a[sel3])
+sel4 <- c(True, True, False, True, False)
+print(a[sel4])
+```
+
+can use complex masks
+```{r}
+mask <- (iris[,2] > 3) & (iris[,5] == 'setosa')
+iris[mask,]
+```
+
