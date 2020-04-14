@@ -20,15 +20,47 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 
 ```
 
+# RStudio Projects
+- Collection of files, data, results, graphs, etc.
+- File -> new project
+  - can create a project directly to a github directory too
+
+
+
+
+```{r}
+
+```
+
 # Variables
 You can use '=' or the assignment operator <- to define variables.
 Variable names can include `.` in them
+
+If necessary use
+`assign('var', val)` where 'var' is the variable and val is the value. The variable name must be in quotes.
+
+`rm(a)` to remove a variable from memory
 ```{r}
 c <- 4
 b = 2
 d = c * b
 d
 ```
+
+# Data Types
+- numeric
+- character (string)
+- Date/POSIXct(time-based)
+- logical (TRUE/FALSE)
+
+- Check datatype with the `class(x)` function
+
+
+
+```{r}
+
+```
+
 
 # Logical operators are the same as python
 `==`
@@ -40,7 +72,14 @@ d
 ```{r}
 b > c
 ```
-# Strings
+# Character Data (Strings)
+- single or double quotes
+
+# Functions
+`nchar(x)` for the number of characters or number of digits for numeric data (does not work on factors)
+
+
+
 ```{r}
 s <- 'This is a string.'
 t <- "So is this."
@@ -48,17 +87,190 @@ print(s)
 print(t)
 ```
 
-
+# Numeric Data
 
 # Mathematical operations
+
+use `^` instead of `**` to do exponents
+
 `sqrt(x)` -- if multiple items, will sqrt all of them
 `log(x)`
 `sum(x, y)` -- sums all numbers within
 `mean(x, y,...)`
 `length(x, y, ...)` returns the number of objects in ()
+`var(x)` returns the variance of the vector
+`sd(x)` returns the standard deviation
+`min(x)` returns the min value
+`max(x)` returns the max value
+
+# Numeric Function
+`is.numeric(x)` returns TRUE/FALSE checking for numeric values
+`is.integer(x)` works like you would expect
+- to assign a value as an integer, you need to append an L (see below)
+
+
 ```{r}
 a <- c(1, 2, 3, 4, 5)
 print(length(a))
+
+# integers must have an L appended to be truly integer data type
+print(is.integer(5))
+print(is.integer(5L))
+```
+
+# Dates Data Types
+- Numerous types
+
+#### Data stored as number of days (date) or number of seconds (POSIXct) since 1/1/1970
+- Date
+  - stores just a date
+- POSIXct
+  - stores date and time
+  
+## Date/Time Packages
+- lubridate
+- chron
+
+
+```{r}
+date1 <- as.Date('2020-04-06')
+date2 <- as.POSIXct('2020-04-06 11:45')
+print(class(date1))
+print(date1)
+print(class(date2))
+print(date2)
+print(as.numeric(date1))
+print(as.numeric(date2))
+```
+
+# Logical (Boolean) Data Type
+TRUE = 1
+FALSE = 0
+
+`is.logical(x)` returns TRUE/FALSE depending on whether x is of logical data type
+
+T and F can also be used, but this is not best practice as these are variables that can be overwritten
+
+
+```{r}
+
+```
+
+# Vectors
+Vectors are like numpy arrays: collection of elements that must all be the same type.
+- However, vectors do not have dimensions, so basically it's a list
+
+
+- vector operations occur on every element in the vector
+  - multiply a vector by a scalar, and every element is multiplied
+  
+- concatenate (combine) using `c(element list)` or you can specify a range of numbers using `start_num:stop_num` e.g. `1:10`
+
+- vector operations on vectors of the same length will apply to each corresponding element
+
+- use the `length(v)` to return the number of objects in the vector
+
+- see *Conditionals as Selectors* section below for using booleans on vectors to create masks
+
+- `any` vs `all`
+  - `any(condition)` will return TRUE/FALSE if any of the objects meet the specified condition
+  - `all(condition)` every element must pass
+
+
+```{r}
+# vector examples
+v1 <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+v2 <- -5:4
+
+print(v1)
+print(v2)
+cat('\n') # print a line break
+print(v1 * 2)
+print(v1 + v2)
+cat('\n')
+print(any(v1>5))
+print(all(v1>5))
+print(v1 > 5)
+```
+```{r}
+# selecting vector elements
+print(v1[3]) # R is 1 indexed
+print(v2[3]) 
+cat('\n')
+print(v1[3:6]) # unlike python, 6 is selected
+# print(v1[:7]) # throws an error
+# print(v1[5:]) # throws an error
+print(v1[c(3, 6)]) # selects on certain elements
+```
+
+# Naming Vector Elements
+- Sort of like a python dictionary
+
+
+```{r}
+# name elements in a vector (like python dictionary)
+w <- c(First='a', Second='b', Third='c')
+print(w)
+print(names(w)) # print out the element names
+cat('\n')
+
+# can assign names after defining a vector
+z <- c('four', 'five', 'six')
+names(z) <- c('Number of shoes', 'Number of socks', 'Number of toes')
+print(z)
+
+```
+
+# Factors and Vectors
+- factors are basically like categories
+- turning a vector of objects into a factor vector will assign each unique value an integer that refers to that item
+- it also stores a list of the unique items
+
+`as.factor(x)` is used to create a factor vector
+
+## Can Set Ordered Levels
+`factor(x=c('First', 'Second', 'Third', 'Second', 'Third', 'First'),
+          levels=c('First', 'Second', 'Third')
+          ordered=TRUE)`
+
+
+```{r}
+vec <- c('MBU', 'SIUF', 'AWR', 'SIUF', 'AWR', 'MBU', 'SIUF')
+fac.vec <- as.factor(vec)
+fac.vec
+cat('\n')
+factor(x=c('Second', 'Second', 'First', 'Second', 'Third', 'First'),
+          levels=c('First', 'Second', 'Third'),
+          ordered=TRUE)
+```
+```{r}
+as.numeric(fac.vec) # return the numeric values for each item
+```
+
+## Lists
+Can hold data of different types (unlike a vector)
+`list(e1, e2[, e3...])` where en are elements
+`list(c(e1, e2[, e3...]))` is a single element list that contains a vector
+- each element could be an integer, vector, etc.
+- lists can have named items just like dataframes
+  - can assign during creation or by assigning after creation (just like with df's)
+  
+### Creating an empty list
+`emptyList <- vector(mode='list', length=n)`
+  - mode specifies the type of empty object
+  - n specifies the number of elements
+
+## Selecting elements in a list
+- use nested indexing
+- use `[[]]` double brackets when selecting to return the object at the specified location (or with the specified name)
+  - can then add additional selectors like you would while working with that object
+  
+## Appending to a list
+Assign something to an index that doesn't exist (preferably the next index)
+- use `lenght(myList)` to get the length, then add 1, and that's the next index to assign to 
+
+```{r}
+
 ```
 
 
@@ -77,31 +289,28 @@ R is 1 indexed!
 print(a[3])
 ```
 
-# Dataframes
-Access columns using `$` e.g. `df.name$column.name`
-`rownames(df)` will return all of the row names in a df
 
-`data()` can be used to load a dataframe that comes with R
-- `data(iris)` for example
 
-## Selecting df elements
-Like python (except 1 indexed)
-`df[1, 2]` gets the first row, second column
-- can also use this to assign values `df[1, 2] <- 100`
-`df[4,]` selects entire 4th row, same idea for columns, but usually would just use column name for that
+# Installing Packages
+`install.packages('packagename')` to install a package, or just use the RStudio GUI
 
-## Basic exploratory functions
-`names(df)` lists all of the column names
-`unique(selection)` will list all of the unique items in the specified selection `unique(df[,2])`
+### Install directly from github
+`library(devtools)` to load devtools library
+`install_github(repo='coefplot/jaredlander')` to id the repo
 
-## Basic plots
-`plot(df)` will do a pairplot of all of the variables
-`plot(df$y.var ~ df$x.var)` for basic plots
+# Require vs. Library
+`require()` will return TRUE if it succeeds or FALSE if the package isn't found. This is useful within functions.
 
-```{r}
+## Quietly
+`library(coefplot, quitely=TRUE)` setting quietly=TRUE will not print out any dependencies that are also loaded (default action)
 
-```
+# Unloading packages
+`detach('package:coefplot')` to remove/unload a library
 
+# Double loading, calling the right package
+- prefix the function with the package name
+`arm::coefplot()` vs. `coefplot::coefplot`
+- otherwise, the most recently loaded version will be called
 
 # Lattice Library
 `library(lattice)` to load libraries
@@ -117,8 +326,30 @@ print(scatter1)
 
 
 # Missing Values
-`na.rm = True` works for many functions, and this just omits those values
 
+`NA` and `NULL` are both missing data types
+
+
+## NA is a 'Missing Value'
+- it is treated like an element that is missing
+
+`is.na(x)` will return TRUE/FALSE for each element in x
+
+to code `NA` do NOT use '', just type NA
+
+`na.rm = TRUE` works for many functions (sometimes included as an argument of that function), and this just omits those values
+
+- some functions will only return NA if run on a vector with missing values
+
+## NULL is the absence of anything
+- NULL will disappear from a vector, while NA will persist
+
+`is.null(x)` returns TRUE/FALSE for x
+
+
+```{r}
+
+```
 
 
 # Conditionals
@@ -136,11 +367,10 @@ if (b > c) {
 
 # Conditionals as selectors
 - can use as a selection mask just like python
-`T` is used for True
-`F` is used for False
-`TRUE` OR `FALSE` also works, must be all caps
+
+`TRUE` OR `FALSE`, must be all caps
 ```{r}
-sel <- c(T, T, F, T, T)
+sel <- c(T, T, F, T, T) # bad practice, T/F can be overwritten
 print(a[sel])
 sel2 <- c(1, 1, 0, 1, 1)
 print(a[sel2])
@@ -158,17 +388,216 @@ mask <- (iris[,2] > 3) & (iris[,5] == 'setosa')
 iris[mask,]
 ```
 
-# Matrix function
-matrix(e, byrow=True, nrow=3)
+# Matrices
+Work like numpy arrays in that all objects must be of the same type
+
+
+# Matrix functions
+`matrix(e, byrow=True, nrow=3)`
 - e defines the elements to be used in the matrix (array-like)
 - byrow tells the function to fill by rows rather than cols
 - nrow is the number of rows
 
+## Matrix properties
+
 `colnames(matrix_name) <- array` and `rownames(matrix_name) <- array` can be used to name the cols/rows, passing an array-like object
+
+`nrow(mat)` returns the number of rows
+`ncol(mat)` returns the number of cols
+`dim(mat)` returns the dimensions (nrows, ncols) of the matrix
+
+## Matrix summary info
 
 `rowSums(matrix_name)` will return a sum for each row
 `colSums(matrix_name)` will sum each column
 
+## Combining matrices
+
 `big.matrix <- cbind(m1, m2)` merges matrices together by column
 
 `rbind()` works the same way to merge matrices row-wise
+
+## Matrix operations
+
+In general, operations are carried out element-wise
+  - dimensions of the matrix matter for this
+
+`A + B` will add every element of A to every element of B
+  - same is true for other operations
+
+`A == B` will return TRUE/FALSE for pairwise comparisons of each element based on index
+
+```{r}
+
+```
+
+# Arrays
+
+Are essentially multidimensional matrices
+
+Similar to matrices, except that matrices can only have 2 dimensions
+
+`myArray <- array(e, dim=c())`
+  - create an array with e elements and dimensions specified
+
+```{r}
+
+```
+
+
+# Built-in objects
+
+`LETTERS` a vector of English letters
+  - `LETTERS[1:10]` returns the first 10 letters of the alphabet
+
+
+```{r}
+
+```
+
+# Functions
+
+`?` in front of a function to access the documentation
+- use back ticks around operators like `+` when calling help
+
+`apropos(str)` is used when you want a list of functions that have the supplied character 'str' in them
+
+### Pipes
+The magrittr library allows you to pass a value as the first argument to a function using `%>%` as a pipe
+- example, to count the number of NA's you can nest functions or use a pipe
+  - `sum(is.na(x))`
+  - `x %>% is.na %>% sum`
+- can still add additional named args to functions
+  - `x %>% mean(na.rm=TRUE)`
+  
+```{r}
+
+```
+  
+
+# Dataframes
+Constructing dataframes
+`data.frame(v1[, v2...])`
+- where vn are all vectors of the same length separated by commas
+- can also supply names during creation
+`data.frame(name1=v1[name2=v2...])`
+- do not use quotes around the names
+`stringsAsFactors=` is an optional arg you can specify as FALSE to prevent creating factors for character cols 
+
+ # Dataframe Properties
+
+## Loading built-in data
+`data()` can be used to load a dataframe that comes with R
+- `data(iris)` for example
+
+## Properties of dataframes
+`nrow(df)` returns the number of rows
+`ncol(df)` returns the number of cols
+`dim(df)` returns the dimensions (rows, cols)
+`names(df)` returns the col names (vector that allows you to select items)
+  - `names(df)[2]` returns the second col name
+  - you can also assign names using this syntax
+`rownames(df)` will return the rownames (or integer index)
+  - you can also assign names using this syntax
+  - setting `rownames(df) <- NULL` returns to a numbered index
+
+## Other summary df info
+`head(df[, n=])` prints the first few rows (can optinally specify how many `n`)
+`tail(df[, n=])` prints the last few rows
+`unique(selection)` will list all of the unique items in the specified selection `unique(df[,2])`
+
+
+## Selecting df elements
+Like python (except 1 indexed)
+`df[1, 2]` gets the first row, second column
+- can also use this to assign values `df[1, 2] <- 100`
+`df[4,]` selects entire 4th row, same idea for columns, but usually would just use column name for that
+`df[3, 4:5]` selects the 3rd row cols 4 through 5
+`df[, 2:5]` all rows, cols 2 through 5
+`df[2:4, ]` rows 2 through 4, all cols
+`df[, c('name1', 'name4')]` all rows, named cols `name1` and `name4`
+  - use quotes around the col names
+  
+Objects returned from selections
+- can be dataframes, vectors, scalars, or factors (can use a factor in a dataframe)
+- add arg `drop=False` to return a dataframe instead of a vector/factor
+
+Advanced selections
+`df[c(3, 5), 2]` prints values in rows 3 and 5 from col 2
+  - returns a vector without col info since only one col was selected
+`df[c(3, 5), 4:7]` returns a dataframe with rows 3 and 5, and cols 4 through 7
+  - col names printed since multiple vectors are returned
+
+Select entire column (vector) using `$` e.g. `df.name$column.name`
+
+
+
+```{r}
+
+```
+
+# Creating dummy variables (one hot encoding)
+- requires the steps below
+`newFactor <- factor(c('level1', 'level2'[, 'level3'...]))`
+`model.matrix(~ newFactor - 1)`
+`attr(,'assign')`
+`attr(,'contrasts')`
+`attr(,'contrasts')$newFActor
+
+```{r}
+
+```
+
+# Working with Files
+
+## Reading CSV's
+
+`read.table(file=, header=, sep=[, stringsAsFactors=[, quote=[, colClasses=]]])`
+  - `file=` specifies the file path (can be a URL or other local pathway)
+    - file paths should be in quotes (or variable storing path as a string)
+  - `header=` TRUE/FALSE argument as to whether or not the file contains col headers
+  - `sep=` allows you to specify the delimiter as a string
+    - `\t` for tab delimited
+  - `stringsAsFactors` is default TRUE which converts character (string) cols to factors
+    - setting this false is useful when there are many cols of this type that have many different levels (can save a lot of time)
+    - could go back and change a few specific types to factors
+  - `quote=` can specify the character used for enclosing cells
+  - `colClasses` can specify the datatype for each col
+
+`read.csv` is very similar except that `sep` is preset to ','
+
+## Reading in Large Files
+
+Two very good/fast options (neither automatically reads in char data as factors)
+
+`read_delim` from `readr` package (based on dplyr)
+  - `library(readr)`
+  - `filePath <- 'my/file/path.csv'`
+  - `tibble.object <- read_delim(file=filePath, delim=',')`
+  - When executed, will print out all of the col names and the datatype
+  
+  - `read_delim` functions are return a 'tibble' which is an extension of data.frame
+  
+  - There are shortcut functions that are wrappers for `read_delim`
+    - `read_csv`
+    - `read_tsv`
+
+`fread` from `data.table` package
+  - `library(data.table)`
+  - `fileURL <- 'http://www.webaddress.filepath/filename.csv'`
+  - `data.table.object <- fread(input=fileURL, sep=',', header=TRUE)`
+  
+  - Returns a data.table object (extnesion of data.frame)
+
+- Choice of `read_delim` or `fread` depends on whether you want to use dplyr or data.table for data manipulation
+
+```{r}
+
+```
+
+
+# Plotting
+
+## Basic plots
+`plot(df)` will do a pairplot of all of the variables
+`plot(df$y.var ~ df$x.var)` for basic plots
