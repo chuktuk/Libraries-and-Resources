@@ -530,7 +530,11 @@ Advanced selections
 
 Select entire column (vector) using `$` e.g. `df.name$column.name`
 
+## Advance Selections
 
+- which
+  - returns only indices meeting specified condition
+  - `df2000 <- df[which(df$year == 2000), ]`
 
 ```{r}
 
@@ -566,6 +570,8 @@ Select entire column (vector) using `$` e.g. `df.name$column.name`
 
 `read.csv` is very similar except that `sep` is preset to ','
 
+
+
 ## Reading in Large Files
 
 Two very good/fast options (neither automatically reads in char data as factors)
@@ -591,6 +597,80 @@ Two very good/fast options (neither automatically reads in char data as factors)
 
 - Choice of `read_delim` or `fread` depends on whether you want to use dplyr or data.table for data manipulation
 
+
+
+## R Binary Files
+
+Great way to save data, variable, functions
+
+- Binary files that represent R objects of any kind
+- Can store single or multiple objects
+- Cross platform (Win, Mac, Lin)
+
+Saving Objects in RData file
+- `save(a, b, c, file='path/filename.rdata')`
+  - where a, b, and c are defined objects
+
+Reading in objects
+- `load('path.filename.rdata')`
+  - objects are loaded as they were saved (a, b, c in this case)
+  - do not assign `load` to a variable, it loads saved object names
+  
+saveRDS save one object in a binary file w/o its name
+- `saveRDS(myObject, file='path/filename.rds')`
+
+readRDS will load that object, and you must assign a variable
+- `myObject <- readRDS('path/filename.rds')`
+
+
+
+## Excel .xls or .xlsx Files
+
+- readxl library
+  - only works on downloaded files (cannot read urls)
+    - `download.file(url='url_to_file', destfile='path/filename.xlsx, method='curl')`
+      - use above to download files
+  - `library(readxl)` import the library
+  - `excel_sheets('path/filename.xlsx')` to print sheet names
+  - `myTibble <- read_excel('path/filename.xlsx')` reads in the first sheet by default
+    - returns a tibble
+  - add `sheet=2` argument to `read_excel()` to read in sheet #2
+    - can also used names sheets `sheet='Sheet_Name'`
+    
+
+## Reading Data from Databases
+
+See p. 81 of 'R for Everyone'
+
+
+## Data from Other Stats Programs
+
+See p. 84 of 'R for Everyone'
+
+```{r}
+
+```
+
+
+# Exctracting Data from Websites
+
+p. 88 'R for Everyone'
+
+```{r}
+
+```
+
+
+# JSON Data
+
+jsonlite Library
+
+- `library(jsonlite)`
+- `df <- fromJSON(url)` where url is a string representing the URL path to a .json file
+  - `fromJSON` attempts to parse data into a data.frame
+
+
+
 ```{r}
 
 ```
@@ -601,3 +681,142 @@ Two very good/fast options (neither automatically reads in char data as factors)
 ## Basic plots
 `plot(df)` will do a pairplot of all of the variables
 `plot(df$y.var ~ df$x.var)` for basic plots
+
+- Histograms
+  - `hist(df$feature, main='Main Title', xlab='X Label')`
+  
+- Scatterplots
+  - `plot(yvar ~ xvar, data=df)`
+  - `plot(xvar, yvar)` plotting without formula interface
+  
+- Boxplots
+  - `boxplot(df$feature)`
+
+
+## ggplot2
+
+- Basic syntax
+  - Can save the basics of a plot to a variable
+  - can help with repeated plotting or using plot data
+  - `g <- ggplot(df, aes(x=xvar, y=yvar))`
+  
+- Layering of plots
+  - order of layers matters
+    - layers added in order they are included
+    - last layer is on top
+  - `g <- ggplot(df, aes(x=xvar, y=var))`
+  - `g <- g + ...` add more on top of g
+  - `g` when finished to show the plot
+
+- `library(ggplot2)`
+  - has built-in datasets (like diamonds) you can load
+    - `data(diamonds)`
+    - `data()` will inform you which datasets can be loaded
+  
+- Common plot functions
+  - `geom_point`
+  - `geom_line`
+    - if plotting 1 line, may have to add `group=1` arg to `aes()` function
+  - `geom_histogram`
+  - `geom_density` like histogram but density plot instead
+  - `geom_boxplot`
+  - `geom_violin`
+
+  
+- Split plots by variables functions  
+  - `facet_wrap`
+    - takes the levels of a variables, divides into separate small plots for each level, placement has no meaning
+    - `... + facet_wrap(~var.name)`
+      - can supply two vars like with `facet_grid` below
+  - `facet_grid`
+    - like facet_wrap but assigns all levels of a variable to either a row or column
+    - `... + facet_grid(yvar~xvar)`
+    - would create a separate plot for every combo of yvar/xvar
+  
+- Common arguments for common functions
+  - `aes()` 
+    - aesthetic function
+    - supply to `ggplot()` or to `geom_...`
+      - sometimes both
+    - it's a function supplied as an argument
+    - as arg of `ggplot()`
+      - supply your `x=` and `y=` args here
+    - as arg of `geom_...`
+      - can supply `x=` for geom_density/geom_histogram
+      - supply your `color`, `fill`
+  - `fill=` 
+    - set a fill for histograms/points etc.
+    - arg of `geom_density()` not of `aes()`
+  - `color=` 
+    - arg of `aes()`
+    - use a variable to color categorical variables
+    - `color=feature.name`
+    - `color=factor(feature.name)` to ensure it's categorical
+    - legend added automatically
+    - see Axis/Legend formatting for more options
+  - `group=`
+    - arg of `aes()`
+  
+    
+- Histograms and Densities
+  - `ggplot(data=df) + geom_histogram(aes(x=feature))`
+    - where `feature` is a variable in data.frame `df`
+  - `ggplot(data=df) + geom_density(aes(x=feature), fill='gray50')`
+    - use this for density plot
+    
+- Scatterplots
+  - `ggplot(df, aes(x=xvar, y=yvar)) + geom_point()`
+    - x and y vars are args of the `aes` function
+    - add `geom_point()` to plot points for the scatterplot
+    
+- Boxplots
+  - Must add an x aesthetic for univariate plots
+    - `ggplot(df, aes(y=univariate.var, x=1)) + geom_boxplot()`
+  - Include x variable for multiple boxplots for diff x categories
+    - `ggplot(df, aes(y=yvar, x=xcatvar)) + geom_boxplot()`
+
+- Violin Plots
+  - work just like boxplots
+  - use `+ geom_violin()` instead
+
+## Axis/Legend Formatting
+
+- `library(scales)`
+- `+ scale_color_discrete(name='Legend Name')`
+  - when the `color` arg is used to define the legend
+- `+ scale_y_continuous(labels=comma)`
+  - add commas to y axis numbers
+- `+ labs(title='Main Title', x='x Label', y='y Label')`
+
+## Plotting Themes (ggthemes)
+
+Add as last layer
+
+- `library(ggthemes)`
+
+- Economist Theme
+  - `g <- g + theme_economist() + scale_colour_economist()`
+  
+- Excel Theme
+  - `g <- g + them_excel() + scale_colour_excel()`
+  
+- Tufte Theme
+  - `g <- g + theme_tufte()`
+  
+- Wall street Journal Theme
+  - `g <- g + theme_wsj()`
+
+
+```{r}
+
+```
+
+
+# Working with Dates/Times and Datetimes
+
+## lubridate
+
+- `library(lubridate)`
+- `df$year <- year(df$date)` get the year
+- `df$month <- month(df$date, label=TRUE)`
+  - `label=TRUE` returns name of month instead of number
