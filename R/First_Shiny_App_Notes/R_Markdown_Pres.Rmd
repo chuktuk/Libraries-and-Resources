@@ -1,0 +1,116 @@
+---
+title: "R Markdown Presentation"
+author: "Chuck Tucker"
+date: "4/22/2020"
+output: ioslides_presentation
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Creating New Slides
+
+To create a new slide, just create a new heading.
+
+## Some Basics
+
+- Incorporate code inline
+  - The result of 2 + 2 is `r 2+2`
+  - Use 'r' as the first char inside the backticks
+
+## Ordered Lists
+
+1. Use numbers
+2. If you want to create numbered lists that is
+
+## Chunks of code
+
+- Two ways to add code chunks:
+1. Can click the *Insert* button to add a code chunk
+2. Can do **Ctrl+Alt+i** on a PC or **Cmd+Shift+i** on Mac
+
+## Displaying code in a chunk
+- Use argument 'echo = TRUE' to display code + output
+- Use argument 'echo = FALSE' to supress code and only display the output
+
+```{r code_chunk_name, echo=FALSE}
+print('This was printed by R')
+
+```
+
+
+## Including CSS
+
+- Add argument `css: file.css` to your preamble to include a css file
+- Easiest modications are using HTML tags
+
+
+## RPubs
+
+- Free way to publish R Markdown documents and presentations
+- Publicly available
+- Users can comment on the documents
+- Click this link -> [RPubs](https://rpubs.com)
+- To publish, click the publish button after knitting your document
+
+
+## Shiny Apps
+
+- This is a basic shiny interactive plot, built-in to the slide
+- Shiny apps are not supported in static documents
+  - Must add `runtime: shiny` to the preamble to include this functionality
+  - The **Knit** button then becomes **Run Presentation**
+- Shiny apps have a basic template
+
+## My First Interactive Plot
+
+- Interactive plot allowing you to set the exponent (x^input)
+
+```{r polynomial_plot, echo=FALSE}
+library(shiny)
+shinyApp(
+  ui= fluidPage(     # user interface is a fluidPage, allowing markdown/app to be displayed together
+    sliderInput('exponent',      # name for the variable storing the slider value
+                label = 'Exponent',     # label for this item on the UI
+                min = 1,    # slider parameters including a starting 'value'
+                max = 5,
+                value = 2),
+    plotOutput('polynomialPlot')   # assign name for this object to call in the server argument
+  ),
+  server = function(input, output) {    # create a function with input/output args
+    output$polynomialPlot <- renderPlot(     # output must call renderPlot to be interactive
+      curve(x^input$exponent, from = -5, to = 5)  # the plotting function using the slider variable
+    )
+  }
+)
+```
+
+
+
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+

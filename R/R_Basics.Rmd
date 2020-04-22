@@ -75,7 +75,7 @@ b > c
 # Character Data (Strings)
 - single or double quotes
 
-# Functions
+# Built-In Functions
 `nchar(x)` for the number of characters or number of digits for numeric data (does not work on factors)
 
 
@@ -352,7 +352,7 @@ to code `NA` do NOT use '', just type NA
 ```
 
 
-# Conditionals
+# Control Statements
 
 syntax is below
 ```{r}
@@ -364,6 +364,90 @@ if (b > c) {
   print('C is greater')
 } else print('Nonsense')
 ```
+
+# Switch Statements
+
+- Sort of like JS/PHP
+
+```{r}
+func.switch <- function(x)
+{
+  # first arg is the variable to check
+  # subsequent args are values and results
+  # last result if not assign a value is the default
+  switch(x,
+         'a'='First',
+         'b'='Second',
+         'c'='Third',
+         'Other')
+}
+
+func.switch('b')
+func.switch('z')
+```
+
+## Switch continued
+
+- If the first arg is numeric, it is matched positionally
+  - Nothing is returned if a value greater than those in the func is supplied
+  
+```{r}
+func.switch(3)
+func.switch(4)
+func.switch(121) # nothing is returned (null)
+is.null(func.switch(121))
+```
+
+# ifelse
+
+- `ifelse(conditional_statement, return_if_true, return_if_false)`
+- works with vectorized arguments
+  - avoids for loops and speeds up code
+
+```{r}
+# simple examples, though for scalars, if/else is faster
+ifelse(1 == 1, 'Yup', 'umm no')
+ifelse(1 == 0, 'Yup', 'umm no')
+```
+
+```{r}
+# vector examples
+myVec <- c(1, 0, 0, 1, 1)
+ifelse(myVec == 1, 'Yup', 'No')
+```
+
+```{r}
+# pairwise comparisons of vectors
+testVec <- c(1, 1, 0, 1, 0)
+ifelse(myVec == testVec, 'Yup', 'No')
+```
+
+```{r}
+# can return different values
+ifelse(myVec == testVec, 2^2, 'ok')
+
+# returns positional product when equal
+ifelse(myVec == testVec, myVec*testVec, 'Not Equal')
+```
+
+# Multiple Conditions
+
+- Use `&&` (and) `||` (or) for  single comparisons
+  - best used with if / else if
+- Use `&` / `|` for element wise comparisons (`ifelse`)
+
+```{r}
+(1 == 1 && 2 > 0)
+(1 == 1 && 2 < 0) || 4 < 5
+```
+
+```{r}
+print(myVec)
+print(testVec)
+ifelse(myVec == testVec | myVec < testVec, 'Yup', 'Nope')
+```
+
+
 
 # Conditionals as selectors
 - can use as a selection mask just like python
@@ -387,6 +471,51 @@ can use complex masks
 mask <- (iris[,2] > 3) & (iris[,5] == 'setosa')
 iris[mask,]
 ```
+
+# Loops
+**Generally do not want to use loops, and use vectorization**
+
+## For Loops
+
+- `for(i in ___) { statements }`
+
+## While Loops
+
+- `while(condition) { statements }`
+- can update variables here
+
+```{r}
+i <- 1
+while(i < 10)
+{
+  print(i)
+  i <- i + 1
+}
+```
+
+## Controlling Loops: next, break
+
+- `next` will skip that iteration
+  - often used with conditionals
+- `break` will end the loop
+
+```{r}
+for(i in 1:10)
+{
+  if(i == 3)
+  {
+    next
+  }
+  if(i == 7)
+  {
+    print('Breaking')
+    break
+  }
+  print(i)
+}
+```
+
+
 
 # Matrices
 Work like numpy arrays in that all objects must be of the same type
@@ -532,6 +661,23 @@ square.num <- function(x)
 square.num(2)
 square.num(10)
 
+```
+
+## do.call
+
+- `do.call(func, args=)`
+  - allows the user to supply a function to call as character string or as an object
+  - see example below
+  
+```{r}
+run.this <- function(x, func=mean) # default function is mean
+{
+  # user supplies a vector (x) and a function to call (func)
+  do.call(func, args=list(x))
+}
+
+run.this(1:10) # find the mean of 1-10 (default function)
+run.this(1:10, sum) # find the sum of 1-10
 ```
 
 
