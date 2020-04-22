@@ -470,10 +470,70 @@ The magrittr library allows you to pass a value as the first argument to a funct
 - can still add additional named args to functions
   - `x %>% mean(na.rm=TRUE)`
   
+
+## Creating Functions
+
+- Syntax
 ```{r}
+say.hello <- function() #arguments supplied here
+{
+  print('Hello World')
+}
+
+# calling functions
+say.hello()
+```
+
+# Functions Continued
+
+## sprintf function
+- sprintf is a function that allows you to substitute characters for special inputs (see examples below)
+
+```{r}
+sprintf('Hello %s', 'Chuck')
+```
+```{r}
+hello.firstname <- function(name)
+{
+  sprintf('Hello %s', name)
+}
+
+hello.fullname <- function(first.name, last.name)
+{
+  sprintf('Hello %s %s', first.name, last.name)
+}
+
+hello.firstname('Chuck')
+hello.fullname('Chuck', 'Tucker')
+```
+
+# Functions Continued
+
+## Default args
+- Just like python, supply a value in the function definition
+  - `myFunction <- function(name='Chuck Tucker')`
+
+## Arbitrary number of args
+- Use `...` as an arg to allow supplying additional named args
+  - `myFunction2 <- function(first.name='Chuck', ...)`
+  
+## Returning Values
+- The value of the last line of a function is automatically returned
+  - It is bad practice to return values in this way
+- Use `return()` instead
+
+  
+```{r}
+square.num <- function(x)
+{
+  return(x * x)
+}
+
+square.num(2)
+square.num(10)
 
 ```
-  
+
 
 # Dataframes
 Constructing dataframes
