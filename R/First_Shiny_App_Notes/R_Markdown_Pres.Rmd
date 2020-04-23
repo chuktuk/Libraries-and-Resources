@@ -80,7 +80,7 @@ shinyApp(
     plotOutput('polynomialPlot')   # assign name for this object to call in the server argument
   ),
   server = function(input, output) {    # create a function with input/output args
-    output$polynomialPlot <- renderPlot(     # output must call renderPlot to be interactive
+    output$polynomialPlot <- renderPlot(     # output must call renderPlot to be interactive, often need curly braces here
       curve(x^input$exponent, from = -5, to = 5)  # the plotting function using the slider variable
     )
   }
@@ -88,29 +88,194 @@ shinyApp(
 ```
 
 
+## Shiny Controls (Widgets)
+
+- The list/code for the different Shiny widgets are available at the link below
+- [Shiny Widget Gallery](https://shiny.rstudio.com/gallery/widget-gallery.html)
 
 
-## R Markdown
+## Troubleshooting Issues
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+- Add `print(input$varName)` inside your `renderPlot()` call
+  - In the example, this was added before the `curve()` call, but did not have a comma separating the two function calls
+  - The input value will not print in the presentation, but it will print in the RStudio console
+- e.g. The `selectInput()` select box widget returns a string
+  - Solution: use `as.numeric(input$varName)` in your `renderPlot()` call 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
 
-## Slide with Bullets
+## Interdependent Controls
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+- You may want to update user controls based on other controls
+- The dependent controls must be moved to the server side
+  - Example on the next slide
 
-## Slide with R Output
 
-```{r cars, echo = TRUE}
-summary(cars)
+## Interdependent Controls Example
+
+```{r hist_plot, echo=FALSE}
+shinyApp(
+  ui = fluidPage(
+    selectInput('no_data',
+                label = 'Number of Data Points',
+                choices = list('100' = 100, '500' = 500, '1000' = 1000, '5000' = 5000, '10000' = 10000),
+                selected = 1000),
+    sliderInput('mean',
+                label = 'Mean',
+                min = -10,
+                max = 10,
+                value = 0),
+    sliderInput('sd',
+                label = 'Standard Deviation',
+                min = 0,
+                max = 5,
+                value = 1),
+    uiOutput('xmin_slider'),   # create a uiOutput and assign a name to the object for the interdepentent widget
+    uiOutput('xmax_slider'),   # can do multiples
+    plotOutput('histogram')
+  ),
+  server = function(input, output){
+    
+    output$xmin_slider <- renderUI({   # need to render the UI object on the server
+      
+      if(is.null(input$mean)){  # this statement avoids error messages when initially loading the app
+        return()                # good practice to do this for renderUI objects
+      }
+        
+      sliderInput('xmin',
+                  label = 'X Min',
+                  min = (input$mean - 15),
+                  max = (input$mean - 3),
+                  value = (input$mean - 3))
+      
+    })
+    
+    
+    output$xmax_slider <- renderUI({   # need to render the UI object on the server
+      
+      if(is.null(input$mean)){  # this statement avoids error messages when initially loading the app
+        return()                # good practice to do this for renderUI objects
+      }
+        
+      sliderInput('xmax',
+                  label = 'X Max',
+                  min = (input$mean + 3),
+                  max = (input$mean + 15),
+                  value = (input$mean + 3))
+      
+    })
+    
+    
+      
+    # appears commas are not required between output objects in the server() function
+    
+    output$histogram <- renderPlot(     # use curly braces to contain multiple statements in renderPlot
+      hist(rnorm(as.numeric(input$no_data), mean=input$mean, sd=input$sd), 
+           xlim=c(input$xmin, input$xmax),
+           main='Interactive Histogram',
+           xlab='Distribution',
+           ylab='Frequency')  # still use input$xmin/max here
+    )
+  }
+)
+
 ```
 
-## Slide with Plot
 
-```{r pressure}
-plot(pressure)
+## Reactive Expressions
+
+- In the example on the previous slide, the data are regenerated any time the following are changed by the user:
+  - Number of Data Points
+  - Mean of the Distribution
+  - Standard Deviation
+  - X Min and X Max
+- X Min and X Max should not change the data, but only the scale
+  - Use reactive expressions (example next slide) to control this
+
+
+## Reactive Expressions Example
+
+- Changing X Min and X Max will shift the view but not update the data
+
+```{r reactive_hist_plot, echo=FALSE}
+shinyApp(
+  ui = fluidPage(
+    selectInput('no_data',
+                label = 'Number of Data Points',
+                choices = list('100' = 100, '500' = 500, '1000' = 1000, '5000' = 5000, '10000' = 10000),
+                selected = 1000),
+    sliderInput('mean',
+                label = 'Mean',
+                min = -10,
+                max = 10,
+                value = 0),
+    sliderInput('sd',
+                label = 'Standard Deviation',
+                min = 0,
+                max = 5,
+                value = 1),
+    uiOutput('xmin_slider'),   
+    uiOutput('xmax_slider'),   
+    plotOutput('histogram')
+  ),
+  server = function(input, output){
+    
+    output$xmin_slider <- renderUI({   
+      
+      if(is.null(input$mean)){  
+        return()                
+      }
+        
+      sliderInput('xmin',
+                  label = 'X Min',
+                  min = (input$mean - 15),
+                  max = (input$mean - 3),
+                  value = (input$mean - 3))
+      
+    })
+    
+    
+    output$xmax_slider <- renderUI({   
+      
+      if(is.null(input$mean)){ 
+        return()                
+      }
+        
+      sliderInput('xmax',
+                  label = 'X Max',
+                  min = (input$mean + 3),
+                  max = (input$mean + 15),
+                  value = (input$mean + 3))
+      
+    })
+    
+    # reactive section begins here
+    # only changes to these variables will change the data for the plot
+    # reactive function before the output$histogram renderPlot() call
+    
+    data_for_plot <- reactive({
+      rnorm(as.numeric(input$no_data), mean=input$mean, sd=input$sd)
+    })
+      
+    output$histogram <- renderPlot({    # had to add additional curly brace here
+      
+      if(is.null(input$xmin) || is.null(input$xmax)){
+        return()
+      }
+      
+      data_for_plot <- data_for_plot()   # must call the reactive object as a function here, inside renderPlot()
+      
+      hist(data_for_plot,                  # use the reactive expression result here
+           xlim=c(input$xmin, input$xmax),
+           main='Interactive Histogram',
+           xlab='Distribution',
+           ylab='Frequency')  
+    })  # had to close the additional curly brace here
+  }
+)
+
 ```
+
+
+## Laying Out Shiny Apps
+
 
