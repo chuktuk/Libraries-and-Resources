@@ -6,6 +6,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
+from datetime import datetime as dt
 
 # import data for a table
 df = pd.read_csv('states.csv')
@@ -29,6 +30,20 @@ df2 = pd.read_csv('scatter.csv')
 # define a css stylesheet to use
 external_stylesheets = ['./dash_default.css']
 
+# define markdown text
+markdown_text = '''
+## Dash and Markdown
+
+#### Brief Notes
+- Plot sizes are dynamically scaled to the window automatically.
+- Tables are not: a constant font size/spacing is maintained.
+- Traditional HTML tags like <ul> are rendered as text.
+
+You can specify your headers using '\#'.\n
+Insert a double return using '\\n'.\n
+The escape character is '\\'.
+'''
+
 # initialize the app
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -40,7 +55,7 @@ colors = {
 
 # define the layout
 app.layout = html.Div(style={'background': colors['background']}, children=[
-    html.H1(children='Hello Dash',
+    html.H1(children='Dash is Extremely Dynamic',
            style={
                'textAlign': 'center'
                #, 'color': colors['text']
@@ -96,7 +111,21 @@ app.layout = html.Div(style={'background': colors['background']}, children=[
                 margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
                 legend={'x': 0, 'y': 1},
                 hovermode='closest')
-        })
+        }),
+    
+    # block of markdown
+    html.Div([
+        dcc.Markdown(children=markdown_text, style={'background': '#FFFFFF'})
+    ]),
+    
+    # single datepicker
+    html.Div(style={'background': '#FFFFFF'}, children=[
+        html.Div(children='Please pick a date'),
+        dcc.DatePickerSingle(
+            id='date-picker-single',
+            date=dt.today()
+        )
+    ])
 ])
 
 # run the app if app.py is the main file
