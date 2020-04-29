@@ -5,6 +5,8 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Input, Output
+
 import pandas as pd
 from datetime import datetime as dt
 
@@ -26,6 +28,9 @@ def generate_table(dataframe, max_rows=10):
 
 # load data for a scatterplot
 df2 = pd.read_csv('scatter.csv')
+
+# load data for an interactive plot
+df3 = pd.read_csv('gap.csv')
 
 # define a css stylesheet to use
 external_stylesheets = ['./dash_default.css']
@@ -125,8 +130,69 @@ app.layout = html.Div(style={'background': colors['background']}, children=[
             id='date-picker-single',
             date=dt.today()
         )
-    ])
+    ]),
+    
+    # div to break up the spacing
+    html.Div([
+        html.Br()
+    ]),
+    
+    # interactive plot
+    html.Div([
+        dcc.Graph(id='graph-with-slider'),
+        dcc.Slider(
+            id='year-slider',
+            min=df3['year'].min(),
+            max=df3['year'].max(),
+            value=df3['year'].min(),
+            marks={str(year): str(year) for year in df3['year'].unique()},
+            step=None
+        )
+        
+    ],
+    style={'background': 'white'},
+    )
 ])
+
+# callbacks for interactivity
+
+# GDP and life expectancy
+@app.callback(
+    Output('graph-with-slider', 'figure'),
+    [Input('year-slider', 'value')]
+)
+def update_figure(selected_year):
+    filtered_df = df3[df3.year == selected_year]
+    traces = []
+    for i in filtered_df.continent.unique():
+        df_by_continent = filtered_df[filtered_df['continent'] == i]
+        traces.append(dict(
+            x=df_by_continent['gdpPercap'],
+            y=df_by_continent['lifeExp'],
+            text=df_by_continent['country'],
+            mode='markers',
+            opacity='0.7',
+            marker={
+                'size': 15,
+                'line': {'width': 0.5, 'color': 'white'}
+            },
+            name=i
+        ))
+        
+    return {
+        'data': traces,
+        'layout': dict(
+            title='Life Expectancy by GDP for {}'.format(selected_year),
+            xaxis={'type': 'log', 'title': 'GDP Per Capita',
+                  'range': [2.3, 4.8]},
+            yaxis={'title': 'Life Expectancy',
+                  'range': [20, 90]},
+            margin={'l': 40, 'b': 40, 't': 50, 'r': 10},
+            legend={'x': 0, 'y': 1},
+            hovermode='closest',
+            transition={'duration': 500},
+        )
+    }
 
 # run the app if app.py is the main file
 if __name__ == '__main__':
