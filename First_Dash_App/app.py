@@ -190,7 +190,7 @@ def update_figure(selected_year):
             margin={'l': 40, 'b': 40, 't': 50, 'r': 10},
             legend={'x': 0, 'y': 1},
             hovermode='closest',
-            transition={'duration': 500},
+            transition={'duration': 500},   # this creates smooth transitions when updating the figure
         )
     }
 
