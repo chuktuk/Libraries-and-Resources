@@ -60,7 +60,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # define a dictionary of css styles for repeatedly used inline styles
 colors = {
-    'background': '#7FDBFF',
+    'background': '#e6ffff',
     #'text': '#7FDBFF'
 }
 
