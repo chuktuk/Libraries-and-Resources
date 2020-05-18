@@ -1026,3 +1026,183 @@ Add as last layer
 - `df$year <- year(df$date)` get the year
 - `df$month <- month(df$date, label=TRUE)`
   - `label=TRUE` returns name of month instead of number
+  
+```{r}
+
+```
+
+
+# Apply Functions
+
+- `apply(object, margin, function[, na.rm])`
+  - must be used on a **matrix** (all elements are the same type)
+    - automatically converts data.frame objects to matrix first if possible
+  - where `object` is the object to transform, and `margin=1` for rows and `margin=2` for columns
+    - `function` is the function to 'apply'
+    - any following arguments will be passed to that `function`
+    - default is `na.rm=FALSE`
+  - `apply` will iterate over every entry, treating each entry as the first arg to the `function`
+  
+    
+- `lapply(object, margin, function[, na.rm])`
+  - applies a function to each element of a list or vector and returns a **list**
+  
+- `sapply(object, margin, function[, na.rm])`
+  - exactly the same as `lapply` but returns a **vector** instead of a list
+    
+- `mapply(function, list1, list2[,...])`
+  - applies a function to each element of **multiple lists**
+    - can do this instead of looping
+    
+# Aggregate Functions
+
+## Calling `aggregate` using a formula
+- `aggregate(y ~ x [+ x2...], data, function[, na.rm])`
+  - will provide the `y` values aggregated into the group values specified by `x` by apply `function`
+  - works much like `groupby` in python
+  - default is `na.rm=FALSE`
+  
+- to aggregate by two variables, use `cbind`
+  - `aggregate(cbind(y1, y2), ~ x, data, function)`
+  
+- `aggregate` can be slow, `plyr`, `dplyr`, and `data.table` are faster
+
+# plyr
+
+- must import `library(plyr)`
+- functions end in `ply`
+- first two letters specify input/output respectively
+  - `ddply` accepts a data.frame and outputs a data.frame
+  - `llply` accepts a list and outputs a list
+  - `ldply` accepts a list and outputs a data.frame
+  - `a` = array/vector/matrix
+  - `d` = data.frame
+  - `l` = list
+  - `_` = none (used as second letter for side effects)
+  
+```{r}
+
+```
+
+# data.table
+
+- must import `library(data.table)`
+- extends the function of data.frames
+
+- creating is very similar to creating data.frames
+
+- by default does NOT covert character data to into factors
+
+- can create a data.table out of an existing data.frame easily
+  - `dt <- data.table(df)`
+  
+- slicing and accessing items
+  - `dt[rows, cols]`
+    - where `rows` and `cols` can be slices (e.g. `[1:2]`)
+  - `dt[A >= 7, ]` 
+    - selects all cols where col `A` is >= 7
+  - `dt[, list(A, C)]`
+    - selects all rows and multiple cols by name
+    - must specify a list of actual names, not as characters like with data.frames
+    - if you must specify these as character data types, set `with=FALSE` in the slice
+      - `dt[, 'B', with=FALSE]`
+  - `dt[, list(B)]`
+    - select one col while maintaining the data.table structure
+  
+
+```{r}
+# creating a data.table from scratch
+library(data.table)
+
+# note that A, B, C, D are not in '' here
+dt <- data.table(A=1:10,
+                 B=letters[1:10],
+                 C=LETTERS[11:20],
+                 D=rep(c('One', 'Two', 'Three'), length.out=10),
+                 E=c('A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B'))
+
+# if using character data types to access cols, set with=FALSE
+cols <- c('A', 'C')
+# dt[, cols, with=FALSE]
+
+dt
+```
+
+```{r}
+# show all tables (data.tables) in memory
+tables()
+```
+
+
+## data.table keys
+
+#### really speeds up TRUE/FALSE filtering, or filtering by a category/value
+
+- setting a key
+  - `setkey(dt, col.name)`
+    - where `col.name` is the actual name of the col, without quotes
+    - this will automatically sort the data by `col.name` when displaying the `dt`
+    
+- setting multiple keys
+  - `setkey(dt, col.name1, col.name2)`
+    
+- displaying a key
+  - `key(dt)`
+    - will show the key for the specified data.table
+  - or `tables()`
+    - which will print out the info for all data.tables
+    
+- accessing data with a specific key value
+  - `dt['Value', ]`
+  - `dt[c('Value1', 'Value2'), ]`
+    - both of the above syntaxes will display all cols but only rows with the specified key values
+    - in this case, the key col is a character col, so the values are supplied as character type
+    
+- accessing data specifying multiple key values
+  - finding some weird results with this, need better examples
+  - if you have multiple keys, you must supply values for each key or use a placeholder
+  - `dt[J('Value1', 'OtherVal1'), ]` # all cols where key1 has 'Value1' and Key2 has 'OtherVal1'
+    - must use the `J` function
+      - `J` takes multiple args, each of which is a vector of values to select
+  - `dt[J('Value1', c('OtherVal1', 'OtherVal2'))]`
+    - use this syntax to supply multiple values for a key
+
+```{r}
+# keys examples for data.tables
+setkey(dt, B, D)
+
+dt
+
+# getting some weird results here, need better examples
+# maybe this is correct since the values that don't match all have NA
+dt[J(c(letters[1:10]), 'Three'), ]
+
+# pt1 <- dt[J(c(1:10),'One'), ]
+# print(pt1)
+```
+
+# data.table Aggregation
+
+- These functions are faster than any of the `d*ply` functions
+
+
+
+```{r}
+# show the dt for reference
+dt
+
+# aggregate to find the mean A by category D
+dt[, mean(A), by=D]
+
+# to specify names for the output column
+dt[, list(avg=mean(A)), by=D]
+
+# to aggregate by multiple cols
+dt[, list(avg=mean(A)), by=list(D, E)]
+
+# get multiple summary stats grouping by multiple cols
+dt[, list(avg.A=mean(A), max.B=max(B)), by=list(D, E)]
+```
+
+    
+    
