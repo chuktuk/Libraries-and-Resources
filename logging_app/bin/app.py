@@ -21,7 +21,7 @@ def main():
     '''Main function.'''
     
     # create a logger object
-    logger = my_logger.create_module_logger(log_file, __name__)
+    logger = my_logger.create_file_logger(log_file, __name__, 'DEBUG')
     
     # log the start of the app
     logger.info('App initiated.')

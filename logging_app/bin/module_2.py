@@ -15,7 +15,7 @@ import my_logger
 log_file = ''.join(['../log/', dt.now().strftime('%m%d%Y'), '_app_practice_log.txt'])
 
 # create your logger to use with this module
-logger = my_logger.create_module_logger(log_file, __name__)
+logger = my_logger.create_file_logger(log_file, __name__, 'DEBUG')
 
 # define any module functions that use the logger
 def log_succes_message_four():

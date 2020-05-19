@@ -20,23 +20,8 @@ log_file = ''.join(['../log/', dt.now().strftime('%m%d%Y'), '_app_practice_log.t
 def main():
     '''Main function.'''
     
-    
-    # logging.basicConfig(filename=practice_log_file, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', 
-                        # datefmt='%m/%d/%Y %H:%M:%S', level=logging.DEBUG)
-    
-    # start log with a timestamp
-    # probably don't need to do this if using a format that includes the %(asctime)s value, just do Logging started or something
-    # logging.info('App initiated')
-    
-    
-    
-    # old logger stuff above this line
-    # new logger stuff below this line
-    
-    
-    
     # create a logger object
-    logger = my_logger.create_module_logger(log_file, __name__)
+    logger = my_logger.create_file_logger(log_file, __name__, 'DEBUG')
     
     # log the start of the app
     logger.info('App initiated.')

@@ -15,32 +15,83 @@ statements or just create different functions for each type.
 # import standard packages
 import logging
 # from datetime import datetime as dt
-
     
 
 # create a module level file logger
-def create_module_logger(log_file, module_name):
-    '''Maybe should do as a class rather than function?'''
-
-    # set a module level logger
-    # use this object for logging calls
-    # logger = logging.getLogger(__name__)
+# this works in the app.py file or any associated custom modules
+# create the logger in each module using the standard format
+# nest logging statements within functions of modules
+# see app.py, module_1.py, and module_2.py for examples
+def create_file_logger(log_file, module_name, level):
+    '''This function creates a file logger to use for an app. 
+    
+    Dependencies:
+    import logger
+    
+    This function should be called in every module within an app that logs events. 
+    This function will create a file in the location specified by log_file. 
+    Always supply __name__ for the module_name.
+    
+    Standard format for calling this function:
+    logger = us.create_file_logger(log_file, __name__, level)
+    
+    Accepted values for level:
+    'CRITICAL'
+    'ERROR'
+    'WARNING'
+    'INFO'
+    'DEBUG'
+    
+    Whichever level is supplied, every level above selection will also be logged.
+    e.g. if level == 'WARNING' then 'WARNING', 'ERROR', and 'CRITICAL' are logged.
+    
+    
+    Using the logger to log information about events with a custom message:
+    logger.info('Message to log.')
+    logger.info('%s a log message using %s', 'Writing', 'variables')
+    
+    Using the logger to report exceptions:
+    try:
+        statements that might fail
+        logger.info('Success message.')
+    except Exception as e:
+        logger.exception(e)
+        exception statements
+    '''
+    
+    # create a logger
     logger = logging.getLogger(module_name)
-
-    # set the logger level
-    # could alter this function to accept different levels as an arg
-    # could use a switch statement to set the different levels
-    logger.setLevel(logging.DEBUG)
-
-    # create a file handler and set level
+    
+    # create a filehandler
     fh = logging.FileHandler(log_file)
-    fh.setLevel(logging.DEBUG)
-
-    # create a formatter and add to filehandler
-    # includes the datetime, name, level name, and the message
+    
+    # set the logger level and handler level
+    if level == 'CRITICAL':
+        logger.setLevel(logging.CRITICAL)
+        fh.setLevel(logging.CRITICAL)
+    elif level == 'ERROR':
+        logger.setLevel(logging.ERROR)
+        fh.setLevel(logging.ERROR)
+    elif level == 'WARNING':
+        logger.setLevel(logging.WARNING)
+        fh.setLevel(logging.WARNING)
+    elif level == 'INFO':
+        logger.setLevel(logging.INFO)
+        fh.setLevel(logging.INFO)
+    elif level == 'DEBUG':
+        logger.setLevel(logging.DEBUG)
+        fh.setLevel(logging.DEBUG)
+    else:
+        raise ValueError(''.join(['level must be one of the following: \'CRITICAL\', \'ERROR\', ',
+                                 '\'WARNING\', \'INFO\', or \'DEBUG\'. ',
+                                 'You entered ', '\'', level, '\'.']))
+            #'''level must be one of the following: \'CRITICAL\', \'ERROR\', \'WARNING\', \'INFO\', or \'DEBUG\'. You entered '''level)
+    
+    # create a formatter and add to the file handler
+    # this can be modified to produce different log entry formats
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
-
+    
     # add handler to the logger
     logger.addHandler(fh)
     
