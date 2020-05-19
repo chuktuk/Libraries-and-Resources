@@ -1,0 +1,6 @@
+2020-05-19 11:41:00,604 - __main__ - INFO - Writing a log message while using variables
+2020-05-19 11:41:00,606 - __main__ - ERROR - No module named 'something_that_will_not_import'
+Traceback (most recent call last):
+  File "<ipython-input-4-34fcd10a698b>", line 44, in do_something
+    import something_that_will_not_import
+ModuleNotFoundError: No module named 'something_that_will_not_import'

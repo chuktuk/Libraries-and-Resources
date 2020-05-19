@@ -1,0 +1,18 @@
+2020-05-19 11:30:18,731 - __main__ - INFO - App initiated.
+2020-05-19 11:30:18,732 - module_1 - INFO - Message one logged successfully.
+2020-05-19 11:30:18,732 - module_1 - INFO - Message two logged successfully.
+2020-05-19 11:30:18,732 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Projects\RMS_PeopleFluent\logging_app\bin\module_1.py", line 67, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-19 11:30:18,732 - module_1 - INFO - Message three logged successfully.
+2020-05-19 11:30:18,732 - module_2 - INFO - Message four logged successfully.
+2020-05-19 11:30:18,733 - module_2 - INFO - Message five logged successfully.
+2020-05-19 11:30:18,733 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Projects\RMS_PeopleFluent\logging_app\bin\module_2.py", line 62, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-19 11:30:18,733 - module_2 - INFO - Message six logged successfully.
+2020-05-19 11:30:18,733 - __main__ - INFO - App completed.
