@@ -2,7 +2,7 @@
 title: "R Markdown Presentation"
 author: "Chuck Tucker"
 date: "4/22/2020"
-output: ioslides_presentation
+output: slidy_presentation
 runtime: shiny
 ---
 
@@ -219,10 +219,10 @@ shinyApp(
   ),
   server = function(input, output){
     
-    output$xmin_slider <- renderUI({   
+    output$histogram <- renderUI({   # need to render the UI object on the server
       
-      if(is.null(input$mean)){  
-        return()                
+      if(is.null(input$mean)){  # this statement avoids error messages when initially loading the app
+        return()                # good practice to do this for renderUI objects
       }
         
       sliderInput('xmin',
@@ -234,10 +234,10 @@ shinyApp(
     })
     
     
-    output$xmax_slider <- renderUI({   
+    output$xmax_slider <- renderUI({   # need to render the UI object on the server
       
-      if(is.null(input$mean)){ 
-        return()                
+      if(is.null(input$mean)){  # this statement avoids error messages when initially loading the app
+        return()                # good practice to do this for renderUI objects
       }
         
       sliderInput('xmax',
@@ -248,28 +248,17 @@ shinyApp(
       
     })
     
-    # reactive section begins here
-    # only changes to these variables will change the data for the plot
-    # reactive function before the output$histogram renderPlot() call
     
-    data_for_plot <- reactive({
-      rnorm(as.numeric(input$no_data), mean=input$mean, sd=input$sd)
-    })
       
-    output$histogram <- renderPlot({    # had to add additional curly brace here
-      
-      if(is.null(input$xmin) || is.null(input$xmax)){
-        return()
-      }
-      
-      data_for_plot <- data_for_plot()   # must call the reactive object as a function here, inside renderPlot()
-      
-      hist(data_for_plot,                  # use the reactive expression result here
+    # appears commas are not required between output objects in the server() function
+    
+    output$histogram <- renderPlot(     # use curly braces to contain multiple statements in renderPlot
+      hist(rnorm(as.numeric(input$no_data), mean=input$mean, sd=input$sd), 
            xlim=c(input$xmin, input$xmax),
            main='Interactive Histogram',
            xlab='Distribution',
-           ylab='Frequency')  
-    })  # had to close the additional curly brace here
+           ylab='Frequency')  # still use input$xmin/max here
+    )
   }
 )
 
@@ -278,4 +267,245 @@ shinyApp(
 
 ## Laying Out Shiny Apps
 
+- Three options for layout
+  - sidebarLayout (fluidPage)
+    - 2 columns (responsive for mobile devices)
+    - will stack vertically when resizing the window
+  - tabsetPanel (fliudPage)
+    - multiple tabs in the right hand columns
+    - includes a sidebarLayout for the left hand column
+  - navbarPage (navbarPage)
+    - multi-page apps
+    
+## Sidebar Panel App
 
+- Normal fliudPages are not reponsive, this page is (when slidy_pres)
+
+```{r}
+shinyApp(
+  ui = fluidPage(
+    # adding sidebar layout here
+    sidebarLayout(
+      # include a sidebar panel here
+      sidebarPanel(
+        # add your input items here
+        sliderInput('no_data', label = 'Number of data points',
+                    min = 1000,
+                    max = 5000,
+                    value = 1000),
+        sliderInput('mean', label = 'Mean',
+                    min = 0,
+                    max = 8,
+                    value = 3),
+        sliderInput('sd', label = 'Standard Deviation',
+                    min = 1,
+                    max = 10,
+                    value = 2),
+        # a sliderInput generated in the server section
+        # creates a reactive layout that won't recalculate data when changed
+        uiOutput('xlim_ui')
+      ),
+      # define what is displayed in your main panel here
+      mainPanel(plotOutput('histogram'))
+    )
+  ),
+  server = function(input, output){
+    
+    output$xlim_ui <- renderUI({
+      if(is.null(input$no_data)){
+        return()
+      }
+      sliderInput('xlim', label = 'xlim',
+                  min = input$mean,
+                  max = 10,
+                  value = input$mean,
+                  step = 1)
+    })
+    
+    data_for_plot <- reactive({
+      rnorm(input$no_data, mean = input$mean, sd = input$sd)
+    })
+    
+    output$histogram <- renderPlot({
+      if(is.null(input$xlim)){
+        return()
+      }
+      data_for_plot <- data_for_plot()
+      hist(data_for_plot, xlim=c(-input$xlim,input$xlim))
+    })
+  }
+)
+```
+
+
+## Tab Set Panel
+- Allows for multiple tabs
+
+```{r}
+shinyApp(
+  ui = fluidPage(
+    # can include a sidebar for tab set panels
+    sidebarLayout(
+      sidebarPanel(
+        # add your input items here
+        sliderInput('no_data', label = 'Number of data points',
+                    min = 1000,
+                    max = 5000,
+                    value = 1000),
+        sliderInput('mean', label = 'Mean',
+                    min = 0,
+                    max = 8,
+                    value = 3),
+        sliderInput('sd', label = 'Standard Deviation',
+                    min = 1,
+                    max = 10,
+                    value = 2),
+        # a sliderInput generated in the server section
+        # creates a reactive layout that won't recalculate data when changed
+        uiOutput('xlim_ui')
+      ),
+      mainPanel(tabsetPanel(  # include a tabsetPanel within your main panel
+        # each tab gets a tabPanel
+        tabPanel('Histogram',
+                 plotOutput('histogram')),
+        tabPanel('Data Table',
+                 dataTableOutput('data_table'))
+      )
+    )
+  )),
+  server = function(input, output){
+    
+    output$xlim_ui <- renderUI({
+      if(is.null(input$mean)){
+        return()
+      }
+      sliderInput("xlim", label = "xlim",
+                  min = input$mean,
+                  max = 10,
+                  value = input$mean,
+                  step = 1)
+    })
+    
+    data_for_plot <- reactive({
+      rnorm(input$no_data, mean = input$mean, sd = input$sd)
+    })
+    
+    # create the histogram
+    output$histogram <- renderPlot({
+      if(is.null(input$xlim)){
+        return()
+      }
+      
+      data_for_plot <- data_for_plot()
+      
+      hist(data_for_plot, xlim = c(-input$xlim,input$xlim))
+    })
+    
+    # create the table
+    output$data_table <- renderDataTable({
+      as.data.frame(data_for_plot())
+    })
+    
+  }
+)
+```
+
+
+## Navbar Page
+- Multiple pages with a navbar
+
+```{r}
+library(shinythemes)
+shinyApp(
+  # first function of ui is now navbarPage that can include fluidPages
+  ui = navbarPage(
+    theme = shinytheme('darkly'),
+    'Dashboard-like navbarPage', # title
+    #can add tabPanels for 'pages' of your app
+    # this the first item in the navbarPage app
+    tabPanel('Histograms',
+    # this can include fluidPages
+    fluidPage(sidebarLayout(
+      sidebarPanel(
+        sliderInput('no_data', label = 'Number of data',
+                    min = 1000,
+                    max = 5000,
+                    value = 1000),
+        sliderInput('mean', label = 'Mean',
+                    min = 0,
+                    max = 8,
+                    value = 3),
+        sliderInput('sd', label = 'Standard Deviation',
+                    min = 1,
+                    max = 10,
+                    value = 2),
+        # a sliderInput generated in the server section
+        # creates a reactive layout that won't recalculate data when changed
+        uiOutput('xlim_ui')
+      ),
+      mainPanel(plotOutput('histogram'))
+    ))
+    ),
+    # create a navbar menu
+    # this is the second item on the navbarPage, which has links to two separate 'views' or 'pages'
+    navbarMenu(
+      'Menu item with Children',
+      # this menu has tabPanels that are fluidPages
+      # each of these tab panels is actually a page accessed by clicking on the title in a dropdown menu
+      tabPanel('Child One',
+               fluidPage(plotOutput('curve1')
+                         )
+               ),
+      tabPanel('Child Two',
+               fluidPage(plotOutput('curve2')
+                         )
+               )
+    ), collapsible = TRUE  # allow the menu to collapse (to a hamburger if window size dictates)
+    # collapsible is an arg of navbarPage that affects its responsiveness, it does not apply to navbarMenu
+  ),
+  
+  server = function(input, output){
+    
+    output$xlim_ui <- renderUI({
+      if(is.null(input$mean)){
+        return()
+      }
+      sliderInput("xlim", label = "xlim",
+                  min = input$mean,
+                  max = 10,
+                  value = input$mean,
+                  step = 1)
+    })
+    
+    data_for_plot <- reactive({
+      rnorm(input$no_data, mean = input$mean, sd = input$sd)
+    })
+    
+    output$histogram <- renderPlot({
+      if(is.null(input$xlim)){
+        return()
+      }
+      
+      data_for_plot <- data_for_plot()
+      
+      hist(data_for_plot, xlim = c(-input$xlim,input$xlim))
+    })
+    
+    output$curve1 <- renderPlot({
+      curve(x^1, from = -5, to = 5)
+    })
+    
+    output$curve2 <- renderPlot({
+      curve(x^2, from = -5, to = 5)
+    })
+  } 
+)
+```
+
+## Shiny Themes
+
+- allow you to customize shiny apps appearance without using css
+- see [Shiny Themes](https://rstudio.github.io/shinythemes/)
+- must first make sure shinythemes library is installed
+- simply include the library in the app, and add `theme = shinytheme('themName')` to ui items to format
+- this was done to the previous app using navbarPage
