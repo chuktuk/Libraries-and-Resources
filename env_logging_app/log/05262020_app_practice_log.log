@@ -1,0 +1,444 @@
+2020-05-26 14:42:32,853 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:42:35,565 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:42:35,565 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:42:35,565 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 43, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:42:35,565 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:42:35,589 - __main__ - INFO - env_app.py script complete.
+2020-05-26 14:44:16,620 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:44:19,293 - __main__ - INFO - App initiated.
+2020-05-26 14:44:19,293 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:44:19,293 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:44:19,293 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_1.py", line 43, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:44:19,293 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:44:19,293 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:44:19,294 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:44:19,294 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 43, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:44:19,294 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:44:19,294 - __main__ - INFO - App completed.
+2020-05-26 14:44:19,317 - __main__ - INFO - env_app.py script complete.
+2020-05-26 14:51:04,415 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:51:07,101 - __main__ - INFO - App initiated.
+2020-05-26 14:51:07,101 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:51:07,101 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:51:07,101 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_1.py", line 54, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:51:07,102 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:51:07,102 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:51:07,102 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:51:07,102 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 54, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:51:07,102 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:51:07,102 - __main__ - INFO - App completed.
+2020-05-26 14:51:07,128 - __main__ - INFO - env_app.py script complete.
+2020-05-26 14:52:35,943 - __main__ - INFO - --------------------------------------------
+2020-05-26 14:52:35,943 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:52:38,595 - __main__ - INFO - App initiated.
+2020-05-26 14:52:38,595 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:52:38,595 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:52:38,595 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_1.py", line 54, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:52:38,596 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:52:38,596 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:52:38,596 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:52:38,596 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 54, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:52:38,596 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:52:38,596 - __main__ - INFO - App completed.
+2020-05-26 14:52:38,619 - __main__ - INFO - env_app.py script complete.
+2020-05-26 14:52:38,619 - __main__ - INFO - --------------------------------------------
+2020-05-26 14:53:19,628 - __main__ - INFO - --------------------------------------------
+2020-05-26 14:53:19,628 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:53:22,401 - __main__ - INFO - App initiated.
+2020-05-26 14:53:22,401 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:53:22,401 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:53:22,401 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_1.py", line 54, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:53:22,402 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:53:22,402 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:53:22,402 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:53:22,402 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 54, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:53:22,402 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:53:22,402 - __main__ - INFO - App completed.
+2020-05-26 14:53:22,427 - __main__ - INFO - env_app.py script complete.
+2020-05-26 14:53:22,427 - __main__ - INFO - --------------------------------------------
+2020-05-26 14:54:07,018 - __main__ - INFO - ---------------------BEGIN-----------------------
+2020-05-26 14:54:07,018 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:54:09,815 - __main__ - INFO - App initiated.
+2020-05-26 14:54:09,815 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:54:09,815 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:54:09,815 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_1.py", line 54, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:54:09,816 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:54:09,816 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:54:09,816 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:54:09,816 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 54, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:54:09,817 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:54:09,817 - __main__ - INFO - App completed.
+2020-05-26 14:54:09,842 - __main__ - INFO - env_app.py script complete.
+2020-05-26 14:54:09,842 - __main__ - INFO - ----------------------END------------------------
+2020-05-26 14:55:23,712 - __main__ - INFO - __________________________BEGIN__________________________
+2020-05-26 14:55:23,712 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:55:26,372 - __main__ - INFO - App initiated.
+2020-05-26 14:55:26,372 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:55:26,372 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:55:26,372 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_1.py", line 54, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:55:26,373 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:55:26,373 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:55:26,373 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:55:26,373 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 54, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:55:26,373 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:55:26,374 - __main__ - INFO - App completed.
+2020-05-26 14:55:26,397 - __main__ - INFO - env_app.py script complete.
+2020-05-26 14:55:26,397 - __main__ - INFO - __________________________END__________________________
+2020-05-26 16:04:44,590 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:04:44,590 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:04:44,621 - __main__ - INFO - App initiated.
+2020-05-26 16:04:44,622 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:04:44,622 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:04:44,622 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:04:44,622 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:04:44,622 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:04:44,622 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:04:44,622 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:04:44,622 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:04:44,622 - __main__ - INFO - App completed.
+2020-05-26 16:04:44,626 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:04:44,626 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:08:45,250 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:08:45,250 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:08:45,281 - __main__ - INFO - App initiated.
+2020-05-26 16:08:45,281 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:08:45,281 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:08:45,281 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:08:45,281 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:08:45,281 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:08:45,282 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:08:45,282 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:08:45,282 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:08:45,282 - __main__ - INFO - App completed.
+2020-05-26 16:08:45,286 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:08:45,286 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:21:27,243 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:21:27,243 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:21:27,275 - __main__ - INFO - App initiated.
+2020-05-26 16:21:27,275 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:21:27,275 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:21:27,275 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:21:27,276 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:21:27,276 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:21:27,276 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:21:27,276 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:21:27,276 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:21:27,276 - __main__ - INFO - App completed.
+2020-05-26 16:21:27,280 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:21:27,280 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:21:54,940 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:21:54,940 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:21:54,955 - __main__ - INFO - App initiated.
+2020-05-26 16:21:54,955 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:21:54,955 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:21:54,955 - module_1 - ERROR - global name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: global name 'pd' is not defined
+2020-05-26 16:21:54,956 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:21:54,956 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:21:54,956 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:21:54,956 - module_2 - ERROR - global name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: global name 'c' is not defined
+2020-05-26 16:21:54,956 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:21:54,956 - __main__ - INFO - App completed.
+2020-05-26 16:21:54,959 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:21:54,959 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:22:15,826 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:22:15,826 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:22:15,859 - __main__ - INFO - App initiated.
+2020-05-26 16:22:15,859 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:22:15,859 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:22:15,859 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:22:15,860 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:22:15,860 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:22:15,860 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:22:15,860 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:22:15,860 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:22:15,860 - __main__ - INFO - App completed.
+2020-05-26 16:22:15,865 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:22:15,865 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:23:10,202 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:23:10,202 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:23:10,240 - __main__ - INFO - App initiated.
+2020-05-26 16:23:10,240 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:23:10,240 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:23:10,240 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:23:10,241 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:23:10,241 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:23:10,241 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:23:10,241 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:23:10,241 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:23:10,241 - __main__ - INFO - App completed.
+2020-05-26 16:23:10,246 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:23:10,246 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:23:58,279 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:23:58,279 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:23:58,322 - __main__ - INFO - App initiated.
+2020-05-26 16:23:58,322 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:23:58,322 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:23:58,322 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:23:58,323 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:23:58,323 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:23:58,323 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:23:58,323 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:23:58,323 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:23:58,323 - __main__ - INFO - App completed.
+2020-05-26 16:23:58,328 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:23:58,328 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:25:15,524 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:25:15,524 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:25:15,552 - __main__ - INFO - App initiated.
+2020-05-26 16:25:15,552 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:25:15,552 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:25:15,552 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:25:15,552 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:25:15,552 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:25:15,552 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:25:15,552 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:25:15,552 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:25:15,552 - __main__ - INFO - App completed.
+2020-05-26 16:25:15,556 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:25:15,556 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:27:32,934 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:27:32,934 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:27:32,935 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:27:32,936 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:27:32,968 - __main__ - INFO - App initiated.
+2020-05-26 16:27:32,968 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:27:32,968 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:27:32,968 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:27:32,968 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:27:32,968 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:27:32,968 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:27:32,968 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:27:32,969 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:27:32,969 - __main__ - INFO - App completed.
+2020-05-26 16:28:09,413 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:28:09,413 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:28:09,444 - __main__ - INFO - App initiated.
+2020-05-26 16:28:09,444 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:28:09,444 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:28:09,444 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:28:09,444 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:28:09,444 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:28:09,444 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:28:09,444 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:28:09,445 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:28:09,445 - __main__ - INFO - App completed.
+2020-05-26 16:28:09,598 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:28:09,598 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:28:56,065 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:28:56,065 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:28:56,111 - __main__ - INFO - App initiated.
+2020-05-26 16:28:56,111 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:28:56,111 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:28:56,111 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:28:56,112 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:28:56,112 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:28:56,112 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:28:56,112 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:28:56,112 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:28:56,112 - __main__ - INFO - App completed.
+2020-05-26 16:28:56,222 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:28:56,222 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:31:06,598 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:31:06,598 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:31:06,599 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:31:06,599 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:31:06,629 - __main__ - INFO - App initiated.
+2020-05-26 16:31:06,629 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:31:06,629 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:31:06,629 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:31:06,630 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:31:06,630 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:31:06,630 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:31:06,630 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:31:06,630 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:31:06,630 - __main__ - INFO - App completed.
+2020-05-26 16:31:55,275 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:31:55,276 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:31:55,277 - __main__ - INFO - env_app.py script complete.
+2020-05-26 16:31:55,277 - __main__ - INFO - ----------------------------END----------------------------
+2020-05-26 16:31:55,319 - __main__ - INFO - App initiated.
+2020-05-26 16:31:55,319 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:31:55,319 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:31:55,319 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:31:55,320 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:31:55,320 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:31:55,320 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:31:55,320 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:31:55,320 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:31:55,320 - __main__ - INFO - App completed.
+2020-05-26 16:40:55,619 - __main__ - INFO - ---------------------------BEGIN---------------------------
+2020-05-26 16:40:55,619 - __main__ - INFO - Initiated env_app.py
+2020-05-26 16:40:55,661 - __main__ - INFO - App initiated.
+2020-05-26 16:40:55,661 - module_1 - INFO - Message one logged successfully.
+2020-05-26 16:40:55,661 - module_1 - INFO - Message two logged successfully.
+2020-05-26 16:40:55,661 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_1.py", line 55, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 16:40:55,662 - module_1 - INFO - Message three logged successfully.
+2020-05-26 16:40:55,662 - module_2 - INFO - Message four logged successfully.
+2020-05-26 16:40:55,662 - module_2 - INFO - Message five logged successfully.
+2020-05-26 16:40:55,662 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "/home/chucktucker/Documents/Libraries-and-Resources/env_logging_app/bin/module_2.py", line 55, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 16:40:55,662 - module_2 - INFO - Message six logged successfully.
+2020-05-26 16:40:55,662 - __main__ - INFO - App completed.
