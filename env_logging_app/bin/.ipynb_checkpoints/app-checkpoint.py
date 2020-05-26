@@ -48,6 +48,8 @@ def main():
     # log the end of the app
     logger.info('App completed.')
     
+    return
+    
 # call the main function if this is the primary app
 if __name__ == '__main__':
     main()

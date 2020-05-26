@@ -57,7 +57,7 @@ def main():
     venv = ''.join(['python3 -m venv ', working_directory, '/env'])
     pip_install = 'python3 -m pip install --upgrade pip'
     activ = ''.join(['. ', working_directory, '/env/bin/activate'])
-    #stop = 'jobs'
+    # stop = 'stty sane'
     
     # all environments
     req = 'pip install -r env/requirements.txt'
@@ -82,7 +82,8 @@ def main():
     logger.info('env_app.py script complete.')
     logger.info('----------------------------END----------------------------')
     
-    
+    # will have to hit ctrl+c in linux after executing
+    # currently cannot find a way around this
     
 if __name__ == '__main__':
     main()
