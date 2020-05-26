@@ -22,7 +22,7 @@ import logging
 # create the logger in each module using the standard format
 # nest logging statements within functions of modules
 # see app.py, module_1.py, and module_2.py for examples
-def create_file_logger(log_file, module_name, level):
+def create_file_logger(log_file, module_name, level='DEGUB'):
     '''This function creates a file logger to use for an app. 
     
     Dependencies:

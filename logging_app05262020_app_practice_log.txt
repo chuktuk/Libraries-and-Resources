@@ -1,0 +1,38 @@
+2020-05-26 14:39:20,838 - __main__ - INFO - App initiated.
+2020-05-26 14:39:20,838 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:39:20,838 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:39:20,838 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_1.py", line 43, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:39:20,839 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:39:20,839 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:39:20,839 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:39:20,839 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 43, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:39:20,839 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:39:20,839 - __main__ - INFO - App completed.
+2020-05-26 14:40:06,452 - __main__ - INFO - App initiated.
+2020-05-26 14:40:06,452 - module_1 - INFO - Message one logged successfully.
+2020-05-26 14:40:06,453 - module_1 - INFO - Message two logged successfully.
+2020-05-26 14:40:06,453 - module_1 - ERROR - name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\libraries-and-resources\logging_app\bin\module_1.py", line 43, in log_error_message_one
+    pd.read_csv('no_module_named_pd.csv')
+NameError: name 'pd' is not defined
+2020-05-26 14:40:06,453 - module_1 - INFO - Message three logged successfully.
+2020-05-26 14:40:06,453 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:40:06,453 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:40:06,453 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\libraries-and-resources\logging_app\bin\module_2.py", line 43, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:40:06,454 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:40:06,454 - __main__ - INFO - App completed.
+2020-05-26 14:42:35,564 - __main__ - INFO - App initiated.
+2020-05-26 14:42:35,565 - __main__ - INFO - App completed.

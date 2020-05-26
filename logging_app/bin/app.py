@@ -14,11 +14,19 @@ import module_1 as m1
 import module_2 as m2
 import my_logger
 
-# set file_name and path for log file
-log_file = ''.join(['../log/', dt.now().strftime('%m%d%Y'), '_app_practice_log.txt'])
-
 def main():
     '''Main function.'''
+    
+    
+    
+    # set the working directory
+    working_directory = 'C:/Users/CRTUCKER/Documents/Libraries-and-Resources/logging_app'
+    
+    
+    
+    
+    # set file_name and path for log file
+    log_file = ''.join([working_directory, '/log/', dt.now().strftime('%m%d%Y'), '_app_practice_log.log'])
     
     # create a logger object
     logger = my_logger.create_file_logger(log_file, __name__, 'DEBUG')

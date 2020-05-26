@@ -1,0 +1,10 @@
+2020-05-26 14:42:32,853 - __main__ - INFO - Initiated env_app.py
+2020-05-26 14:42:35,565 - module_2 - INFO - Message four logged successfully.
+2020-05-26 14:42:35,565 - module_2 - INFO - Message five logged successfully.
+2020-05-26 14:42:35,565 - module_2 - ERROR - name 'c' is not defined
+Traceback (most recent call last):
+  File "C:\Users\CRTUCKER\Documents\Libraries-and-Resources\logging_app\bin\module_2.py", line 43, in log_error_message_two
+    r = c
+NameError: name 'c' is not defined
+2020-05-26 14:42:35,565 - module_2 - INFO - Message six logged successfully.
+2020-05-26 14:42:35,589 - __main__ - INFO - env_app.py script complete.

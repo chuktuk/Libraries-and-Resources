@@ -11,8 +11,19 @@ from datetime import datetime as dt
 # import logging module
 import my_logger
 
-# set file path for logger
-log_file = ''.join(['../log/', dt.now().strftime('%m%d%Y'), '_app_practice_log.txt'])
+
+
+
+
+# set the working directory
+working_directory = 'C:/Users/CRTUCKER/Documents/Libraries-and-Resources/logging_app'
+
+    
+    
+    
+    
+# set file_name and path for log file
+log_file = ''.join([working_directory, '/log/', dt.now().strftime('%m%d%Y'), '_app_practice_log.log'])
 
 # create your logger to use with this module
 logger = my_logger.create_file_logger(log_file, __name__, 'DEBUG')
