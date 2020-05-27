@@ -7,7 +7,6 @@ additional log entries.
 
 import os
 import logging
-import sys
 from datetime import datetime as dt
 
 import my_logger
