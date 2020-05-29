@@ -40,8 +40,7 @@ def main():
     try:
         os.chdir(working_directory)
     except Exception as e:
-        message = ' '.join(['FATAL ERROR:', e])
-        logger.exception(message)
+        logger.critical(e)
         
     # set commands
     
@@ -74,12 +73,12 @@ def main():
     try:
         os.system(commands)
     except Exception as e:
-        message = ' '.join(['FATAL ERROR:', e])
-        logger.exception(message)
+        logger.critical(e)
     
     # log completion
     logger.info('env_app.py script complete.')
     logger.info('----------------------------END----------------------------')
+    my_logger.shutdown_logging()
     
     # will have to hit ctrl+c in linux after executing
     # currently cannot find a way around this

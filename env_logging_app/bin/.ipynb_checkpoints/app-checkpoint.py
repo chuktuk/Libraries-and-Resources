@@ -48,6 +48,8 @@ def main():
     # log the end of the app
     logger.info('App completed.')
     
+    my_logger.shutdown_logging()
+    
     return
     
 # call the main function if this is the primary app

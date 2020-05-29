@@ -97,3 +97,12 @@ def create_file_logger(log_file, module_name, level='DEGUB'):
     
     # return the logger
     return logger
+
+def shutdown_logging():
+    '''This function closes the logger and ends logging.'''
+    
+    logger = logging.getLogger()
+    
+    # shut it down
+    logger.removeHandler('fh')
+    logging.shutdown()
