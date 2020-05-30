@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-'''This is a proof of concept to run app.py file using a virtual environment.
+'''This env_app.py was created to test the ability to automate a script
+to run in a virtual environment. The methods tested here would run, but
+calling a script using os.system() from within another script caused
+issues in Linux exiting the python script and returning the terminal.
+
+I decided the best procedure is to set up an environment (either base or other)
+with all necessary requirements at the beginning of an app, and ensure the
+proper environment is activated when doing setup and executing commands in a script.
 
 Running this script should product the same results as running app.py with two
 additional log entries.
@@ -45,21 +52,21 @@ def main():
     # set commands
     
     # windows venv
-    wvenv = ''.join(['py -m venv ', working_directory, '/env'])
+    #wvenv = ''.join(['py -m venv ', working_directory, '/env'])
     wpip_install = 'py -m pip install --upgrade pip'
-    wactiv = ''.join([working_directory, '/env/Scripts/activate'])
+    #wactiv = ''.join([working_directory, '/env/Scripts/activate'])
 
 
     
     # linux venv
-    venv = ''.join(['python3 -m venv ', working_directory, '/env'])
+    #venv = ''.join(['python3 -m venv ', working_directory, '/env'])
     pip_install = 'python3 -m pip install --upgrade pip'
-    activ = ''.join(['. ', working_directory, '/env/bin/activate'])
+    #activ = ''.join(['. ', working_directory, '/env/bin/activate'])
     # stop = 'stty sane'
     
     # all environments
     req = 'pip install -r env/requirements.txt'
-    script = ''.join(['python ', working_directory, '/bin/app.py'])
+    # script = ''.join(['python ', working_directory, '/bin/app.py'])
     
     # windows commands
     # commands = ' & '.join([wvenv, wactiv, wpip_install, req, script])
@@ -67,9 +74,17 @@ def main():
     # linux commands
     # currently have to do ctrl + c in terminal to kill the process
     # need to find a better way to do this in linux
-    commands = ' & '.join([venv, activ, pip_install, req, script])
+    # best not to call an app from within an app
     
-    # run the commands
+    '''either manually set up a virtual environment to run the app and run it
+    or add requirements to a specific environment (base or other)
+    and make sure the appropriate environment is activated before calling
+    an automated script'''
+    
+    #commands = ' & '.join([venv, activ, pip_install, req, script])
+    commands = ' & '.join([pip_install, req])
+    
+    # run the commands to install requirements
     try:
         os.system(commands)
     except Exception as e:

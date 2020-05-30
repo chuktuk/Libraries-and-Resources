@@ -49,9 +49,7 @@ def main():
     logger.info('App completed.')
     
     my_logger.shutdown_logging()
-    
-    return
-    
+        
 # call the main function if this is the primary app
 if __name__ == '__main__':
     main()
