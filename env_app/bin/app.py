@@ -2,7 +2,7 @@
 '''This is a proof of concept to setup an environment for an app.
 
 Prior to the first execution of this app, pyglet was not installed.
-After executing this app on linux, piglet 1.5.0 was installed, 
+After executing this app on linux, pyglet 1.5.0 was installed, 
 and pyglet imported without errors.
 
 Can use this type of command to set the environment for a remote app
