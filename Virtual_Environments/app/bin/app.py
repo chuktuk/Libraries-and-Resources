@@ -12,14 +12,17 @@ and activate.bat depending on the system or where the execute_script
 is run (terminal vs. powershell prompt)).
 
 I have also noticed nuances with needing deactivate or not at the end of
-the .bat script.
+the .bat script. If running from conda prompt, yes needed. 
 
 To use this:
 
 Windows: 
-1. you need to edit the path\to\app in the bin/execute_script.bat file
-2. you need to edit the working_directory in env/setup_venv.py file
-3. run the execute_script2.bat file from the cmd prompt.
+1. you need to edit the path\to\app in the appropriate .bat file
+2. you need to edit the working_directory in env/setup_venv.py file (if using execute_script2.bat)
+3. uses
+    - execute_script.bat will work in conda/powershell type environments, though nuances with .bat vs .ps1
+    - setup_venv_run_script.bat is the best option, and works from cmd prompt starting in any directory
+        - just set the path\to\app in the .bat file first
 
 Linux:
 1. you need to edit the path\to\app in the bin/execute_script.sh file
