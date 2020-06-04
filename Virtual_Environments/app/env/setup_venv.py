@@ -2,7 +2,8 @@
 
 '''Docstrings. Update working_directory.
 
-This file has now become redundant.
+Use this file with execute_script2.bat in windows.
+Do not need this file with linux, just run execute_script.sh.
 
 '''
 
@@ -11,7 +12,7 @@ import os
    
 def main():
 
-    working_directory = '/home/chucktucker/Documents/Libraries-and-Resources/Virtual_Environments/app'
+    working_directory = 'D:/ChuckTucker/Documents/CompSci/Libraries-and-Resources/Virtual_Environments/app'
     
     
     venv_path = ''.join([working_directory, '/env'])
@@ -29,10 +30,10 @@ def main():
     lpip_install = 'python3 -m pip install --upgrade pip'
    
     # run windows commands
-    # commands = ' & '.join([venv, activ, pip_install, req])
+    commands = ' & '.join([venv, activ, pip_install, req])
     
     # run linux commands
-    commands = ' && '.join([lvenv, lactiv, lpip_install, req])
+    # commands = ' && '.join([lvenv, lactiv, lpip_install, req])
     
     os.system(commands)
 
