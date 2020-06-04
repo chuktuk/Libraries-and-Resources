@@ -3,8 +3,9 @@
 pyglet is not installed in my base environment but will be setup
 in the virtual environment.
 
-I just realized that all of setup_venv.py can be now executed in the
-.bat or .sh script. Moving there simplifies this.
+I realized that all of setup_venv.py can be executed in the
+.bat or .sh script. Moving there simplifies this. setup_venv.py is
+redundant at this point and not needed.
 
 To use this:
 
