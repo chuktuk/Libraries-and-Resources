@@ -13,7 +13,7 @@ activ=$env_path'/bin/activate'
 req=$env_path'/requirements.txt'
 app=$app_path'/bin/app.py'
 
-python3 -m venv $env_path
+python3 -m venv $env_path &&
 . $activ &&
 python3 -m pip install --upgrade pip &&
 pip install -r $req &&
