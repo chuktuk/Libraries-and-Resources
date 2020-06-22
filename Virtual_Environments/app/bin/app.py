@@ -25,7 +25,8 @@ Windows:
         - just set the path\to\app in the .bat file first
 
 Linux:
-1. you need to edit the path\to\app in the bin/execute_script.sh file
+1. you need to edit the path/to/app in the bin/execute_script.sh file
+2. can test using variables now
 3. run the execute_script.bat file from the terminal.
 
 old execute_script.py code

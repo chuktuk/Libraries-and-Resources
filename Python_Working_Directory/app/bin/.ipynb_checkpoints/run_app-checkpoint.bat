@@ -1,5 +1,5 @@
 SETLOCAL
-set full_path=%~dpo
+set full_path=%~dp0
 set app_path=%full_path:\bin\=%
 set env_path=%app_path%\env
 set activ=%env_path%\Scripts\activate.bat
