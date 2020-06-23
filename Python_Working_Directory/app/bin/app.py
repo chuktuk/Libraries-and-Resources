@@ -9,5 +9,5 @@ import pyglet
 # this command gets the location of app.py, and sets a variable to the app folder
 app_dir = os.path.dirname(__file__).replace('\\', '/').replace('/bin', '')
 
-print('File Location: ', app_dir)
+print('App Location: ', app_dir)
 print('Virtual Environment setup. Pyglet imported successfully.')
