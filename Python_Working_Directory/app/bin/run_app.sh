@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# testing with pwd command to get directory
+# the full_path line will always return the location of this .sh file
 
-#app_path='/home/chucktucker/Documents/Libraries-and-Resources/Virtual_Environments/app'
-full_path=$(PWD)
+#full_path=$(pwd) # this pwd command will return the terminal's dir, not the app dir
+full_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 app_path=${full_path//'/bin'/''}
 env_path=$app_path'/env'
 activ=$env_path'/bin/activate'
