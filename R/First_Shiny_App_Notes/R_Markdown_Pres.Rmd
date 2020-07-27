@@ -219,7 +219,7 @@ shinyApp(
   ),
   server = function(input, output){
     
-    output$histogram <- renderUI({   # need to render the UI object on the server
+    output$xmin_slider <- renderUI({   # need to render the UI object on the server
       
       if(is.null(input$mean)){  # this statement avoids error messages when initially loading the app
         return()                # good practice to do this for renderUI objects
