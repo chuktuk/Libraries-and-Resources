@@ -9,7 +9,9 @@ https://dash.plotly.com/dash-core-components/tabs
 https://dash-bootstrap-components.opensource.faculty.ai/docs/components/card/
 https://dash.plotly.com/datatable
 
-
+Current practice is to save all app functions in a main file, then save
+all data query functions in a query.py file. Import those modules to
+this app.py file.
 '''
 
 import dash
@@ -24,6 +26,9 @@ from dash.dependencies import Input, Output, State
 
 # additional imports here
 import pandas as pd
+
+# import custom modules for the app here
+import main_functions as mf
 
 
 # read in sample data
