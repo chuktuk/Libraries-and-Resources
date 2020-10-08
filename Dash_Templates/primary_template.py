@@ -35,10 +35,9 @@ import pandas as pd
 
 
 # read in sample data
-df = pd.read_csv('gap.csv')
-df2 = pd.read_csv('states.csv')
+#df = pd.read_csv('gap.csv')
+#df2 = pd.read_csv('states.csv')
 df3 = px.data.gapminder()
-#df3.columns = ['idx', 'ctry', 'cont', 'pop', 'lifeexp', 'gpdpercap']
 
 
 # set additional css styling
