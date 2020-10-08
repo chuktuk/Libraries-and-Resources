@@ -154,8 +154,31 @@ sidebar = html.Div(
 
 
 
+# define first row card deck and cards
+
+# define the first card
+# can also include images using dbc.CardImg(src='url', top=True), but keep separate from CardBody
+# can use dbc.CardHeader('Header Title') to give a header separated with a line
+first_card = dbc.CardBody(
+    [
+        html.H5('First Card Title', className='card-title'),
+        # can use html.P or any other html components here
+        html.Div(id='card1_content'),
+    ]
+)
 
 
+# define the second card
+# if using multiple dbc options within a card, make it a list
+second_card = [
+    dbc.CardHeader('This card has a header'),
+    dbc.CardBody(
+        [
+            html.H5('This card has warning text', className='card-title'),
+            html.P('Some card text, can use f strings here', className='card-text'),
+        ]
+    ),
+]
 
 # define a card to be used in a bit
 third_card = [
@@ -185,34 +208,10 @@ fourth_card = [
 fr_card_deck = dbc.CardDeck(
     [
         # first card
-        dbc.Card(
-            
-            # can also include images using dbc.CardImg(src='url', top=True), but keep separate from CardBody
-            # can use dbc.CardHeader('Header Title') to give a header separated with a line
-                
-            dbc.CardBody(
-                [
-                    html.H5('First Card Title', className='card-title'),
-                    # can use html.P or any other html components here
-                    html.Div(id='card1_content'),
-                ]
-            )
-        ),
+        dbc.Card(first_card),
         
         # second card
-        dbc.Card(
-            
-            # if using multiple dbc options within a card, make it a list
-            [
-                dbc.CardHeader('This card has a header'),
-                dbc.CardBody(
-                    [
-                        html.H5('This card has warning text', className='card-title'),
-                        html.P('Some card text, can use f strings here', className='card-text'),
-                    ]
-                ),
-            ], color='warning', inverse=True
-        ),
+        dbc.Card(second_card, color='warning', inverse=True),
         
         # third card that uses a variable rather than explicitly setting
         # this also sets some additional card settings, inverse=True flips the text colors for dark backgrounds
@@ -223,6 +222,9 @@ fr_card_deck = dbc.CardDeck(
         dbc.Card(fourth_card, color='info', inverse=True)
     ]
 )
+
+
+
 
 # define the app content here
 # using cards for the first row where values can be displayed
