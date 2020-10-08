@@ -9,9 +9,7 @@ https://dash.plotly.com/dash-core-components/tabs
 https://dash-bootstrap-components.opensource.faculty.ai/docs/components/card/
 https://dash.plotly.com/datatable
 
-Current practice is to save all app functions in a main file, then save
-all data query functions in a query.py file. Import those modules to
-this app.py file.
+
 '''
 
 import dash
@@ -24,18 +22,23 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
+import plotly.express as px
+import plotly.graph_objects as go
+
 # additional imports here
 import pandas as pd
 
-# import custom modules for the app here
-import main_functions as mf
+# import custom modules
+# customary app design includes putting all functions in main.py and all data queries in query.py
+# import main as mn
+# import query as qry
 
 
 # read in sample data
 df = pd.read_csv('gap.csv')
 df2 = pd.read_csv('states.csv')
-df3 = pd.read_csv('scatter.csv')
-df3.columns = ['idx', 'ctry', 'cont', 'pop', 'lifeexp', 'gpdpercap']
+df3 = px.data.gapminder()
+#df3.columns = ['idx', 'ctry', 'cont', 'pop', 'lifeexp', 'gpdpercap']
 
 
 # set additional css styling
@@ -152,10 +155,6 @@ sidebar = html.Div(
 
 
 
-
-
-# define first row card deck and cards
-
 # define the first card
 # can also include images using dbc.CardImg(src='url', top=True), but keep separate from CardBody
 # can use dbc.CardHeader('Header Title') to give a header separated with a line
@@ -223,9 +222,6 @@ fr_card_deck = dbc.CardDeck(
     ]
 )
 
-
-
-
 # define the app content here
 # using cards for the first row where values can be displayed
 content_first_row = dbc.Row([
@@ -272,8 +268,11 @@ content_first_row = dbc.Row([
 
 
 
-
-
+data_canada = df3[df3.country == 'Canada']
+fig1 = px.bar(data_canada, x='year', y='pop', hover_data=['lifeExp', 'gdpPercap'], color='lifeExp',
+    labels={'pop': 'population of Canada'}
+)
+fig1.update_layout(title='Canada Population Over Time')
 
 
 # design a shiny style tabbed layout
@@ -287,7 +286,7 @@ figure1 = (
                 dcc.Tab(
                     id='plot',
                     label='Plot',
-                    children=[dcc.Graph(id='metrics_graph1')]
+                    children=[dcc.Graph(id='metrics_graph1', figure=fig1)]
                 ),
                 dcc.Tab(
                     id='figure1_table',
@@ -297,8 +296,8 @@ figure1 = (
                         # can assign DataTable to a var and use that here
                         dash_table.DataTable(
                         id='data_table2',
-                        columns = [{'name': i, 'id': i} for i in df.columns],
-                        data=df.to_dict('records'),
+                        columns = [{'name': i, 'id': i} for i in data_canada.columns],
+                        data=data_canada.to_dict('records'),
                         
                         # these settings work well for a page with a navbar on the side, and two cols of plots
                         style_table={'overflowX': 'auto'},
@@ -313,7 +312,11 @@ figure1 = (
     )
 )
 
-
+data_usa = df3[df3.country == 'United States']
+fig2 = px.bar(data_usa, x='year', y='pop', hover_data=['lifeExp', 'gdpPercap'], color='lifeExp',
+    labels={'pop': 'population of USA'}
+)
+fig2.update_layout(title='US Population Over Time')
 
 figure2 = (
     dbc.Col(
@@ -323,7 +326,7 @@ figure2 = (
                 dcc.Tab(
                     id='plot2',
                     label='Plot',
-                    children=[dcc.Graph(id='metrics_graph2')]
+                    children=[dcc.Graph(id='metrics_graph2', figure=fig2)]
                 ),
                 dcc.Tab(
                     id='figure2_table',
@@ -333,8 +336,8 @@ figure2 = (
                         # could use a variable and assign the DataTable to that var
                         dash_table.DataTable(
                         id='data_table3',
-                        columns = [{'name': i, 'id': i} for i in df2.columns],
-                        data=df2.to_dict('records'),
+                        columns = [{'name': i, 'id': i} for i in data_usa.columns],
+                        data=data_usa.to_dict('records'),
                         
                         # these settings work well for a page with a navbar on the side, and two cols of plots, I think I like these settings better
                         style_table={'overflowX': 'auto'},
@@ -351,6 +354,9 @@ figure2 = (
 )
 
 
+fig3 = px.scatter(df3.query('year==2007'), x='gdpPercap', y='lifeExp',
+    size='pop', color='continent', hover_name='country', log_x=True, size_max=60
+)
 
 # set the tabbed layout for a full width figure
 figure3 = [
@@ -361,7 +367,7 @@ figure3 = [
                 dcc.Tab(
                     id='plot3',
                     label='Plot',
-                    children=[dcc.Graph(id='metrics_graph3')]
+                    children=[dcc.Graph(id='metrics_graph3', figure=fig3)]
                 ),
                 dcc.Tab(
                     id='figure3_table',
