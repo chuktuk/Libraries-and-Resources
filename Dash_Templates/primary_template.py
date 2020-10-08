@@ -3,6 +3,8 @@
 
 '''This is a primary layout for dash apps.
 
+**************         THE PRIMARY DASH FILE SHOULD BE NAMED app.py      ****************
+
 References:
 
 https://dash.plotly.com/dash-core-components/tabs
@@ -419,8 +421,8 @@ metrics = dcc.Tab(
 # primary data table setup
 primary_data_table = dash_table.DataTable(
     id='data_table',
-    columns = [{'name': i, 'id': i} for i in df.columns],
-    data=df.to_dict('records')
+    columns = [{'name': i, 'id': i} for i in df3.columns],
+    data=df3.to_dict('records')
 )
 
 # setup primary data table here
