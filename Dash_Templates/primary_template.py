@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''This is a primary layout for dash apps.
+"""This is a primary layout for dash apps.
 
-**************         THE PRIMARY DASH FILE SHOULD BE NAMED app.py      ****************
+#######################    THE PRIMARY DASH FILE SHOULD BE NAMED app.py   ######################
 
 References:
 
@@ -12,7 +12,9 @@ https://dash-bootstrap-components.opensource.faculty.ai/docs/components/card/
 https://dash.plotly.com/datatable
 
 
-'''
+"""
+
+################################################### IMPORTS ##########################################################
 
 import dash
 import dash_table
@@ -36,10 +38,7 @@ import pandas as pd
 # import query as qry
 
 
-# read in sample data
-#df = pd.read_csv('gap.csv')
-#df2 = pd.read_csv('states.csv')
-df3 = px.data.gapminder()
+############################################ CUSTOM CSS STYLES ##################################################
 
 
 # set additional css styling
@@ -72,21 +71,37 @@ CARD_TEXT_STYLE = {
     'color': '#0074D9'
 }
 
-# initialize the app
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+################################################ DATA QUERIES ################################################
+
+# read in sample data
+# df = pd.read_csv('gap.csv')
+# df2 = pd.read_csv('states.csv')
+df3 = px.data.gapminder()
+df3['year'] = df3['year'].astype('int')
+
+############################################# DATA WRANGLING ##########################################
 
 
+# extract Canada data
+data_canada = df3[df3.country == 'Canada']
 
+# extract US data
+data_usa = df3[df3.country == 'United States']
 
+############################################# LISTS ######################################################
 
-# define the controls that are needed (user inputs)
-# each control gets a title and and object
+years = sorted(list(df3.year.unique()))
+
+########################################### UI CONTROLS AND INPUTS #########################################
+
+################ 1. Sidebar Controls and Titles ###################
+
 
 # control 1
 control_one_title = html.P('Control 1 Display Name', style={'textAlign': 'center'})
-# using a dropdown for exmaple here
+# using a dropdown for example here
 control_one_object = dcc.Dropdown(
-    id='dropdown', 
+    id='dropdown',
     options=[{
         'label': 'Value One',
         'value': 'Value1'
@@ -94,54 +109,67 @@ control_one_object = dcc.Dropdown(
         'label': 'Value Two',
         'value': 'Value2'
     }],
-    value='Value1', # default value
-    #multi=True
+    value='Value1',  # default value
+    # multi=True
 )
 
 # control 2
-control_two_title = html.P('Control 2 Items nested in dbc.Card', 
-    style={'textAlign': 'center'}
-)
+control_two_title = html.P('Control 2 Items nested in dbc.Card',
+                           style={'textAlign': 'center'}
+                           )
 control_two_object = dbc.Card([dbc.RadioItems(
     id='radio_items',
     options=[{
-    'label': 'Value One',
-    'value': 'value1'
+        'label': 'Value One',
+        'value': 'value1'
     }, {
-    'label': 'Value Two',
-    'value': 'value2'
+        'label': 'Value Two',
+        'value': 'value2'
     }],
-    value='value1', # default selected value
+    value='value1',  # default selected value
     style={'margin': 'auto'}
 )])
 
+# submit button
+submit_button = dbc.Button(
+    id='submit_button',
+    n_clicks=0,
+    children='Submit',
+    color='primary',
+    block=True
+)
+
+################# 2. Figure Controls #####################
+
+# year slider for gapminder plot
+year_slider = dcc.Slider(
+    id='year-slider',
+    min=min(years),
+    max=max(years),
+    value=max(years),
+    marks={str(i): str(i) for i in years},
+    step=None
+)
+
+########### 3. Define Form Groups if Needed #########
 
 
-# enter the controls into this template
 controls = dbc.FormGroup(
     [
         control_one_title,
         control_one_object,
         html.Br(),
-        
-        
+
         control_two_title,
         control_two_object,
         html.Br(),
-        
-        # submit button
-        dbc.Button(
-            id='submit_button',
-            n_clicks=0,
-            children='Submit',
-            color='primary',
-            block=True
-        ),
-        
+
+        submit_button,
+
     ]
 )
 
-
+################################################ SIDEBAR ###############################################
 
 # define the sidebar content
 sidebar = html.Div(
@@ -153,8 +181,9 @@ sidebar = html.Div(
     style=SIDEBAR_STYLE,
 )
 
+########################################## DASHBOARD CONTENT #########################################
 
-
+########################### 1. Cards and Card Decks ###############################
 
 # define the first card
 # can also include images using dbc.CardImg(src='url', top=True), but keep separate from CardBody
@@ -167,15 +196,14 @@ first_card = dbc.CardBody(
     ]
 )
 
-
 # define the second card
 # if using multiple dbc options within a card, make it a list
 second_card = [
     dbc.CardHeader('This card has a header'),
     dbc.CardBody(
         [
-            html.H5('This card has warning text', className='card-title'),
-            html.P('Some card text, can use f strings here', className='card-text'),
+            html.H5('This card has dynamic color based on the radio items selection', className='card-title'),
+            html.P(id='card2_content', className='card-text'),
         ]
     ),
 ]
@@ -183,11 +211,11 @@ second_card = [
 # define a card to be used in a bit
 third_card = [
     # set a card header
-    dbc.CardHeader('I also have a card header'),
+    dbc.CardHeader('Primary Color Card'),
     dbc.CardBody(
         [
             html.H5('Card 3 Title', className='card-title'),
-            html.P('Primary Color', className='card-text',),
+            html.P(id='card3_content', className='card-text', ),
         ]
     ),
 ]
@@ -195,11 +223,11 @@ third_card = [
 # define a card to be used in a bit
 fourth_card = [
     # set a card header
-    dbc.CardHeader('Card Header'),
+    dbc.CardHeader('Info Color'),
     dbc.CardBody(
         [
-            html.H5('Card 4 Title', className='card-title'),
-            html.P('Info Text', className='card-text',),
+            # html.H5('Card 4 Title', className='card-title'),
+            html.Div(id='card4_content', className='card-text', ),
         ]
     ),
 ]
@@ -209,228 +237,192 @@ fr_card_deck = dbc.CardDeck(
     [
         # first card
         dbc.Card(first_card),
-        
+
         # second card
-        dbc.Card(second_card, color='warning', inverse=True),
-        
+        dbc.Card(second_card, id='second_card', inverse=True),
+
         # third card that uses a variable rather than explicitly setting
         # this also sets some additional card settings, inverse=True flips the text colors for dark backgrounds
         dbc.Card(third_card, color='primary', inverse=True),
-        
+
         # colors of interest include 'primary', 'secondary', 'info', 'success', 'warning', 'danger', 'light', 'dark'
         # can use variables and check values to set the card colors
         dbc.Card(fourth_card, color='info', inverse=True)
     ]
 )
 
-# define the app content here
-# using cards for the first row where values can be displayed
-content_first_row = dbc.Row([
-    
-    fr_card_deck
-    
-])
+################################# 2. Plots ####################################
 
-# define tab content here
-#tab1 = dcc.Tab(
-#    id='tab-1',
-#    label='Tab 1',
-    
-    # tab content here
-#    children=[
-#        dbc.Row(
-#            [
-#                dbc.Col(
-#                    dcc.Graph(id='tab1_graph1'), md=4
-#                ),
-#                dbc.Col(
-#                    dcc.Graph(id='tab1_graph2'), md=6
-#                )
-#            ]
-#        )
-#    ]
-#)
-
-#tab2 = dcc.Tab(
-#    id='tab-2',
-#    label='Tab 2',
-    
-    # tab content here
-#    children=[
-#        dbc.Row(
-#            [
-#                dbc.Col(
-#                    dcc.Graph(id='tab2_graph1'), md=12
-#                )
-#            ]
-#        )
-#    ]
-#)
-
-
-
-data_canada = df3[df3.country == 'Canada']
+# figure1 plot
 fig1 = px.bar(data_canada, x='year', y='pop', hover_data=['lifeExp', 'gdpPercap'], color='lifeExp',
-    labels={'pop': 'population of Canada'}
-)
-fig1.update_layout(title='Canada Population Over Time')
+              labels={'pop': 'population of Canada'}
+              )
+fig1.update_layout(title='Canada Population (Bars) and Life Expectancy (Color) Over Time', titlefont={'size': 12})
 
-
-# design a shiny style tabbed layout
-
-# each figure in the metrics tab should be a tabbed layout wiht plot/data
-figure1 = (
-    dbc.Col(
-        dcc.Tabs(
-            id='figure1_plot',
-            children=[
-                dcc.Tab(
-                    id='plot',
-                    label='Plot',
-                    children=[dcc.Graph(id='metrics_graph1', figure=fig1)]
-                ),
-                dcc.Tab(
-                    id='figure1_table',
-                    label='Table',
-                    children=[
-                        
-                        # can assign DataTable to a var and use that here
-                        dash_table.DataTable(
-                        id='data_table2',
-                        columns = [{'name': i, 'id': i} for i in data_canada.columns],
-                        data=data_canada.to_dict('records'),
-                        
-                        # these settings work well for a page with a navbar on the side, and two cols of plots
-                        style_table={'overflowX': 'auto'},
-                        style_cell={'minWidth': '120%', 'width': '120%', 'maxWidth': '120%'},
-                        page_size=10)
-                    
-                    ]
-                )
-            ]
-        ), md=6
-    , style={'padding': '25px'}  
-    )
-)
-
-data_usa = df3[df3.country == 'United States']
+# figure2 plot
 fig2 = px.bar(data_usa, x='year', y='pop', hover_data=['lifeExp', 'gdpPercap'], color='lifeExp',
-    labels={'pop': 'population of USA'}
-)
-fig2.update_layout(title='US Population Over Time')
+              labels={'pop': 'population of USA'}
+              )
+fig2.update_layout(title='US Population (Bars) and Life Expectancy (Color) Over Time', titlefont={'size': 12})
 
-figure2 = (
-    dbc.Col(
-        dcc.Tabs(
-            id='figure2_plot',
-            children=[
-                dcc.Tab(
-                    id='plot2',
-                    label='Plot',
-                    children=[dcc.Graph(id='metrics_graph2', figure=fig2)]
-                ),
-                dcc.Tab(
-                    id='figure2_table',
-                    label='Table',
-                    children=[
-                        
-                        # could use a variable and assign the DataTable to that var
-                        dash_table.DataTable(
-                        id='data_table3',
-                        columns = [{'name': i, 'id': i} for i in data_usa.columns],
-                        data=data_usa.to_dict('records'),
-                        
-                        # these settings work well for a page with a navbar on the side, and two cols of plots, I think I like these settings better
-                        style_table={'overflowX': 'auto'},
-                        style_cell={'height': 'auto', 'minWidth': '150px', 'width': '150px', 'maxWidth': '150px', 'whiteSpace': 'normal'},
-                        page_size=10)
-                        
-                    
-                    ]
-                )
-            ]
-        ), md=6
-    , style={'padding': '25px'}  
-    )
-)
+# figure 3 plot is defined using a callback at the bottom
 
 
-fig3 = px.scatter(df3.query('year==2007'), x='gdpPercap', y='lifeExp',
-    size='pop', color='continent', hover_name='country', log_x=True, size_max=60
-)
-
-# set the tabbed layout for a full width figure
-figure3 = [
-    dbc.Col(
-        dcc.Tabs(
-            id='figure3_plot',
-            children=[
-                dcc.Tab(
-                    id='plot3',
-                    label='Plot',
-                    children=[dcc.Graph(id='metrics_graph3', figure=fig3)]
-                ),
-                dcc.Tab(
-                    id='figure3_table',
-                    label='Table',
-                    children=[
-                        dash_table.DataTable(
-                            id='data_table4',
-                            columns=[{'name': i, 'id': i} for i in df3.columns],
-                            data=df3.to_dict('records'),
-                            
-                            # these settings work well for a page with a navbar on the side, and two cols of plots, I think I like these settings better
-                            style_table={'overflowX': 'auto'},
-                            style_cell={'height': 'auto', 'minWidth': '150px', 'width': '150px', 'maxWidth': '150px', 'whiteSpace': 'normal'},
-                            page_size=10
-                        )
-                    ]
-                )
-            ]
-        )
-    )
-]
-
-# define the shiny style metrics tab
-
-# each 'figure' below consists of a tabbed layout of Plot/Table
-metrics = dcc.Tab(
-    id='metrics',
-    label='Metrics',
-    
-    # change this to a tabbed layout with Plot/Table configuration
-    children=[
-        #dbc.Row(
-        #    [
-        #        dbc.Col(
-        #            dcc.Graph(id='metrics_graph1'), md=12
-        #        )
-        #    ]
-        #),
-        dbc.Row([figure1, figure2]),
-        dbc.Row(figure3)
-            #[
-            #    dbc.Col(
-            #        dcc.Graph(id='metrics_graph2'), md=12
-            #    )
-            #]
-        #)
-    ]
-)
+############################## 3. Tables #########################################
 
 # primary data table setup
 primary_data_table = dash_table.DataTable(
     id='data_table',
-    columns = [{'name': i, 'id': i} for i in df3.columns],
-    data=df3.to_dict('records')
+    columns=[{'name': i, 'id': i} for i in df3.columns],
+    data=df3.to_dict('records'), filter_action='native', sort_action='native',
+    page_size=50
+)
+
+# figure1 table
+figure1_table = dash_table.DataTable(
+    id='data_table1',
+    columns=[{'name': i, 'id': i} for i in data_canada.columns],
+    data=data_canada.to_dict('records'),
+
+    # these settings work well for a page with a navbar on the side, and two cols of plots
+    style_table={'overflowX': 'auto'},
+    style_cell={'minWidth': '150px', 'width': '150px', 'maxWidth': '150px'},
+    page_size=10,
+    filter_action='native',
+    sort_action='native'
+)
+
+# figure2 table
+figure2_table = dash_table.DataTable(
+    id='data_table2',
+    columns=[{'name': i, 'id': i} for i in data_usa.columns],
+    data=data_usa.to_dict('records'),
+
+    style_table={'overflowX': 'auto'},
+    style_cell={'minWidth': '150px', 'width': '150px', 'maxWidth': '150px'},
+    page_size=10,
+    filter_action='native',
+    sort_action='native'
+)
+
+# figure3 table created using a callback below
+
+
+########################### 4. Other Objects ######################################
+
+
+################################################# APP LAYOUT ###############################################
+
+
+####################### 1. Assemble Tab Content Into Figures ############################
+'''Each figure is a self contained object with tabs'''
+
+# Canada data plot/table
+figure1 = (
+    dbc.Col(
+        dbc.Tabs(
+            id='figure1_plot',
+            children=[
+                dbc.Tab(
+                    id='plot',
+                    label='Plot',
+
+                    # figure added directly here (not using a callback)
+                    children=[dcc.Graph(id='metrics_graph1', figure=fig1)]
+                ),
+                dbc.Tab(
+                    id='figure1_table',
+                    label='Table',
+
+                    # table added directly here (not using a callback)
+                    children=[figure1_table]
+                )
+            ]
+        ), md=6
+        , style={'padding': '25px'}  # , 'background-color': '#f8f9fa'}
+    )
+)
+
+# US data plot/table
+figure2 = (
+    dbc.Col(
+        dbc.Tabs(
+            id='figure2_plot',
+            children=[
+                dbc.Tab(
+                    id='plot2',
+                    label='Plot',
+                    children=[dcc.Graph(id='metrics_graph2', figure=fig2)]
+                ),
+                dbc.Tab(
+                    id='figure2_table',
+                    label='Table',
+                    children=[figure2_table]
+                )
+            ]
+        ), md=6
+        , style={'padding': '25px'}  # , 'background-color': '#f8f9fa'}
+    )
+)
+
+# gapminder plot/table
+figure3 = [
+    dbc.Col(
+        dbc.Tabs(
+            id='figure3_plot',
+            children=[
+                dbc.Tab(
+                    id='plot3',
+                    label='Plot',
+                    children=[
+
+                        # figure 3 consists of a div with a plot and its slider
+                        html.Div([
+                            dcc.Graph(id='metrics_graph3'),  # no figure specified here, set using a callback
+                            year_slider
+                        ])
+
+                    ]
+                ),
+                dbc.Tab(
+                    id='figure3_table',
+                    label='Table'
+
+                    # no table specified here, set using a callback
+
+                )
+            ]
+        )  # , style={'background-color': '#f8f9fa'}
+    )
+]
+
+################# 2. Assemble Tabbed Figures into Primary Metrics/Data Tab Layout ################
+'''This section adds your self contained figures into a tabbed layout.
+
+metrics includes the primary content, and data is the primary data behind the app.'''
+
+# this is the primary layout for metrics tab (main app area)
+# each 'figure' below consists of a tabbed layout of Plot/Table
+metrics = dbc.Tab(
+    id='metrics',
+    label='Metrics',
+
+    # metrics objects here
+    # use dbc.Row and/or dbc.Col to organize objects
+    children=[
+        dbc.Row([figure1, figure2]),
+        dbc.Row(figure3)
+    ],
+
+    style={'padding-left': '15px', 'padding-right': '15px'}
 )
 
 # setup primary data table here
-data = dcc.Tab(
+data = dbc.Tab(
     id='data',
     label='Data',
-    
-    # add the table here
+
+    # this is the primary data table
     children=[
         dbc.Col(
             primary_data_table
@@ -438,14 +430,23 @@ data = dcc.Tab(
     ]
 )
 
-# design a shiny style tabbed layout
+########################## 3. Upper Level App Layout ############################
+'''Organize app content into rows and cols and specify higher level layout.'''
+
+# using cards for the first row where values can be displayed
+content_first_row = dbc.Row([
+
+    # the card deck that can be used to display values
+    fr_card_deck
+
+])
+
+# primary layout using a tabbed design
 content_primary_tab_design = dbc.Row(
     dbc.Col(
-        dcc.Tabs(
-            id='shiny-style-tabbing',
-            
-            #value='metrics',
-            
+        dbc.Tabs(
+            id='primary-content',
+
             # add tabs here
             children=[
                 metrics,
@@ -455,76 +456,43 @@ content_primary_tab_design = dbc.Row(
     )
 )
 
-
-
-
-
-
-
-
-
-
-
-
-# this content_second_row is designed to be a tabbed layout
-#content_second_row = dbc.Row(
-#    dbc.Col(
-#        dcc.Tabs(id='tabs-container',
-#            # set default selected tab
-#            value='tab-1',
-#            
-#            # add tabs here
-#            children=[
-#                tab1,
-#                tab2
-#            ]
-#            
-#        )
-#    )
-#)
-
-# the third row is setup to show plots going across in 3 columns
-#content_third_row = dbc.Row(
-#    [
-#        dbc.Col(
-#            dcc.Graph(id='graph_1'), md=4
-#        ),
-#        dbc.Col(
-#            dcc.Graph(id='graph_2'), md=4
-#        ),
-#        dbc.Col(
-#            dcc.Graph(id='graph_3'), md=4
-#        )
-#    ]
-#)
-
-
-# the content of the app goes here
+# this is the 'content' of the app, or everything that's not part of the sidebar
+# this design uses rows to organize main app content
 content = html.Div(
     [
         html.H2('Dashboard Title', style=TEXT_STYLE),
         html.Hr(),
-        
+
         # enter your content rows here
         content_first_row,
-        
+
         # add spacing as needed
         html.Hr(),
-        
+
         # primary tab layout here
         content_primary_tab_design,
-        #html.Hr(),
-        
-        #content_second_row,
-        #content_third_row
-        
+        # html.Hr(),
+
+        # add any additional rows here
+
     ],
     style=CONTENT_STYLE
 
 )
 
+####################### 4. Initialize App and Set the layout Attribute ###################
+
+# initialize the app
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+
 # define the app layout after defining the other objects
 app.layout = html.Div([sidebar, content])
+
+########################################### CALLBACKS ##################################################
+'''Define callbacks for user inputs and interactivity.'''
+
+
+############ 1. Card Callbacks ###############
 
 # define a callback to update a card's text based on the dropdown with id='dropdown'
 @app.callback(
@@ -532,8 +500,76 @@ app.layout = html.Div([sidebar, content])
     [Input('dropdown', 'value')])
 def update_card1(value):
     return f'{value} is selected in the dropdown'
-    
 
+
+# define a callback that has multiple outputs based on one input
+# to update card colors, you must update the dbc.Card object
+# to update card text, you must update the parts of a card (dbc.CardHeader or dbc.CardBody for example)
+@app.callback(
+    [Output('card2_content', 'children'),
+     Output('second_card', 'color')],
+    [Input('radio_items', 'value')])
+def update_card2(value):
+    if value == 'value1':
+        color = 'warning'
+    if value == 'value2':
+        color = 'danger'
+
+    return f'{value} is selected in the radio buttons', color
+
+
+# define a callback with multiple inputs
+@app.callback(
+    Output('card3_content', 'children'),
+    [Input('dropdown', 'value'), Input('radio_items', 'value')])
+def update_card3(dropdown_value, radio_value):
+    return f'The dropdown value is {dropdown_value}, and the radio value is {radio_value}.'
+
+
+# define a callback that uses the submit button
+# using the Input as the submit button, with the n_clicks as the property to watch
+# using state to monitor the actual input data
+@app.callback(
+    Output('card4_content', 'children'),
+    [Input('submit_button', 'n_clicks')],
+    [State('dropdown', 'value'),
+     State('radio_items', 'value')])
+def update_card4(n_clicks, dropdown_value, radio_value):
+    content = [html.P(f'''Dropdown Value = {dropdown_value}, Radio Value = {radio_value}'''),
+               html.P(f'''This card only updates when the Submit Button is clicked. n_clicks={n_clicks}.''')]
+
+    return content
+
+
+########### 2. Plot/Table Callbacks #################
+
+# figure3 plot and table
+@app.callback([Output('metrics_graph3', 'figure'),
+               Output('figure3_table', 'children')],
+              [Input('year-slider', 'value')])
+def update_fig3(year):
+    df = df3.query(f'year=={year}')
+    fig = px.scatter(df, x='gdpPercap', y='lifeExp', size='pop', color='continent',
+                     hover_name='country', log_x=True, size_max=60)
+    fig.update_layout(title=f'GDP Per Capita vs. Life Expectancy for {year}',
+                      annotations=[{'xref': 'paper', 'yref': 'paper', 'x': -0.03, 'y': 1.08, 'showarrow': False,
+                                    'text': 'Each Bubble is a Country: Bubble Size Represents Population'}])
+
+    table = dash_table.DataTable(
+        id='data_table3',
+        columns=[{'name': i, 'id': i} for i in df.columns],
+        data=df.to_dict('records'),
+
+        style_table={'overflowX': 'auto'},
+        style_cell={'minWidth': '150px', 'width': '150px', 'maxWidth': '150px'},
+        page_size=10,
+        filter_action='native',
+        sort_action='native')
+
+    return fig, table
+
+
+########################################## RUN SERVER ####################################################
 
 # run the app
 if __name__ == '__main__':
