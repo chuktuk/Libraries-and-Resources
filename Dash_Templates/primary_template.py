@@ -100,7 +100,7 @@ years = sorted(list(df3.year.unique()))
 # control 1
 control_one_title = html.P('Control 1 Display Name', style={'textAlign': 'center'})
 # using a dropdown for example here
-control_one_object = dcc.Dropdown(
+control_one_object = dcc.Dropdown( # can also use a dbc.Select object
     id='dropdown',
     options=[{
         'label': 'Value One',

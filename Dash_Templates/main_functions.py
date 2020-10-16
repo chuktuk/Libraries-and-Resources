@@ -27,7 +27,7 @@ def make_dash_datatable(df, html_id, cell_width='150px', page_size=10):
                 data=df.to_dict('records'),
                         
                 style_table={'overflowX': 'auto'},
-                style_cell={'height': 'auto', 'minWidth': cell_width, 'width': cell_width, 'maxWidth': cell_width, 'whiteSpace': 'normal'},
+                style_cell={'minWidth': cell_width, 'width': cell_width, 'maxWidth': cell_width},
                 page_size=page_size)
                 
     return table
