@@ -11,6 +11,7 @@ https://dash.plotly.com/dash-core-components/tabs
 https://dash-bootstrap-components.opensource.faculty.ai/docs/components/card/
 https://dash.plotly.com/datatable
 
+If using chained callbacks, use dcc.Dropdown instead of dbc.Select
 
 """
 
@@ -44,7 +45,7 @@ import pandas as pd
 # set additional css styling
 # the style arguments for the sidebar.
 SIDEBAR_STYLE = {
-    'position': 'fixed',
+    'position': 'fixed',   # absolute position might work better
     'top': 0,
     'left': 0,
     'bottom': 0,
@@ -100,7 +101,7 @@ years = sorted(list(df3.year.unique()))
 # control 1
 control_one_title = html.P('Control 1 Display Name', style={'textAlign': 'center'})
 # using a dropdown for example here
-control_one_object = dcc.Dropdown( # can also use a dbc.Select object
+control_one_object = dcc.Dropdown( # can also use a dbc.Select object / but this isn't compatible with chained callbacks
     id='dropdown',
     options=[{
         'label': 'Value One',
