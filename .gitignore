@@ -2,3 +2,14 @@
 .Rhistory
 .RData
 .Ruserdata
+
+Flask/flask-tutorial/venv/
+Flask/flask-tutorial/*.pyc
+Flask/flask-tutorial/__pycache__/
+Flask/flask-tutorial/instance/
+Flask/flask-tutorial/.pytest_cache/
+Flask/flask-tutorial/.coverage
+Flask/flask-tutorial/htmlcov/
+Flask/flask-tutorial/dist/
+Flask/flask-tutorial/build/
+Flask/flask-tutorial/*.egg-info/
