@@ -6,9 +6,11 @@
 It also tells Python that flaskr should be treated like a package.
 """
 
+
 import os
 
 from flask import Flask
+
 
 def create_app(test_config=None):
     
@@ -49,14 +51,23 @@ def create_app(test_config=None):
     # a simple page that says hello
     @app.route('/hello')
     def hello():
-        return 'Hello World!'
+        return 'Hello, World!'
     
     # import and call the init_app function from db.py
     from . import db
     db.init_app(app)
     
-    # import and register the blueprint
+    # import and register the auth blueprint
     from . import auth
     app.register_blueprint(auth.bp)
+    
+    # import and register the blog blueprint
+    from . import blog
+    app.register_blueprint(blog.bp)
+    # this line ensures that url_for('index') and url_for('blog.index') both generate '/'
+    # this means that we're setting 'blog.index' as the primary 'index' page
+    # often don't want to do this, but we do since the blog is the main page of the app
+    # if we gave the blog blueprint a url_prefix, then 'index' and 'blog.index' endpoints would be different
+    app.add_url_rule('/', endpoint='index')
     
     return app

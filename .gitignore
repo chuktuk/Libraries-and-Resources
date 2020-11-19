@@ -13,3 +13,5 @@ Flask/flask-tutorial/htmlcov/
 Flask/flask-tutorial/dist/
 Flask/flask-tutorial/build/
 Flask/flask-tutorial/*.egg-info/
+Flask/flask-tutorial/flaskr/__pycache__/
+*.pyc

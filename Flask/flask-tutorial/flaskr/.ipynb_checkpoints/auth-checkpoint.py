@@ -31,7 +31,7 @@ def register():
         
         # request.form is a dict of form submissions, and we are accessing two keys to get their values
         username = request.form['username']
-        password = request.from['password']
+        password = request.form['password']
         db = get_db()
         error = None
         
