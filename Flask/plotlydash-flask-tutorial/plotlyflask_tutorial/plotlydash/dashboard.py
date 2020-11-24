@@ -12,6 +12,8 @@ import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 
+from copy import deepcopy
+
 from .data import create_dataframe, get_data, format_dataframe
 
 import plotly.express as px
@@ -671,7 +673,8 @@ def init_multi_page_dashboard(server):
     app_two_filter2 = dbc.Card(
         dbc.Checklist(
             id='app-two-filter2',
-            options=[{'label': f'Option {i}', 'value': f'Option {i}'} for i in range(2, 10, 2)]
+            options=[{'label': f'Option {i}', 'value': f'Option {i}'} for i in range(2, 10, 2)],
+            value=[f'Option {i}' for i in range(2, 10, 2)]
         )
     )
 
@@ -1085,7 +1088,6 @@ def init_multi_page_dashboard(server):
 
 
 def init_callbacks_multi_page(dash_app):
-
     # app one primary data
     @dash_app.callback(
         Output('app-one-primary-data', 'children'),
@@ -1118,11 +1120,11 @@ def init_callbacks_multi_page(dash_app):
         [Input('app-one-figure1-dropdown', 'value')]
     )
     def update_app_one_figure_one(mask):
-        tdata = data[data['Stage'] == mask]
+        tdata = deepcopy(data[data['Stage'] == mask])
 
         tdata.sort_values('Value1', inplace=True)
         tdata['Cat'] = tdata[['Category', 'Department']].apply(lambda x: ''.join(x.values.astype(str)), axis=1)
-        fig = px.bar(tdata.loc[:10, :], x='Cat', y='Value1')
+        fig = px.bar(tdata, x='Cat', y='Value1')
 
         table = dash_table.DataTable(
             id='app-one-figure1-data-table',
@@ -1151,8 +1153,7 @@ def init_callbacks_multi_page(dash_app):
         tdata = tdata.groupby(x)['Value1'].sum()
         x = list(tdata.index)
 
-
-        fig = px.bar(x = x, y = tdata)
+        fig = px.bar(x=x, y=tdata)
 
         tdata = tdata.reset_index()
         table = dash_table.DataTable(
@@ -1171,12 +1172,12 @@ def init_callbacks_multi_page(dash_app):
 
     # app two selected filters
     @dash_app.callback(
-        [Output('app-one-selected-filters-card', 'children')],
-        [Input('app-two-submit-query', 'n_clicks')],
+        Output('app-one-selected-filters-card', 'children'),
+        [Input('app-one-submit-query', 'n_clicks')],
         [State('app-one-filter1', 'value'),
          State('app-one-filter2', 'value')]
     )
-    def update_app_two_selected_filters(n_clicks, mask1, mask2):
+    def update_app_one_selected_filters(n_clicks, mask1, mask2):
         return [
             html.P(f'Filter 1: {[i for i in mask1]}'),
             html.P(f'Filter 2: {[i for i in mask2]}')
@@ -1184,7 +1185,7 @@ def init_callbacks_multi_page(dash_app):
 
     # app two selected filters
     @dash_app.callback(
-        [Output('app-two-selected-filters-card', 'children')],
+        Output('app-two-selected-filters-card', 'children'),
         [Input('app-two-submit-query', 'n_clicks')],
         [State('app-two-filter1', 'value'),
          State('app-two-filter2', 'value')]
@@ -1194,6 +1195,25 @@ def init_callbacks_multi_page(dash_app):
             html.P(f'Filter 1: {[i for i in mask1]}'),
             html.P(f'Filter 2: {[i for i in mask2]}')
         ]
+
+    # app two calculation card
+    @dash_app.callback(
+        [Output('app-two-calculation-card', 'children'),
+         Output('change-card-color', 'color')],
+        [Input('app-two-filter1', 'value')]
+    )
+    def update_app_two_calculation_card(value):
+        ret = sum([int(i) for i in value])
+        if ret < 3:
+            col = 'info'
+        elif ret < 21:
+            col = 'warning'
+        else:
+            col = 'danger'
+
+        ret_text = f'The sum of selected values for Filter 1 is {ret}.'
+
+        return ret_text, col
 
     # update app 2 figure and table
     @dash_app.callback(
