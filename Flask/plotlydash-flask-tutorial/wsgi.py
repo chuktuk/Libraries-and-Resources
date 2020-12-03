@@ -8,6 +8,13 @@ from werkzeug.utils import import_string
 
 import os
 
+# use .env file if present
+if os.path.exists('.env'):
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(override=True)
+    except:
+        pass
 
 # create the app instance
 app = init_app()

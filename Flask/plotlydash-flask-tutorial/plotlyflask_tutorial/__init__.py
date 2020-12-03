@@ -11,14 +11,6 @@ import os
 
 def init_app():
     """Construct core Flask app."""
-    
-    # use .env file if present
-    if os.path.exists('.env'):
-        try:
-            from dotenv import load_dotenv
-            load_dotenv(override=True)
-        except:
-            pass
 
     # create the flask app
     app = Flask(__name__, instance_relative_config=True)
