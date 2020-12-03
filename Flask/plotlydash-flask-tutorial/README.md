@@ -14,6 +14,7 @@ Environment variables needed to run:
     <li>SECRET_KEY (production environment only)</li>
     
 </ul>
+<p>Can set these using .env file and dotenv package.</p>
 </div>
 
 <div>
@@ -31,6 +32,7 @@ Application entry point is <code>wsgi.py</code>.
 set to <code>config.ProdConfig</code> when deploying.</p>
 <p>set/export <code>ENV_FOR_FLASK = config.ProdConfig</code></p>
 <p>set/export <code>SECRET_KEY =</code> assigning a random bytes string</p>
+<p>can also use the dotenv package with a .env file to set these variables</p>
 </div>
 
 <div>
