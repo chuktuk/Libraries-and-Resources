@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Flask + Dash App Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<nav>
+  <ul>
+    <li><a class="link" href="/dashapp_template_single/">Single Page Dash App</a></li>
+    <li><a class="link" href="/dashapp_template_multi/">Multi Page Dash App</a></li>
+  </ul>
+</nav>
+{% endblock %}

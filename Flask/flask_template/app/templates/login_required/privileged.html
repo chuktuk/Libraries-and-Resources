@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1 class="title-text">{% block title %}{{ _(title) }}{% endblock %}</h1>
+{% endblock %}
+
+{% block app_content %}
+<p>{{ _('This page and content is for authorized users only.') }}</p>
+{% endblock %}

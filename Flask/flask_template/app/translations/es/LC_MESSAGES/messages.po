@@ -1,0 +1,209 @@
+# Spanish translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-12-16 11:54-0500\n"
+"PO-Revision-Date: 2020-12-16 11:54-0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: app/__init__.py:103
+msgid "Please log in to access this page."
+msgstr "Inicie sesión para acceder a esta página."
+
+#: app/auth/forms.py:17 app/auth/forms.py:44 app/main/forms.py:16
+#: app/templates/user.html:8
+msgid "Username"
+msgstr "Usuario"
+
+#: app/auth/forms.py:18 app/auth/forms.py:52 app/main/forms.py:17
+#: app/templates/user.html:9
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: app/auth/forms.py:19 app/auth/forms.py:45 app/auth/forms.py:58
+msgid "Password"
+msgstr "Contraseña"
+
+#: app/auth/forms.py:23 app/auth/forms.py:68
+msgid "Password must contain at least one number."
+msgstr "La contraseña debe contener al menos un número."
+
+#: app/auth/forms.py:24 app/auth/forms.py:70
+msgid "Password must contain at least one letter."
+msgstr "La contraseña debe contener al menos una letra."
+
+#: app/auth/forms.py:25
+msgid "Password must contain at least one of !@#$&?"
+msgstr "La contraseña debe contener al menos uno de estos !@#$&?"
+
+#: app/auth/forms.py:27 app/auth/forms.py:74
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"
+
+#: app/auth/forms.py:28 app/templates/auth/register.html:5
+msgid "Register"
+msgstr "Registrarse"
+
+#: app/auth/forms.py:34 app/main/forms.py:29
+msgid "Username in use, please enter a different username."
+msgstr "Nombre de usuario en uso, ingrese un nombre de usuario diferente."
+
+#: app/auth/forms.py:39
+msgid "Email address in use, please enter a different email."
+msgstr "Dirección de correo electrónico en uso, ingrese una dirección de correo electrónico diferente."
+
+#: app/auth/forms.py:46
+msgid "Remember Me"
+msgstr "Recuérdame"
+
+#: app/auth/forms.py:47 app/templates/auth/login.html:5
+msgid "Sign In"
+msgstr "Iniciar sesión"
+
+#: app/auth/forms.py:53
+msgid "Request Password Reset"
+msgstr "Petición para la recuperación de contraseña"
+
+#: app/auth/forms.py:72
+msgid "Password must contain at least one of !@#$%&?"
+msgstr "La contraseña debe contener al menos uno de estos !@#$&?"
+
+#: app/auth/forms.py:75 app/main/forms.py:18
+msgid "Submit Changes"
+msgstr "Presentar Cambios"
+
+#: app/main/forms.py:33
+msgid "Search"
+msgstr "Buscar"
+
+#: app/main/routes.py:37 app/templates/base.html:32
+msgid "Home"
+msgstr "Inicio"
+
+#: app/main/routes.py:48
+msgid "About Page"
+msgstr "Información"
+
+#: app/templates/about.html:4 app/templates/base.html:40
+msgid "About"
+msgstr "Información"
+
+#: app/templates/about.html:6
+msgid "This page contains info about the app."
+msgstr "Esta página contiene información sobre la aplicación."
+
+#: app/templates/base.html:15
+msgid "Application Home"
+msgstr "Inicio"
+
+#: app/templates/base.html:33 app/templates/dashboards.html:4
+msgid "Dashboards"
+msgstr "Cuadros de mando"
+
+#: app/templates/base.html:35
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+#: app/templates/base.html:37
+msgid "Privileged"
+msgstr "Privilegiada"
+
+#: app/templates/base.html:38
+msgid "Profile"
+msgstr "Perfil de Usuario"
+
+#: app/templates/base.html:42
+msgid "Logout"
+msgstr "Cerrar Sesión"
+
+#: app/templates/dashboards.html:8
+msgid "Single Page Dash App"
+msgstr "Aplicación Dash de una sola página"
+
+#: app/templates/dashboards.html:9
+msgid "Multi Page Dash App"
+msgstr "Aplicación Dash de varias páginas"
+
+#: app/templates/edit_profile.html:5 app/templates/user.html:28
+msgid "Edit Profile"
+msgstr "Editar Perfil de Usuario"
+
+#: app/templates/auth/reset_password.html:12 app/templates/edit_profile.html:12
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: app/templates/index.html:9
+msgid "Welcome"
+msgstr "Bienvenidos"
+
+#: app/templates/index.html:11
+msgid "Please Login"
+msgstr "Por Favor Iniciar Sesión"
+
+#: app/templates/user.html:10
+msgid "Last Login"
+msgstr "Inicio de sesión más reciente"
+
+#: app/templates/user.html:21
+msgid "First Login!"
+msgstr "Primer inicio de sesión!"
+
+#: app/templates/user.html:29
+msgid "Change Password"
+msgstr "Cambia la Contraseña"
+
+#: app/templates/auth/login.html:12
+msgid "New User?"
+msgstr "¿Nuevo usuario?"
+
+#: app/templates/auth/login.html:12
+msgid "Click to Register"
+msgstr "Haga clic para registrarse"
+
+#: app/templates/auth/login.html:13
+msgid "Forgot Your Password?"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: app/templates/auth/login.html:13
+msgid "Click to Reset It"
+msgstr "Haga clic para restablecerlo"
+
+#: app/templates/auth/reset_password.html:5
+msgid "Reset Your Password"
+msgstr "Restablecer la contraseña"
+
+#: app/templates/auth/reset_password_request.html:5
+msgid "Reset Password"
+msgstr "Restablecer la contraseña"
+
+#: app/templates/errors/404.html:4
+msgid "Page or File Not Found"
+msgstr "Página o archivo no encontrado"
+
+#: app/templates/errors/404.html:5 app/templates/errors/500.html:6
+msgid "Back"
+msgstr "Atrás"
+
+#: app/templates/errors/500.html:4
+msgid "An unexpected error has occurred"
+msgstr "Ocurrió un error inesperado"
+
+#: app/templates/errors/500.html:5
+msgid "The administrator has been notified. Sorry for the inconvenience!"
+msgstr "Se ha notificado al administrador. ¡Lo siento por los inconvenientes ocasionados!"
+
+#: app/templates/login_required/privileged.html:8
+msgid "This page and content is for authorized users only."
+msgstr "Esta página y su contenido son solo para usuarios autorizados."

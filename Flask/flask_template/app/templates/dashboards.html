@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1 class="title-text">{{ _("Dashboards") }}</h1>
+
+    <p>
+        <ul>
+            <li><a class="link" href="/dashapp_template_single/">{{ _("Single Page Dash App") }}</a></li>
+            <li><a class="link" href="/dashapp_template_multi">{{ _("Multi Page Dash App") }}</a></li>
+        </ul>
+    </p>
+{% endblock %}

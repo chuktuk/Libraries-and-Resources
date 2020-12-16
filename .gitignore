@@ -15,3 +15,8 @@ Flask/flask-tutorial/build/
 Flask/flask-tutorial/*.egg-info/
 Flask/flask-tutorial/flaskr/__pycache__/
 *.pyc
+
+Flask/flask_template/.idea/
+Flask/flask_template/.env
+Flask/flask_template/flask_template.db
+Flask/flask_template/migrations
