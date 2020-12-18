@@ -20,3 +20,8 @@ Flask/flask_template/.idea/
 Flask/flask_template/.env
 Flask/flask_template/flask_template.db
 Flask/flask_template/migrations
+
+utility_scripts_package/.idea/
+utility_scripts_package/build/
+utility_scripts_package/dist/
+utility_scripts_package/utility_scripts.egg-info/

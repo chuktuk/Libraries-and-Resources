@@ -350,7 +350,7 @@ def upsert_into_mongo(data, unique_id, collection):
     
     # ensure appropriate data type provided
     if type(data) == dict:
-        data = []
+        data = [data]
     
     # ensure unique_id is treated as a list 
     if type(unique_id) == str:
