@@ -1,0 +1,268 @@
+<VisionDataExchange xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--
+ Copyright (c) 2005 Peopleclick, Inc.  All Rights Reserved 
+-->
+<Credentials>
+<Client>client_rtg_base</Client>
+<Version>4.3</Version>
+</Credentials>
+<ExportData>
+<Requisition clientReqId="21">
+<Title>ReqExportTest</Title>
+<SalaryLow>888</SalaryLow>
+<SalaryHigh>999</SalaryHigh>
+<RecruitStartDate>2008-12-26 00:00:00</RecruitStartDate>
+<RecruitEndDate/>
+<TargetStartDate>2009-03-03 00:00:00</TargetStartDate>
+<CandFillCount>50</CandFillCount>
+<WorkHours>40</WorkHours>
+<WorkHourUnit>Week</WorkHourUnit>
+<TravelRequired code="1">Yes</TravelRequired>
+<TravelPercent>65</TravelPercent>
+<EssentialFunction>position requirements</EssentialFunction>
+<Description>position description</Description>
+<WorkEnv/>
+<Active code="1">Yes</Active>
+<FolderActivityDate>2008-12-22 17:15:46</FolderActivityDate>
+<Posted code="0">No</Posted>
+<Status code="OPEN">Open</Status>
+<Workflow code="RENE_WK">Rene workflow</Workflow>
+<Priority code="MEDIUM">Medium Priority</Priority>
+<Location code="RALEIGH_NC">Raleigh, NC</Location>
+<Experience code="LESS_THAN_ONE_YEAR">Less than 1 year</Experience>
+<Duration code="FULLTIMEREG">Full-Time Regular</Duration>
+<Education code="ASSOCIATES">Associates Degree</Education>
+<FLSA code="EXECUTIVE">Executive</FLSA>
+<GradeLevel code="NOT_INDICATED">Not Indicated</GradeLevel>
+<JobCode code="NOT_INDICATED">Not Indicated</JobCode>
+<CostCenter code="ENTERPRISE">Enterprise</CostCenter>
+<SalaryCurrency code="USD">United States of America, US Dollar</SalaryCurrency>
+<Relocation code="NO">No</Relocation>
+<CustomInfo>
+<Field fldCode="FLD_REQ_DEPARTMENT" code="MARKETING">Cost Accounting</Field>
+<Field fldCode="FLD_REQ_DIVISION" code="ASIA_PACIFIC">Asia Pacific</Field>
+<Field fldCode="FLD_REQ_POSITION_BUDGETED" code="1">Yes</Field>
+<Field fldCode="FLD_REQ_FACILITY" code="MANUFACTURING">Manufacturing Plant</Field>
+<Field fldCode="FLD_REQ_POSITION_CATEGORY" code="AERO">Aerospace</Field>
+<Field fldCode="FLD_REQ_TARGET_INCENTIVE">777</Field>
+<Field fldCode="FLD_REQ_TARGET_EQUITY">666</Field>
+<Field fldCode="FLD_REQ_OTHER_COMP_INFO">Other comp info</Field>
+<Field fldCode="FLD_REQ_HOURSOFWORK">40</Field>
+</CustomInfo>
+<EEOCategory code="PROFESSIONAL">Professionals</EEOCategory>
+<AAPJobGroup code="NOT_INDICATED">Not Indicated</AAPJobGroup>
+<AAPEstablishment code="NOT_INDICATED">Not Indicated</AAPEstablishment>
+<Opening code="NEW">New Position</Opening>
+<Shift code="THIRD">3rd</Shift>
+<OpeningDescription>reason for opening</OpeningDescription>
+<Budgeted code="1">Yes</Budgeted>
+<Skills/>
+<Categories/>
+<Contacts>
+<Contact>
+<Primary code="1">Yes</Primary>
+<Role code="HIRING_MANAGER">Hiring Manager</Role>
+<User refCode="">emmanuel montes h</User>
+</Contact>
+<Contact>
+<Primary code="1">Yes</Primary>
+<Role code="RECRUITER">Recruiter</Role>
+<User refCode="rene_rec0">rene recruiter 0</User>
+</Contact>
+</Contacts>
+<Costs>
+<Cost id="4">
+<Amount>500</Amount>
+<SubCategory code="REFERRALS">Employee/Other Referrals</SubCategory>
+<Currency code="USD">United States of America, US Dollar</Currency>
+<Date>2008-12-22 00:00:00</Date>
+<Note>cost note</Note>
+</Cost>
+</Costs>
+<Notes>
+<Note id="11">
+<Subject>note 2</Subject>
+<Text>this is the note 2 this note is not public</Text>
+<Public code="0">No</Public>
+<Created>
+<Date>2008-12-22 17:19:04</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Created>
+<Modified>
+<Date>2008-12-22 17:19:04</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Modified>
+</Note>
+<Note id="10">
+<Subject>Note 1</Subject>
+<Text>Req Note 1</Text>
+<Public code="1">Yes</Public>
+<Created>
+<Date>2008-12-22 17:18:46</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Created>
+<Modified>
+<Date>2008-12-22 17:18:46</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Modified>
+</Note>
+</Notes>
+<Approval>
+<Status code="PENDING">Pending</Status>
+<Panels>
+<Panel code="PNL_REQ_GENERAL_INFO">Requisition Information</Panel>
+<Panel code="PNL_REQ_DETAIL_INFO">Opening Information</Panel>
+<Panel code="PNL_REQ_ADDITIONAL_INFO">Additional Information</Panel>
+</Panels>
+<Editors>
+<User refCode="Editor">Approval Editor</User>
+</Editors>
+<Approvers>
+<User refCode="jdoe">
+<FullName>pc-jane.doe</FullName>
+<Approved code="0">No</Approved>
+<DenialReason code=""/>
+<DateSent>2008-12-22 20:15:47.321</DateSent>
+<DateCompleted/>
+<IsNextApprover code="1">Yes</IsNextApprover>
+</User>
+<User refCode="madoe">
+<FullName>pc-mark.doe</FullName>
+<Approved code="0">No</Approved>
+<DenialReason code=""/>
+<DateSent/>
+<DateCompleted/>
+<IsNextApprover code="0">No</IsNextApprover>
+</User>
+</Approvers>
+<CreateNote code="0">No</CreateNote>
+<Email code="AFTERME">After Approval</Email>
+</Approval>
+<Created>
+<Date>2008-12-22 17:15:46</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Created>
+<Modified>
+<Date>2008-12-22 17:16:33</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Modified>
+<ReqStatusActivities>
+<ReqStatusActivity id="40">
+<LogEntryType code="CREATED"/>
+<StatusBefore code=""/>
+<StatusAfter code=""/>
+<Created>
+<Date>2008-12-22 17:15:47</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Created>
+</ReqStatusActivity>
+<ReqStatusActivity id="41">
+<LogEntryType code="STATUS_CHANGE"/>
+<StatusBefore code="OPEN">Open</StatusBefore>
+<StatusAfter code="PENDING_APPROVAL">Pending</StatusAfter>
+<Created>
+<Date>2008-12-22 17:15:47</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Created>
+</ReqStatusActivity>
+<ReqStatusActivity id="42">
+<LogEntryType code="STATUS_CHANGE"/>
+<StatusBefore code="PENDING_APPROVAL">Pending</StatusBefore>
+<StatusAfter code="OPEN">Open</StatusAfter>
+<Created>
+<Date>2008-12-22 17:16:33</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Created>
+</ReqStatusActivity>
+</ReqStatusActivities>
+<EntityModifiedOn>2008-12-22 17:19:26.0</EntityModifiedOn>
+<JobPostActivities>
+<JobPost id="1">
+<TemplateName>Untitled</TemplateName>
+<Title>ReqExportTest</Title>
+<SalaryLow>888</SalaryLow>
+<SalaryHigh>999</SalaryHigh>
+<RecruitStartDate>2008-12-26 00:00:00</RecruitStartDate>
+<RecruitEndDate/>
+<TargetStartDate>2009-03-03 00:00:00</TargetStartDate>
+<CandFillCount>1</CandFillCount>
+<WorkHours>50</WorkHours>
+<WorkHourUnit>Week</WorkHourUnit>
+<TravelRequired code="1">Yes</TravelRequired>
+<TravelPercent>65</TravelPercent>
+<EssentialFunction>position requirements</EssentialFunction>
+<Description>position description</Description>
+<WorkEnv/>
+<Location code="RALEIGH_NC">Raleigh, NC</Location>
+<Experience code="LESS_THAN_ONE_YEAR">Less than 1 year</Experience>
+<Duration code="FULLTIMEREG">Full-Time Regular</Duration>
+<Education code="ASSOCIATES">Associates Degree</Education>
+<FLSA code="EXECUTIVE">Executive"</FLSA>
+<GradeLevel code="NOT_INDICATED">Not Indicated</GradeLevel>
+<JobCode code="NOT_INDICATED">Not Indicated</JobCode>
+<CostCenter code="ENTERPRISE">Enterprise</CostCenter>
+<SalaryCurrency code="USD">United States of America, US Dollar</SalaryCurrency>
+<Relocation code="NO">No"</Relocation>
+<Shift code="THIRD">3rd"</Shift>
+<Contact>
+<Name>James Doe</Name>
+<Email>JamesDoe@a.com</Email>
+<Phone/>
+<Fax/>
+<Address/>
+</Contact>
+<IsOutOfSyncWithReq code="0">No</IsOutOfSyncWithReq>
+<ReferralPosition code="1">Yes</ReferralPosition>
+<CustomInfo>
+<Field fldCode="FLD_JP_DEPARTMENT" code="MARKETING">Cost Accounting</Field>
+<Field fldCode="FLD_JP_DIVISION" code="ASIA_PACIFIC">Asia Pacific</Field>
+<Field fldCode="FLD_JP_POSITION_BUDGETED" code="1">Yes</Field>
+<Field fldCode="FLD_JP_FACILITY" code="MANUFACTURING">Manufacturing Plant</Field>
+<Field fldCode="FLD_JP_POSITION_CATEGORY" code="AERO">Aerospace</Field>
+<Field fldCode="FLD_JP_TARGET_INCENTIVE">777</Field>
+<Field fldCode="FLD_JP_TARGET_EQUITY">666</Field>
+<Field fldCode="FLD_JP_OTHER_COMP_INFO">Other comp info</Field>
+<Field fldCode="FLD_JP_HOURSOFWORK">40</Field>
+</CustomInfo>
+<JobPostStatusLog id="2">
+<IsCurrent code="1">Yes</IsCurrent>
+<LogDate>2009-12-04 11:09:27.0</LogDate>
+<PostSite>post site</PostSite>
+<PostSiteType>External</PostSiteType>
+<PostingStatus>Removed</PostingStatus>
+<UserAction>Remove</UserAction>
+<UserStatus>Success</UserStatus>
+</JobPostStatusLog>
+<JobPostStatusLog id="1">
+<IsCurrent code="0">No</IsCurrent>
+<LogDate>2009-10-19 13:05:31.0</LogDate>
+<PostSite>post site2</PostSite>
+<PostSiteType>External</PostSiteType>
+<PostingStatus>Posted</PostingStatus>
+<UserAction>Remove</UserAction>
+<UserStatus>Success</UserStatus>
+</JobPostStatusLog>
+<Created>
+<Date>2009-10-19 13:05:30</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Created>
+<Modified>
+<Date>2009-12-04 11:09:27</Date>
+<UTCOffset>-5</UTCOffset>
+<User refCode="">pc-john.doe</User>
+</Modified>
+</JobPost>
+</JobPostActivities>
+</Requisition>
+</ExportData>
+</VisionDataExchange>
