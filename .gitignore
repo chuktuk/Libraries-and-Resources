@@ -20,3 +20,5 @@ Flask/flask_template/.idea/
 Flask/flask_template/.env
 Flask/flask_template/flask_template.db
 Flask/flask_template/migrations
+
+data/mortgage_data_rapids/
