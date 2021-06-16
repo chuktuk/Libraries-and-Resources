@@ -22,3 +22,5 @@ Flask/flask_template/flask_template.db
 Flask/flask_template/migrations
 
 data/mortgage_data_rapids/
+
+Interpretable_ML_Book/data/aa-domestic-delays-2018.csv
