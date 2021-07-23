@@ -1,0 +1,661 @@
+_____________________________________________________
+Force Pushing
+
+List existing remotes
+	- git remote -v
+
+use https to set the remote repo location
+	- git remote set-url https://github.com/chuktuk/<repo>.git
+
+use ssh to set the remote repo
+	- git remote set-url git@github.com/chuktuk/<repo>.git
+
+
+view logs
+	- git log
+	- git log origin/master
+	- git log --oneline (shows a condensed version with SHAs and commit messages)
+
+other log options
+	- --graph --all --decorate --oneline
+
+Compare changes on the remote since your last push (fetching)
+	- git fetch
+
+Force Pushing
+	- local version is preferable to what's in the remote version
+	- versions have diverged and merging is undesirable
+
+	- git push -f
+	- git push --force
+
+	- completely replaces any remote versions with the local version (can undo commits by collaborators)
+	- use with extreme caution
+	- potentially disruptive to others
+	- subsequent commits by others are orphaned
+
+	- any commits that collaborators are ahead, now become local only (and some can be orphaned if there are multiple commits)
+
+	- git reset --hard origin/master
+		○ will make those collaborator commits past what is force pushed go away
+		○ All collaborators should do this if a force push is needed
+	
+View commits after fetching (before pulling/merging)
+	- git show origin/master
+
+______________________________________________________________________
+Identifying Merged Branches
+
+View merged branches or branches that haven't been merged
+	- git branch --merged
+		○ shows merged branches only
+	- git branch --no-merged
+		○ shows branches that have not yet been merged
+	- (git branch) will show all branches and the active branch
+	- git branch -r --merged
+		○ adding -r will show info for the remote instead of the local
+		○ this compares the remote branches to the currently checked out local branch
+
+Switching branches
+	- git checkout <branch_name>
+		○ if branch already exists
+	- git checkout -b <branch_name>
+		○ if branch doesn't yet exist (creates it)
+
+Merging changes from one branch into the current branch
+	- git merge master (or other branch name)
+		○ scenario -> you have a feature branch, master gets ahead from where you branched, and you want to merge in the new commits from master
+		○ new commits from the name branch you type, will be added to the branch you are in (have checked out)
+
+Uses the current branch by default, but can specify others
+	- git branch --merged HEAD
+		○ current branch
+	- git branch --merged <branch_name>
+		○ checks a specific branch
+		○ add origin/ to the branch name to check the remote
+
+___________________________________________________
+Delete Local and Remote Branches
+
+Local Branches
+
+Must be on a different branch than the one you want to delete
+	- git branch -d <branch_name>
+		○ will only delete this branch if it has been completely merged into the current branch
+	- git branch -D <branch_name>
+		○ force delete, will delete a branch even if it hasn't been completely merged into the current branch
+
+Remote Branches
+
+	- git push origin :<branch_name>
+		○ can push branches with `git push origin <local>:<remote>`
+		○ the command above pushes nothing to the remote
+	- git push --delete origin <branch_name>
+		○ git v 1.7.0+
+	- git push -d origin <branch_name>
+		○ git v 2.8.0+
+
+_____________________________________________________
+Prune Stale Branches
+
+Delete all of the stale remote tracking branches
+Stale branch: a remote-tracking branch tha tno longer tracks anything because the actual branch in the remote repo has been deleted
+
+Actually three versions of branches: remote, local snapshot of the remote, local branch tracking the remote branch
+
+Methods above can delete the local and remote branches
+	- if you follow the methods above to delete a remote, the remote-tracking branch is deleted automatically
+
+It is necessary to delete local tracking branches when COLLABORATORS delete branches
+	- git fetch does not automatically prune for us by default
+
+	- git remote prune origin
+		○ can add the --dry-run flag at the end to see what the command would do without executing it
+
+	- git fetch --prune
+	- git fetch -p
+		○ both of these will automatically prune when fetching
+
+Can also set your global config to automatically prune when fetching
+	- git config --global fetch.prune true
+
+Prune all unreachable objects (do not need to use!)
+	- git prune
+This is part of garbage collection
+	- git gc
+		○ cleans up git repo and throw away all of the stuff that's not being used
+
+_____________________________________________________
+Create Tags
+
+Tags allow marking points in history as important (a named reference to a commit)
+
+Tags are most often used to mark releases (v1.0, v1.1, v2.0 etc.)
+
+You reference a commit in the tag, so you must commit first
+
+Two types of tags
+	- git tag <name_of_tag> <commit_sha_to_reference>
+		○ lightweight tag
+			§ name_of_tag is usually something like v1.0, bugfixissue137, etc.
+			§ the sha_to_ref, doesn't have to be the full sha, just the first part to make it unique (and find the correct commit)
+	- git tag -a <name_of_tag> -m "<annotation message>" <commit_sha_to_reference>
+		○ annotated tag (most common)
+		○ can also combine the a/m flags
+	- git tag -am "<message>" <name_of_tag> <sha>
+
+If you don't provide the sha, then the commit that the HEAD points to will be tagged (usually the latest commit)
+
+____________________________________________________
+List Tags
+
+List tags
+	- git tag
+	- git tag -l
+		○ more explicit, and probably better practice because if you add other options, you need the -l (or --list)
+	- git tag -l "v2*"
+		○ all tags that begin with v2 (-l required here)
+		○ * is a wildcard here
+	- git tag -l -n
+		○ list tags with annotations (default is list just one line if a multi-line annotation)
+		○ can add a number after the -n to specify a number of lines to list
+		○ git tag -ln works too
+
+Work with tags, works just like working with shas (git show)
+	- git show v1.1
+	- git diff v1.0..v1.1
+
+____________________________________________________
+Delete Tags
+
+	- git tag --delete <tag_name>
+	- git tag -d <tag_name>
+
+____________________________________________________
+Push Tags to Remote
+
+Tags are local unless shared to a remote
+
+git push doesn't transfer tags to a remote by default
+
+git fetch will automatically retrieve tags from the remote
+
+	- git push origin <tag_name>
+	- git push origin --tags
+		○ pushes all local tags to the remote
+
+	- git fetch --tags
+		○ fetch only tags with necessary commits
+		○ rarely used
+
+__________________________________________________
+Delete Remote Tags
+
+	- git push origin :<tag_name>
+	- git push -d origin <tag_name> 
+		○ or --delete
+
+__________________________________________________
+Check Out Tags
+
+Branches and tags are different
+Branches are designed to keep adding commits and be located easily
+
+Tags identity a particular commit
+Tags can be checked out just like commits can
+
+The correct way to checkout a tag is to create a new branch from it
+	- git checkout -b <branch_name> <tag_name>
+
+If you checkout the tag directly, but this has implications (you just checked out a specific commit)
+
+Detached HEAD state
+	- you checkout a tag directly attached to a previous commit
+	- you add work and commit, then these commits do NOT belong to any branch
+	- detached will be garbage collected by git (~2 weeks)
+	- hard to get back to these commits if you switch branches
+
+Reattach the HEAD and LOSE your detached HEAD work/commits
+	- git checkout <branch_name>
+		○ master, etc.
+
+3 ways to preserve work from a detached head state
+	- git tag temp
+		○ tag the orphaned commits
+	- git branch <branch_name>
+		○ create a new branch from this
+		○ HEAD is still in detached state, however, and must checkout the branch to reattach it
+	- git checkout -b <branch_name>
+		○ best method, that creates a new branch and checks it out (reattaches the HEAD)
+	
+_____________________________________________________________
+Interactive (Staging) Mode
+
+Still need to commit once your done here
+
+IM allows you to stage files interactively, stage parts of files
+
+Enter interactive mode
+	- git add --interactive
+	- git add -I
+
+When in a command, the line heading will show what command you're using
+
+Hit enter without typing to exit that command when you're done with it (this will actually execute all the actions you did in that command)
+
+Type s (for status) to show the primary menu for what you need
+
+Commands
+	- update
+		○ allows you to add (stage) files that are already tracked by git
+	- revert (same as checkout from command line)
+		○ allows you to unstage stuff you have staged
+	- add untracked
+		○ gives a list of untracked files and allows you to add them to staging
+	- diff
+		○ works just like command line and shows the differences in a file
+
+______________________________________________________
+Patch Mode (Interactive Staging)
+
+Allows staging of portions of a changed file
+
+Git chooses how to break up your changes, and it breaks them into "Hunks" (areas where two files differ)
+
+Hunks can be
+	- staged, skipped, or split into smaller hunks
+
+After entering the file number to patch, hit enter again to actually launch patch mode
+
+It will show you the first hunk and ask if you want to stage it, with a list of commands you can do
+	- ?
+		○ will explain what each options is (it's a long list)
+
+	- git diff --cached
+		○ shows difference between what's in the staging area and what's in the HEAD
+
+Note: you can enter this mode directly from the command line too
+	- git add -p
+		○ or --patch
+	- git stash -p
+	- git reset -p
+	- git checkout -p
+	- git commit -p
+
+_______________________________________________________
+Split a hunk
+
+Must be one or more unchanged lines between changes for git to figure this out
+
+_______________________________________________________
+Edit a hunk
+
+Most useful when a hunk can't be split automatically
+
+	- e
+
+opens your text editor, each line either has a +, -, or # for comments
+there are some directions to help
+
+You can then remove the parts of the hunk that you don't want, keeping spaces for unchanged lines, - for removing, + for adding, etc.
+It's ok for you to move lines if it makes sense to do that
+
+when done, save it and close the file (you may also need to close a MERGE_MSG file
+
+your edited hunk is now staged
+
+_____________________________________________________
+Cherry Pick Commits
+
+Apply the changes from one or more existing commits
+
+Each existing commit is recorded as a new commit on the current branch
+
+Similar to copy/paste, except that new commits are going to have different SHAs
+
+Scenario -> on a branch, and you want to grab only one or two commits from master, but not merge with all of the newer commits to master
+
+when you cherry pick a commit -> you get its changes, but your new commit's SHA is different from the commit you cherry picked
+
+	- git cherry-pick <identifier>
+		○ identifier can be a SHA, range (SHA1..SHA3) gets all the commits in that range sequentially
+		○ can add --edit or -d to edit the commit message
+
+
+Cannot cherry-pick a merge commit
+
+_____________________________________________________
+Resolve Cherry-Picking Conflicts
+
+if you cherry-pick, and there is a conflict, you will get a message with hints
+
+Options:
+	- check git status for more hints
+	- you can resolve and git commit -> but you should really continue your cherry-pick
+	- best options:
+		○ fix conflicts and run `git cherry-pick --continue`
+			§ fix then
+			§ git add filename
+			§ git cherry-pick --continue
+		○ cancel the cherry pick by running `git cherry-pick --abort`
+
+_____________________________________________________
+Create Diff Patches
+
+Share changes via files
+
+Useful when changes are not ready for a public remote/branch
+Useful when collaborators do not share a remote
+Discussion, review, approval process
+
+	- git diff <from-commit> <to-commit> > output.diff
+		○ The last > writes the output of the command to output.diff
+		○ space or .. works between your commit SHAs
+
+	- from/to commit notes
+		○ the from commit needs to be the parent of the commit(s) you want to diff
+		○ if you want to see the last two commits, the from commit is the third SHA into the past
+
+
+_____________________________________________________
+Apply Diff Patches
+
+You've created or received diff patches, now you want to apply those changes
+
+Will apply the changes from a .diff file to our working directory (branch, status, etc.)
+	- makes the changes, but it does NOT commit them
+	- there is no commit history in the diff file, only changes
+
+
+	- git apply <filename.diff>
+
+This can fail if there are unaccounted for differences
+You must resolve these before you can apply the .diff
+
+
+_____________________________________________________
+Create Formatted Patches
+
+Export each commit in Unix mailbox format
+Useful for email distribution of changes
+
+Includes a diff, but also includes commit messages
+One commnit per file by default
+	- will export every commit (in the specified range)
+
+	- git format-patch <sha1>..<sha2>
+
+export all of the commits on the current branch that are NOT in master branch (can replace master with any branch name)
+	- git format-patch master
+
+export only a single commit, need -1 (that's one, not l)
+	- git format-patch -1 <SHA>
+
+put patch files into a directory with the -o option (will create the directory if it doesn't exist)
+	- git format-patch master -o <dir_name>
+
+output patches as a single file
+	- git format-patch <begin>..<end> --stdout > <name>.patch
+		○ the --stdout option tells git to push the output as one long string to the console instead of creating files, then > filename.patch writes it to a single file instead
+
+_______________________________________________________
+Apply Formatted Patches
+
+Extract author, commit message, and changes from a mailbox message and apply them to the current branch
+
+Similar to cherry-picking: same changes, different SHAs
+
+Unlike diff patches, this commit history IS TRANSFERRED
+
+Apply a single patch (assumes patch files are in the 'dir_name' folder within the cwd
+	- git am <dir_name/filename.patch>
+		○ am = apply mailbox or mailbox formatted patch
+
+Apply all the patches within the dir_name directory
+	- git am <dir_name>/*.patch
+		○ use the * wildcard
+
+Running this, will actually apply the commits (tho SHAs will be different)
+
+_______________________________________________________
+Rebase Commits
+
+Take commits from a branch and replay them at the end of another branch
+
+Useful to integrate recent commits without merging
+
+Cleaner and more linear project history
+
+Ensures topic/feature branch commits apply cleanly back to the master branch
+	- use to incorporate master branch commits into topic/feature branches to avoid merge conflicts later
+	- some companies/teams require this
+
+Essentially shifts changes on a branch to the tip of another branch such as master
+	- results in new SHAs for the commits on the branch being rebased for its existing commits since branching
+	- it functionally rewinds (or undoes the commits) in the current branch back to where it branched, saving them in temp storage, executes all of the commits on the branch used for the rebasing, then executes the commits from the current branch
+
+
+	- git rebase <branch_name>
+		○ branch_name like master or whatever
+		○ uses current branch by default, and moves the current branch commits after the last <branch_name> commit
+	- git rebase <rebasing_branch> <branch_to_rebase>
+		○ this syntax will not use the current branch, but move branch_to_rebase's commits to the tip of the rebasing_branch
+	
+	- git log --graph --all --decorate --oneline 
+		○ helps to visualize
+
+	- git merge-base <source_branch> <topic_branch>
+		○ return commit where the topic branch diverges (returns the commit SHA, but doesn't do anything or revert or change anything) 
+
+________________________________________________
+Merging vs Rebasing
+
+Merging
+	- adds merge commit
+	- nondestructive (still have all the old SHAs)
+	- complete record of what/when
+	- easy to under (hard reset)
+	- logs can become cluttered and non-linear
+
+Rebasing
+	- no additional merge commit
+	- destructive, SHA changes and commits are rewritten (can be ok depending what you need)
+	- no longer have complete record of what and when
+	- tricky to undo
+	- logs cleaner and more linear
+
+Golden Rule of Rebasing
+	- THOU SHALT NOT REBASE A PUBLIC BRANCH!
+		○ rebase abandons existing, shared commits and creates new, similar commits instead
+		○ collaborators would see part of the project history vanish!
+		○ this is realy bad if they've mad commits off of the commits that vanished
+	- only use on private/local branches and/or branches that you use exclusively
+
+Choosing between merging/rebasing
+	- merge to allow commits to stand out or be clearly grouped (bring large topic branches back into master)
+	- rebase to add minor commits in master into the topic branch
+	- rebase to move commits from one branch to another
+	- merge any time the topic branch is already public and being used by others
+
+______________________________________________
+Handling Rebase Conflicts
+
+Git will pause rebase before each conflict and allow you to fix
+
+	- git add <filename>
+		○ after resolving each conflict by going into the file and saving it
+		○ do this before git rebase --continue
+
+	- git rebase --continue 
+		○ when fixed to proceed to the next conflict
+	- git rebase --skip
+		○ skips this conflicting commit and goes to the next
+	- git rebase --abort
+		○ stop the rebase altogether (reverts any changes during the current rebase attept)
+
+_________________________________________________
+Rebase onto Other Branches
+
+	- git rebase --onto <newbase> <upstream> <branch>
+		○ takes <branch> off of <upstream> and moves it to the tip of <newbase>
+
+________________________________________________
+Undo a Rebase
+
+It is possible to undo a simple rebase, but it is destructive, so that can complicate things
+
+Undoing complex rebases may lose data
+
+preferred option is to reset
+	- git reset --hard ORIG_HEAD
+		○ ORIG_HEAD is a temp variable sort of like HEAD, it keeps track of where things were when doing a reset, rebase, or merge
+		○ ORIG_HEAD will change tho, if you do another reset, rebase, or merge, so be careful there
+		
+if ORIG_HEAD is changed due to another reset, rebase, or merge
+	- git rebase --onto <former-merge-base-sha> <new_upstream> <branch>
+		○ do another rebase to undo it
+		○ keep in mind this is another destructive rebase process
+
+________________________________________________
+Interactive Rebasing
+
+Chance to modify the commits as they're being replayed
+Opens the rebase to-do list and pauses at each step
+	- can reorder, skip, or edit commit contents
+
+not going over the 'exec' 
+
+	- git rebase -i <new_spot> <branch>
+		○ only difference is the -i option
+
+Opens your default text editor with a git-rebase-tools file
+	- lists its current plans
+	- has comments at the bottom for your commands
+	- you make the change you want using the commands, then save, then go back to your terminal
+		○ depending on what you did, another text editor file opens, make changes, then save, then go back to terminal
+		○ the terminal may provide extra instructions like using git commit --amend or whatever
+		○ If you are prompted, you may need to run 
+			§ git rebase --continue
+	
+Edit commits without moving them to a new merge base
+	- git rebase -i HEAD~3
+		○ this says to use the merge base that is 3 commits back from the current HEAD
+		○ pick up the last three commits, then put them in the exact same place, but let's you interactively edit
+	- ok to use this locally, but do NOT do this on public/shared branches where these commits are available
+
+______________________________________________
+Squash Commits
+
+folds two or more commits into one
+
+squash: combines change sets and concatenates the messages
+fixup: combine change sets and discards the messages
+
+If multiple authors of the commits, uses the first author in the commit series by default
+
+In a rebase todo, squash commits are rolled into the commit above, so need a pick above any to squash/fixup
+
+______________________________________________
+Pull Rebase
+
+Normal pull will pull and merge into local from the remote
+
+pull rebases will fetch from remote, then rebase instead of merging
+
+Keeps history cleaner by reducing merge commits
+
+Only use on local commits not shared to a remote
+
+will fetch all of the commits from the branch you pull, then move any of your new commits on that branch past the point where they differ to the end
+
+	- git pull --rebase
+		○ or -r
+		○ --rebase=preserve
+			§ preserve locally created merge commits and not flatten them
+		○ --rebase=interactive
+			§ opens the interactive feature like above
+
+______________________________________________
+Log Options (for tracking down problems/debugging)
+
+Log is the primary interface to git
+	- sorting, filtering, output formatting and more
+
+	- git help log
+		○ very useful
+
+	- git log -p
+		○ or --patch
+		○ lists commits as patches (diffs)
+
+	- git log -L <100,150>:<filename.txt>
+		○ list edits to lines 100-150 in filename.txt
+
+Can type 
+	- /<search string>
+		○ when in the log view (if there is a colon at the bottom) because that's the unix 'less' editor, and it does some cool stuff like looking for your <search string>
+		○ finds the first occurrence of the string, then type 'n' to find the next one
+		○ 'N' reverses and goes backwards
+	- up/down arrows to navigate
+
+	- q
+		○ quit
+
+_____________________________________________
+Blame
+
+browse an annotated version of a file
+	- who changed which lines and why
+	- probe history behind a file's contents
+	- which commit introduced a bug/feature
+
+	- git blame <filename.txt>
+	- git blame -w <filename.txt> 
+		○ ignore whitespace changes
+	- git blame -L <100,150> <filename.txt>
+		○ only looks at lines 100-150 in filename.txt
+		○ also works like <100,+5> with an incrementer
+	
+by default, git blame shows the current state (HEAD) of a file
+
+Look at specific version
+	- git blame <SHA> <filename.txt>
+	- git blame <SHA -- <filename.txt>
+		○ if you add other options, -- may be needed before filename
+
+if blame is too negative, add an alias for praise
+
+	- git config --global alias.praise blame
+		○ now can use 'praise' instead of 'blame'
+
+	- git annotate <filename.txt>
+		○ similar to blame, but has a slightly different output format
+
+_______________________________________________
+Bisect
+
+Find the commit that introduced a bug or regression
+Use it when you know there is a bad version that didn't use to have a problem
+
+Supply last known good revision and first known bad revision
+	- git will help with an automated process to find where the issue is
+
+Resets code to mid-point for testing
+	- mark it as good/bad, and continue to cut in half until you find the issue
+
+	- git bisect start
+	- git bisect bad <treeish>
+		○ treeish = branch, sha, tag, or leave blank for the current HEAD
+	- git bisect good <treeish>
+
+Do your testing -> your working directory will be set to a commit, and those details will be in the terminal
+	- git bisect good
+		○ test passed
+		○ HEAD is implied, which is the commit you're now on because of bisecting
+	- git bisect bad
+		○ test failed
+
+
+To exit:
+	- git bisect reset
+resets to the HEAD you started at before bisecting
