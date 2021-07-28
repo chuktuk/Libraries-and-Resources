@@ -1,0 +1,495 @@
+____________________________________________
+Intro
+
+Git is software to keep track of changes (version control system [VSC])
+
+aka Source Code Management (SCM)
+
+History
+	- Source Code Control System (SCCS) 1972 (Unix only)
+	- Revision Control System (RCS) 1982 (cross platform)
+	- Concurrent Versions System (CVS) 1986-1990
+	- Apache Subversion (SVN) 2000 (first files/directories)
+	- BitKeeper SCM (closed source) 2000
+		○ used for Linux kernel for 2002-2005 (weird since linux is open source)
+		○ distributed
+	- Git (2005)
+		○ created by Linus Torvalds (to manage Linux kernel source code)
+	- GitHub in 2008
+
+_______________________________________________
+Distributed Version Control
+
+DVC
+	- Different users each maintain their own repositories
+	- Changes saved as sets/packages
+	- Track changes, not versions -> CVS, SVN track versions
+	- Change sets can be exchanged between repositories
+	- Merge in change sets or apply patches
+	- No single master repository, many working copies, each with their own combination of change sets
+
+
+________________________________________________
+Configuration
+
+System level config
+	- applies to every user of the system by default
+	- /etc/gitconfig or Program files/git/etc/…
+
+User level config
+	- .gitconfig
+
+Project level
+	- <project>/.git/config
+
+	- git config
+		○ --system
+		○ --global (user level)
+		○ or no flags for project level
+
+	- git config --global user.name "<user name>"
+	- git config --global user.email "<me@mail.com>"
+
+	- git config --list
+		○ shows all configs
+
+	- git config user.name
+		○ or similar will list only a single config value
+
+	- git config --global core.editor "<editor name>"
+		○ set the default text editor
+		○ git config --global core.editor "atom --wait" 
+			§ tells git to open atom editor then wait for instructions from git
+		○ additional settings depending on the editor, can look this up
+
+	- git config --global color.ui
+		○ true/false
+			§ let git colorize the ui to help with viewing stuff
+
+______________________________________________________
+Git Auto-Completion
+
+Mac/Linux only autocompletion feature (windows installed already)
+	- start typing, then hit the tab key, and it will guess what you mean
+	- github.com/git/git
+		○ contrib folder
+		○ git-completion
+		○ choose the right one (bash for me)
+	- save the file as git-completion.bash
+	- mv git-completion.bash .git-completion.bash
+		○ rename the file using terminal (must be in correct dir) (home user dir is fine)
+	- Edit ~/.bashrc or ~/.bash_profile
+		○ if [ -f ~/.git-completion.bash ]; then
+		  source ~/.git-completion.bash
+		fi
+		
+	- using autocompletion
+		○ type 
+			§ git <command>
+				□ start typing then hit tab, if it flashes, hit tab again to pull up your options, type a little more, then hit tab again
+
+
+______________________________________________________
+Git help
+
+	- git help
+
+	- git help <command>
+		○ log, commit, etc
+
+	- q
+		○ exit the help
+
+	- man <command>
+		○ unix help
+		○ man <git-log> same as git help log
+
+_______________________________________________________
+Initialize a Repository
+
+	- git init
+		○ inside a directory to serve as the root folder for the project
+
+________________________________________________________
+Git File Storage
+
+	- .git (folder)
+		○ branches
+		○ hooks
+		○ HEAD
+		○ config
+			§ project level config
+			§ probably only folder you really touch
+		○ delete this folder to remove git tracking and essentially delete the repo
+
+_________________________________________________________
+Commit Messages Best Practices
+
+	- short single line summary (< 50 chars)
+		○ optionally followed by a blank line and a more complete description
+	- each line < 72 chars
+	- always present tense and not past tense
+	- use hypens or asterisk for bullet points
+	- add tracking numbers
+	- can develop shorthards for your org
+		○ ghi# (github issue and number) common shorthand
+	- clear and descriptive
+
+_________________________________________________________
+View git commit log
+
+	- git log
+		○ newest at top
+		○ pretty detailed
+			§ commit sha, author, datetime, commit message, head location
+
+	- git help log
+		○ for options
+
+	- git log --oneline
+		○ shows all commits and first line of the commit message
+	- git log -n#
+		○ limits the log to the most recent # commits
+	- git log --since=YYYY-MM-DD
+		○ all commits since the provided date
+	- git log --until=YYYY-MM-DD
+		○ can use both since/until
+	- git log --author="<name>"
+		○ can use just first/last name too, shows all that apply
+	- git log --grep="<regexp>"
+		○ any commit that has the string in it
+
+_____________________________________________________
+The Three Trees
+
+	- Repository
+		○ committed
+	- Staging Index
+		○ added
+	- Working
+		○ saved
+
+	- usually pull directly from repo to working
+	- goes through all 3 to update the repo
+
+______________________________________________________
+SHA
+
+	- Hash values
+	- git generates a checksum for each change set
+	- checksum algo's convert data into a simple number
+	- same data always = same checksum
+	- data integrity is fundamental
+	- each value is unique and tied to the data that created the checksum
+	- git uses SHA-1 algo to create checksums
+	- 40 char hexadecimal string 0-9 or a-f
+	- uses the code and the metadata to create the SHAs
+	- parent SHA, author, message, file/code changes
+	- links commits in a history of changes
+
+____________________________________________________
+HEAD
+
+Pointer to the tip of the current branch in repository
+last state of repo, what was last checked out
+points to parent of next commit where writing commits takes place
+
+	- HEAD info
+		○ .git/HEAD
+			§ tells you this info is in .git/refs/heads/master
+		○ .git/refs/heads/master
+			§ SHA for where the HEAD is currently
+
+____________________________________________________
+Untracked Files / Adding Files
+
+	- git doesn't know anything about these files, and they're not in the repo
+	- any changes at this point are not tracked, there is no version history while files are untracked
+
+	- git add
+		○ adds to the staging tree
+	- git add .
+		○ add all files in the current dir
+	- git add <filename>
+		○ add one file
+
+	- git reset HEAD <filename>
+		○ un-stage <filename>
+
+Edited Files
+	- git shows these as "modified"
+		○ changes not staged for commit
+
+_____________________________________________________
+View Changes with diff
+
+	- git diff
+		○ compares staging version to working dir
+			§ if all changes have been committed, effectively compares repo to working
+			§ if you `git add` a file and run `git diff`, changes are NOT displayed anymore
+	- git diff --staged
+	- git diff --cached
+		○ shows only changes that are in staging area
+		○ repo vs staging
+		○ cached vs is older, staged is newer, both do the same thing
+
+diff is a unix program invoked by git
+
+diff only shows the lines with changes (snippets)
+
+will shows changes for all files that have changes
+
+added/removed/changed
+
+Will show the line number, and how many lines are being displayed
+
+	- -S (return)
+		○ Toggles the diff between wrapping long lines or wrap lines in the diff mode
+
+	- git diff --color-words
+		○ +/- are gone, but does show the 'words' that are different
+
+_____________________________________________________
+Delete Files
+
+	1. Remove from the project directory structure
+		a. physically remove/move the file
+		b. git rm <filename>
+		c. git commit
+	2. git rm <filename>
+		a. (will permanently delete the file with this command)
+		b. automatically stages this for committing
+		c. git commit
+
+_____________________________________________________
+Move/Rename Files
+
+	1. Make changes using the folder GUI
+		a. shows the original as deleted, and the renamed/moved as new/untracked
+		b. need to add both changes to staging
+			i. git add <new_filename>
+			ii. git rm <old_filename>
+		c. now git shows them as being renamed (~50% similar it will recognize it as being renamed) with git status
+	2. git mv <filename> <new_filename>
+		a. git immediately recognizes as renamed, and automatically stages this change
+		b. uses the mv (move) command
+
+_____________________________________________________
+Stage and Commit Shortcut
+
+	- git commit -a
+	- git commit --all
+		○ commit all the files
+		○ stages/commits all changes to tracked files
+		○ does NOT include untracked files
+
+	- git commit -am "<message>"
+		○ proper syntax using the message too
+	- git commit -a -m "<message>"
+		○ also works
+
+_____________________________________________________
+View a Commit
+
+	- git show <SHA>
+		○ shows a diff for that commit
+		○ can use --color-words just like with diff
+
+____________________________________________________
+Compare Commits
+
+	- git diff <oldest_sha>..<later_sha>
+		○ compares those two versions and what is different
+
+	- if using the current HEAD, you can type HEAD instead of a SHA
+
+_____________________________________________________
+Multi-Line Commit Messages
+
+Leave off the commit message
+	- git add <>
+	- git commit
+
+	- git commit -a
+
+Opens the default text editor
+Filename is COMMIT_EDITMSG
+
+# comments out a line
+An empty message aborts the commit
+
+Add primary message on first line
+Skip a line
+Type the longer message below, adding new lines for formatting
+
+Save/close the file
+
+________________________________________________________
+Atomic Commits
+
+Best practice to make atomic commits
+
+Small commits
+
+Only affect a single aspect
+	- grouped by topic
+
+Makes commits easier to understand, work with, and find bugs
+
+Improves collaboration
+
+	- git add <dir>/
+		○ adds everything in that directory to staging
+
+
+______________________________________________________
+Undo Changes in the Working Dir Tree
+
+If changes haven't been staged/committed
+	- git checkout -- <filename>
+		○ the -- tells git that it should checkout a filename
+		○ replaces what's in your working dir with what's in the repo tree
+		○ use . instead of filename to checkout all files
+
+_____________________________________________________
+Unstage Files/Changes
+
+You made changes, then you used git add to stage those changes
+
+	- git reset HEAD <filename>
+		○ changes are still in the working dir, but they have been unstaged
+
+_____________________________________________________
+Ammend Commits (already in the repo)
+
+git doesn't want you to change previous commits
+
+you can potentially make changes to the most recent commit, because there are not any commits depending on it
+	- recall that SHA values include info about the parent commit, dates, author, etc., so altering a commit in the middle would break things
+
+	1. stage your changes
+	2. git commit --amend -m "<message>"
+
+Most recent commit is gone, there is a new commit with the new message that includes the original commit changes and the recently added changes
+
+Don't even need to have any changes. Use the command in 2. above to change your commit message (also changes the author, date, SHA, etc.)
+
+
+_____________________________________________________
+Retrieve Old Versions of Files
+
+Correct way to undo changes in older commits is to turn those into new changes and new commits
+
+May still be helpful to retrieve an old version of a file
+
+	- git log
+		○ view commits
+	- git show <SHA>
+		○ shows the diff of the change
+
+	- grab the SHA of the commit BEFORE any changes you want to undo
+	- that's the file state you want
+
+	- git checkout <previous_SHA> -- <filename>
+		○ this retrieves only the specified file, from the current branch (--), and stages this change to be committed
+	- git diff --staged
+		○ to see those changes
+
+____________________________________________________
+Revert a Commit
+
+	- git revert <SHA>
+		○ opens an editor for COMMIT_EDITMSG
+		○ commits upon saving/closing the editor
+
+Adds a new commit, and the default message states that the new commit undoes the previous commit
+The old commit is still there in the chain/git log
+
+Keeping commits ATOMIC makes it much easier to do this
+
+____________________________________________________
+Remove Untracked Files from the Repo
+
+Scenario
+	- you get files in the project that you don't want added/committed
+
+	- git clean <option>
+		○ -i (interactive)
+		○ -n (dry-run, shows you what would happen)
+		○ -f (force, cleans the repo, and actually deletes the files from the working dir)
+		○ ONLY removes/deletes untracked files
+			§ working dir only, not anything staged/committed
+
+	- the delete is a permanent delete
+
+______________________________________________________
+.gitignore
+
+must go in the project's root directory, parallel to the .git folder
+
+filenames
+pattern matching
+	- *?[aeiou][0-9]
+	- !
+		○ means not, e.g. !index.php combined with *.php, will ignore all .php files except index.php
+
+directory
+	- <dir_name>/
+
+# comments in .gitnore
+
+types of files to ignore
+	- compiled source code
+	- packages and compressed files
+	- logs and databases
+	- OS generated files
+	- user uploaded assets
+		○ images, pdfs, videos
+
+github.com/github/gitignore has some useful templates
+
+_______________________________________________
+Globally Ignore Files in git
+
+Ignores files in all repositories
+
+Settings are not tracked in any repo, but by user
+
+	- git config --global core.excludesfile <file_path/file_name>
+
+A common choice is to store in a user directory (since this is a user setting)
+	- ~/.gitignore_global
+		○ or similar
+		○ making it a dot file makes it usually hidden
+
+_____________________________________________
+Ignore Tracked Files
+
+Files that are already tracked can't be ignored by just adding to the .gitignore
+
+	- git rm --cached <filename>
+		○ this untracks a file
+
+This keeps the file in your working directory, but removes it from being tracked
+
+Stage/commit changes to .gitignore, and you'll be good
+
+____________________________________________
+Track Empty Directories
+
+Git tracks files and the dirs needed to get to files
+
+Git ignores empty directories
+
+	- git ls-tree HEAD
+		○ lists all of the files being tracked in the current HEAD
+
+Add a dot file to that dir
+	- make sure it's not empty
+	- .gitkeep
+		○ this is a convention
+		○ dot files are hidden, so that's nice
+
+In Unix
+	- touch <dir_name>/.gitkeep
+creates it if it doesn't exist
