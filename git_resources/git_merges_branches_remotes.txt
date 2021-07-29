@@ -1,0 +1,710 @@
+_________________________________________________
+Referencing Commits
+
+Tree-ish
+	- tree is a directory containing files or other directories
+	- also identifiers which reference a tree
+		○ commits (it refers to a tree at the point when a commit has been applied)
+
+Tree-ish
+	- SHA (min 4 chars, 8-10 is pretty standard)
+	- HEAD pointer ref
+		○ .git/HEAD (usually refers to something else)
+		○ .git/refs/heads/<branch>
+			§ file that has the SHA for the HEAD
+		○ git show HEAD
+	- branch ref
+	- tag ref
+	- ancestry
+
+____________________________________________________
+Ancestry
+
+parents and grandparents etc. for commits
+
+Parent commit
+	- <tree-ish>^
+		○ like SHA, HEAD, master
+		○ add more ^ for grandparents, ggp, etc.
+	- <tree-ish>~#
+		○ the number tells you have far to go back, 1 for parents, etc.
+
+	- git show <sha>^^ == git show <sha>~2
+	- git show HEAD^^ == git show HEAD~2
+		○ both show two commits back (grandparent of the current HEAD)
+
+____________________________________________________
+Tree Listings
+
+	- git ls-tree <tree-ish>
+		○ checkout git help ls-tree
+
+	- provides a list of objects in that tree
+
+	- git ls-tree <tree-ish> <dir_name>/
+		○ you can provide a directory name followed by a slash to view the contents of that directory (tree) within this view
+		○ you can dive into anything that is listed as a 'tree' by ls-tree
+
+____________________________________________________
+Filter the Commit Log
+
+Can combine many of these options into one command
+	- git log
+		○ git log -#
+			§ limit to # commits only
+		○ git log --since=YYYY-MM-DD (after)
+		○ git log --until=YYYY-MM-DD (before)
+			§ can provide phrases
+			§ --until="3 days ago"
+			§ --after=2.weeks --before=3.days
+		○ git log --author="<name>"
+			§ can do only first name, only last name, or <FirstName LastName>
+		○ git log --grep="<regex>"
+			§ providing a string uses substring matching (contains your string)
+		○ git log SHA1..SHA2
+			§ works with other treeishes
+			§ can use HEAD instead of SHA2
+		○ git log <filename>
+			§ only changes that relate to that file
+			§ also works with dirs
+
+	- git help log
+		○ for more!
+
+____________________________________________________
+Format the Commit Log
+
+	- git log -p
+		○ shows the patch or change set (what changed)
+		○ shows diffs associated with commits
+	- git log --stat
+		○ statistics about what was changed in each commit
+	- git log --format=<format>
+		○ medium (default)
+		○ short
+		○ long
+		○ oneline (git log --oneline: is a bit more succint)
+		○ full
+		○ fuller
+		○ email
+		○ raw
+	- git log --graph
+		○ shows commit/branch history
+	- git log --graph --all --oneline --decorate
+		○ nice simple map
+
+________________________________________________
+Branches
+
+Easy to create, easy to delete, easy to work with
+
+Isolate features and sections of work
+
+One working directory -> changes based on which branch/commit you have checked out
+
+______________________________________________
+Create Branches
+
+New branches are created off of the currently checked out branch from the current HEAD pointer
+
+	- git branch
+		○ get a list of branches
+
+	- git branch <branch_name>
+		○ no spaces, letters, underscores, numbers
+
+.git/HEAD
+	- file contains the path to the file below for the current head (e.g. refs/HEAD/master)
+.git/refs/heads/
+	- dir contains a file for each branch
+	- this file contains the SHA for where the most recent HEAD pointer is/was
+
+_______________________________________________
+Switch Branches
+
+	- git checkout <branch_name>
+		○ checks out a branch that already exists
+	- git checkout -b <branch_name>
+		○ creates AND checks out new branch all at once
+
+________________________________________________
+Switch Branches with Uncommitted Changes
+
+Trying to switch branches with uncommitted changes will produce an error message and abort
+You must:
+	a. commit changes
+	b. remove the changes (checkout the file again)
+	c. stash changes
+
+Not all changes will prevent switching
+	- changes in working dir conflict with what's in other branch (would destroy changes)
+	- can switch if changes in working dir can be applied without ANY conflict
+	- can switch if files are not being tracked
+
+______________________________________________
+Compare Branches
+
+	- git diff <branch1>..<branch2>
+		○ compares those branches by showing diffs
+	- typically put the older branch first
+		○ tho older can be tricky with branches
+
+Can add a ^ to go back to the branch's ancestor too
+	- git diff branch1..branch2^
+
+	- git branch --merged
+		○ shows branches whose tips have been merged in the current branch
+	- git branch --no-merged
+		○ shows branches whose tips have not been merged in the current branch
+
+____________________________________________
+Rename Branches
+
+	- git help branch
+		○ to see help about branches
+
+	- git branch -m [<old_branch>] <new_branch>
+		○ effectively 'moves' the branch to the new name
+		○ if you omit <old_branch> name, it renames/moves the currently checked out branch
+
+Do NOT want to rename branches if other users have already used these branches
+
+____________________________________________
+Delete Branches
+
+	- git branch -d <branch_name>
+		○ deletes a branch (LOST FOREVER!)
+
+Cannot delete a branch that is checked out
+
+If you have commits on the branch you're trying to delete
+	- you get a message if that branch isn't fully merged
+	- it says you can still delete it, but you must use -D flag to force the delete
+
+______________________________________________
+Configure Command Prompt to Show Current Branch (Unix only)
+
+Add the current branch name to the command prompt
+	- similar to .git-completion.bash
+
+	- __git_ps1
+		○ if you get an error with this, then the feature is not fully configured
+
+Download the script from
+	- https://github.com/git/git
+	- contrib/completion/git-prompt.sh
+	- get the script and put on local system
+	- git-prompt.bash (or .sh)
+	- save in your user directory
+	- rename to a dot file
+		○ mv git-prompt.bash .git-prompt.bash
+
+Edit the .bash_profile or .bashrc
+
+Add the code:
+
+if [ -f ~/.git-prompt.bash ]; then
+  source ~/.git-prompt.bash
+  export PS1='\W$(__git_ps1 "(%s)") > '
+fi
+
+_____________________________________________
+Reset Branches
+
+Any type of reset will effectively undo commits
+	- this should NOT be done on commits that have been shared with collaborators, unless necessary steps/best practices to inform are taken
+	- avoid on shared commits if possible
+
+Reset changes the files in the staging index and/or the working directory to the state they had when a specified commit was made
+
+Functionally moves the HEAD pointer to the specific commit
+
+Types of resets
+	- soft
+	- mixed
+	- hard
+
+Soft Reset
+	- moves the HEAD
+	- does not change the staging index
+	- does not change the working directory
+	- only effective change is where new commits will be made
+	- git reset --soft <tree-ish>
+		○ commit, branch, tag, etc.
+
+Mixed Reset
+	- moves the HEAD
+	- changes the staging index to match the repo
+	- does NOT change the working dir
+	- git reset --mixed <tree-ish>
+	- default method if you just do git reset
+
+Hard Reset
+	- moves the HEAD
+	- changes the staging index to match the repo
+	- changes the working dir to match the repo
+	- completely rollsback to that snapshot
+	- git reset --hard <tree-ish>
+
+Use Scenarios
+	- Soft
+		○ return to an old state and leagve code changes staged
+		○ useful for ammending one or more commits (does allow you to recommit those changes)
+		○ roll back in time, but hold on to changes
+		○ similar to git commit --amend
+		○ PREVIOUS COMMITS WILL BE DISCARDED (bad if commits have been shared with collaborators)
+			§ of course this is true for all types of resets
+		○ All the changes that were committed will be moved back to the staging area in sequence
+			§ git reset --soft HEAD^
+				□ moves back one commit, moves those changes back to staging
+			§ git reset --soft HEAD^^
+				□ would move back two commits, moving the changes from each commit back to staging
+			§ if you did both of these commands, it would move you back 3 commits FYI
+		○ git ammend will only let you change the last commit, so you can use a soft reset to go back more than one commit to ammend
+		○ UNDO a soft reset
+			§ if you copy the SHA for where the tip was (HEAD before resetting)
+			§ you can `git reset --soft <orig_sha>` to move the HEAD back where it was (redoes the commit)
+				□ this is only possible if no additional commits have been made since resetting
+			§ otherwise, that commit is effectively erased, tho staged changes remain
+		○ You could do `git reset --soft HEAD^^` followed by a commit to combine the last two commits into one
+
+	- Mixed (default)
+		○ leaves code changes in working directory
+		○ most useful for reorganizing commits
+		○ PREVIOUS commits will be discarded
+		○ changes still exist in your working directory, but these changes are not staged
+		○ UNDO a mixed reset
+			§ same as soft `git reset --mixed <original_sha>` if you copied the original HEAD sha before resetting
+			§ only possible if no commits have been made since resetting
+
+	- Hard
+		○ useful to permanently undo commits
+		○ ALL changes will be discarded
+		○ PREVIOUS commits and changes discarded
+		○ UNDO a hard reset
+			§ can `git reset --hard <original_sha>` for a short term, but orphaned commits that aren't used will be cleaned up by git garbage collection after a time
+		○ useful to make one branch look like another branch
+			§ checkout the branch you want to change
+			§ git reset --hard <other_branch>
+			§ current branch now looks exactly like <other_branch>
+		○ if you want to keep some changes, create a  new branch first before resetting the branch you're on
+
+_________________________________________________
+Merge Code
+
+Best practice to checkout the branch where you are receiving changes
+
+Review changes first
+	- git diff <current_branch>..<branch_to_bring_in>
+
+	- git merge <branch_to_bring_in>
+		○ brings the specified branch in to the current branch
+
+Best practice to only merge with a clean working directory
+	- can complicate things if you have uncommitted changes when merging
+	- commit or stash before merging
+
+_________________________________________________
+Fast-Forward vs True Merges
+
+Fast-Forward
+	- a new commit is not 100% necessary because the HEAD pointer is an ancestor of the branch to bring in
+	- this means you can simply add to the HEAD to produce the merge (almost like you never branched in the first place)
+	- all changes on the receiving branch already exist in the branch to bring in
+	- says 'fast-forward' when merging
+
+True/real merges
+	- the branch receiving the changes has additional commits since branching
+	- the changes being brought in must reconcile with the new changes on the receiving branch
+	- says merge made by recursive strategy when merging
+
+______________________________________________
+Merge Conflicts
+
+Occurs when there are changes to the same line in both branches. Which to keep?
+
+When a conflict occurs -> you are still in the middle of the merge
+You get a message for which file(s) have the conflict, and that the conflicts need to be fixed then commit the result
+
+	- git status
+		○ reveals which branch you are on, and that you have unmerged paths
+		○ message says to fix conflicts and run git commit
+		○ use git merge --abort to abort the merge
+		○ also lists unmerged paths and use git add <file> to mark the resolution
+			§ the unmerged paths message tells you which file(s) conflict
+
+Looking at the file, there will be 
+<<<<<<<<<<<< HEAD
+<lines of the file>
+=========
+<lines of the file>
+>>>>>>>>>>>> <merging_in_branch_name>
+
+where the two <lines of the file> sections are the lines that conflict between the two branches
+	- it shows you both versions
+	- the first (top) set is usually the current branch
+	- the second (bottom) set is usually the branch you are bringing in
+
+___________________________________________________
+Resolving Merge Conflicts
+
+Three ways
+	- abort the merge
+	- resolve conflicts manually
+	- use a merge tool
+
+Abort
+	- git merge --abort
+
+Manual
+	- git diff --color-words <current_branch>..<branch_to_bring_in> <filename>
+		○ lets you see exactly what the conflicts are in <filename>
+		○ doesn't have to be current branch, but usually you should be on the branch receiving the changes
+	- git show --color-words
+		○ shows the differences between the two branches since you are in the middle of a merge
+	- start editing one of the <lines of the file> (see above for details) using your editor of choice
+		○ make it look exactly like you want it to look after the merge
+	- remove the other <lines of the file> block, because it doesn't look exactly like you want
+	- remove the three markers added because of the conflict
+		○ <<<<<<<<<<<<< HEAD
+		○ ==========
+		○ >>>>>>>>>>>>> <branch_name>
+	- test the changes using your code executor, or view in browser, or whatever
+	- git add <filename>
+	- says whether or not all conflicts are fixed
+	- do this for all conflicted files
+	- once you have, it says All conflicts fixed but you are still merging, use git commit to conclude merge
+	- git commit
+		○ will probably open your editor for a commit message
+		○ save/close
+		○ merge is completed automatically
+	- can undo if needed with a git reset --hard <sha_you_want>
+
+Merge Tool
+	- git help mergetool
+		○ will tell you the tools available
+		○ they are programs that can help
+	- git mergetool --tool=<which_tool>
+
+_____________________________________________
+Strategies to Reduce Merge Conflicts
+
+	- keep lines short
+	- keep commits small and focused (atomic commits)
+	- beware of stray edits to whitespace (spaces, tabs, line returns)
+		○ if collaborating, get on the same practices with others
+	- merge often
+		○ keeps merges small, less likely to conflict
+	- track changes to master
+		○ merge changes from master into your branch
+		○ keeps your branch up-to-date
+
+____________________________________________
+Stash Changes
+
+Save changes in the stash
+	- special 4th area of git separate from the working dir, staging, repo
+
+Why?
+	- you have working dir changes that you don't want to lose, but you want to switch branches or something like that
+	- you don't want to commit before switching
+
+	- git stash save "<some descriptive words>"
+		○ changes have been moved into 'the stash'
+		○ now you can checkout another branch
+		○ -u or --include-untracked
+			§ will include untracked files
+		○ newest item is added at stash index 0, older stashes move down the list
+
+git stash does NOT include untracked files by default
+
+_____________________________________________
+View the Stash
+
+	- git stash list
+		○ provides a list of all stashed changes
+		○ this list is 0 indexed
+
+Syntax for the list
+	- stash@{<#>}
+
+View an item in the stash
+	- git stash show stash@{<#>}
+		○ where your # corresponds to the number of the stash item to view
+		○ returns a diff stat by default (just the files changed and how many lines etc.)
+	- git stash show -p stash@{<#>}
+		○ shows a patch version instead
+		○ the actual diff
+
+Changes in the stash are independent of the branch you're in
+	- they don't care which branch you were in when you created it or which branch you're in when you view it
+
+___________________________________________
+Retrive Stashed Changes
+
+First thing to do is figure out where you want to use it
+	- checkout the correct branch
+
+Retrieve changes to the working directory in your current branch
+	- git stash pop stash@{<#>}
+		○ the stash@ part is optional
+		○ default is to get the first (newest) stash item
+		○ this removes the change from the stash 
+	- git stash apply stash@{#}
+		○ the stash@ is optional
+			§ will apply the first (newest) stash item by default (index 0)
+		○ applies the changes to the current working dir
+		○ leaves the changes in the stash to apply again later
+
+Merge conflicts are possible with this
+
+__________________________________________
+Clear the Stash
+
+Delete stashed changes
+	- git stash drop stash@{<#>}
+		○ can omit the stash@
+		○ deletes the first item (index 0 by default)
+	- git stash clear
+		○ deletes the entire stash
+	- git stash pop
+		○ remember that this applies and deletes a stash item
+
+_________________________________________
+Local vs Remote Repos
+
+Local repos work without any need for a remote
+
+Remotes are hosted on a server
+	- better for collaboration
+	- push/pull from them
+
+Remotes work exactly the same as local repos
+
+Results in a new branch available on your local system
+	- origin/<branch_name>
+		○ this branch tries to stay in synch with your remote
+
+
+Fetch will pull the changes from the remote to your origin/<branch_name>, but not yet to your local <branch_name> repo
+	- still need to merge it into your local branch
+
+
+___________________________________________
+Add the Remote Repo to the Local Repo
+
+Create it in GitHub
+	- push an existing repo from the command line
+		○ git remote
+			§ shows a list of current remotes
+		○ git remote add origin <url>
+			§ copy/paste the url from GitHub
+
+It is possible to have more than one remote, but typically it's only one, and typically it's 'origin'
+
+	- git remote rm origin
+		○ deletes the remote named origin
+		○ can delete other remotes if you have others that aren't origin
+
+_____________________________________________
+Create a Remote Branch
+
+Do this when you already have the project locally
+
+	- git branch
+		○ view branches on local
+		○ -r view branches on remote
+		○ -a view all branches
+
+checkout the branch you want to push up to the remote
+
+	- git push -u origin <branch_name>
+		○ may ask for credentials
+		○ can add those to git config
+		○ use the -u flag when first publishing
+
+your project stores info about remotes in
+	- .git/refs/remotes
+		○ has a folder for each remote
+	- .git/refs/remotes/origin
+		○ lists all branches
+			§ each branch file contains a SHA that points to the tip of that branch (or HEAD)
+
+_______________________________________________
+Clone a Remote Repository
+
+Do this when the project is on a remote, but you don't have it locally yet
+
+Get the clone URL from GitHub
+
+	- cd to the dir where you want the project to exist
+		○ this is actually the parent folder of the project
+		○ e.g. Projects folder
+		○ git clone will create a new dir that actually contains the project
+	- git clone <url> [project_name]
+		○ default is to use the repo name as the dir name unless you provide a different project_name
+	
+______________________________________________
+Track Remote Branches
+
+tracking -> keep closely in sync
+	- pull/merge changes in frequently
+
+Cloning a remote repo or using -u flag when pushing will track the remote
+
+Can edit the .git/config file to add that
+	- not preferred
+
+Two methods (they're the same) to set remote tracking if you didn't clone or -u when first pushing the branch
+	- git branch -u <upstream>
+	- git branch --set-upstream-to=<upstream>
+		○ <upstream> is what you are calling the remote version
+
+Example for a branch that already exists local and remote called non_tracking
+	- git branch -u origin/non_tracking non_tracking
+		○ the last non_tracking is needed if you don't have non_tracking checked out
+
+	- git branch --unset-upstream <branch_name>
+		○ will remove tracking
+
+	- git log
+		○ will show the tracking branch location for origin/<branch_name> rather than the actual remote
+		○ this does NOT reflect any changes on the remote that have not yet been fetched
+
+______________________________________________
+Push
+
+	- git push origin <branch_name>
+		○ if you have a tracking branch `git push` is enough
+
+______________________________________________
+Fetching
+
+Fetching updates the tracking branch on the local system, but not the local branch or working dir
+
+	- git fetch origin <branch_name>
+		○ brings down info from the remote, but does not alter the local branch or the working dir
+		○ if you only have one remote & branch, and it is already tracked, git fetch is sufficient
+
+No merges were creating in the making of this fetch
+
+Always fetch before you work
+Always fetch before you push
+Always fetch before you go offline (off the grid w/o internet access)
+Always fetch often
+
+______________________________________________
+Merge in Fetched Changes
+
+	- checkout branch you want to merge into (local branch)
+
+	- git merge origin/<branch_name>
+		○ works like any other merge
+		○ merges with the remote tracking branch (not the actual remote)
+			§ so good idea to `git fetch` first to ensure you have the latest remote changes
+
+	- git pull
+		○ == git fetch + git merge
+
+____________________________________________
+Checkout Remote Branches
+
+Cloning by default only gives you the master/main
+
+	- git branch -r
+		○ shows remote branches
+
+	- git branch <branch_name> origin/<branch_name>
+		- creates a new branch based on the origin tracking branch
+	- git checkout -b <branch_name> origin/<branch_name>
+		- creates just like above but also checks it out
+
+__________________________________________
+Push to a Remote that Has Extra Commits
+
+Will fail if you try to push when there are commits on the remote that haven't been fetched
+
+Must fetch/merge (pull) before you can push
+
+_________________________________________
+Delete a Remote Branch
+
+Remove a branch from the remote
+Useful when a feature branch is complete and merged
+
+	- git push origin :<branch_name>
+		- will remove the branch from the remote
+		- the : is the key here with nothing before it (push nothing to :<branch_name>
+		- branch may still exist on the local repo
+	- git push origin --delete <branch_name>
+		- does the same as above
+		- removes the branch from the remote only
+
+________________________________________
+Enable Colaboration
+
+Add collaborators to your projects
+	- Got to GitHub -> Settings -> Collaborators tab -> search -> choose and Add collaborator
+		- allows that user to clone, then read/write
+
+Open Source Projects
+	- best practices
+		- do it in forks
+		- decide what change/feature you want to contribute first
+		- review the open issues and pull requests first to be sure no one else is already doing that
+		- start a conversation to let people know what you're thinking of doing and your game plan, also stake claim to that feature/change
+	- Everyone will  have read access
+		- fork a project
+			§ adds it to your account
+			§ clone the project
+			§ make your changes
+			§ push them to your remote fork
+			§ create a pull request
+				□ choose the branches you want to submit
+				□ add a message that describes it
+				□ make your case
+
+_______________________________________
+Collaboration Workflow Example
+
+Scenario -> creating a new feature branch off master on a collaborated project (not forked, but cloned)
+
+Me
+	- git checkout master
+	- git fetch
+	- git merge origin/master
+	- git checkout -b <feature_branch>
+	- DO THE WORK
+	- git add <files>
+	- git commit
+	- git fetch
+		- merge if necessary
+	- git push -u origin <feature_branch>
+		- contact collaborators for review
+	
+Collaborator
+	- git checkout master
+	- git fetch
+	- git merge origin/master
+	- git checkout -b <feature_branch> origin/<feature_branch>
+	- POKE THROUGH AND WORK AND TEST
+	- git log
+	- git show
+	- DO ANY ADDITIONAL WORK/TWEAKS
+	- git add
+	- git commit
+	- git fetch (and merge if necessary)
+	- git push
+		- contact collaborators
+
+Me
+	- git fetch
+	- git log -p <feature_branch>..origin/<feature_branch>
+		- view the changes collaborator made
+		- like the changes and want to accept
+	- git merge origin/<feature_branch>
+	- git checkout master
+	- git fetch
+	- git merge origin/master (if needed)
+	- git merge <feature_branch>
+	- git push
