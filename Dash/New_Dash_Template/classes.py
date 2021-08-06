@@ -244,11 +244,22 @@ class DashDF(DataFrame):
             filter_action='native',
             sort_action='native',
 
+            # new styling
+            style_header={'whiteSpace': 'normal'},
+            fixed_rows={'headers': True},
+            style_table={'height': '400px'},
+            virtualization=True,
+            style_cell={'minWidth': cell_width},
+            export_format='csv'
+
+            # old styling
             # define table layout
-            style_cell={'minWidth': cell_width,
-                        'width': cell_width,
-                        'maxWidth': cell_width},
-            style_table={'overflowX': 'auto'},
-            page_size=page_size)
+            # style_cell={'minWidth': cell_width,
+            #             'width': cell_width,
+            #             'maxWidth': cell_width},
+            # style_table={'overflowX': 'auto'},
+            
+            # page_size=page_size)
+        )
 
         return table

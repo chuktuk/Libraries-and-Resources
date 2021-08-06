@@ -210,14 +210,14 @@ class DashDF(DataFrame, ABC):
         else:
             data = self.to_dict('records')
 
-        long_column_names = [{"if": {"column_id": column}, "min-width": "300px"} for column in self.columns if
-                             len(column) >= 30]
-        med_column_names = [{"if": {"column_id": column}, "min-width": "250px"} for column in self.columns if
-                            (len(column) > 15 and len(column)) < 30]
-        small_column_names = [{"if": {"column_id": column}, "min-width": "150px"} for column in self.columns if
-                              len(column) <= 15]
+        # long_column_names = [{"if": {"column_id": column}, "min-width": "300px"} for column in self.columns if
+        #                      len(column) >= 30]
+        # med_column_names = [{"if": {"column_id": column}, "min-width": "250px"} for column in self.columns if
+        #                     (len(column) > 15 and len(column)) < 30]
+        # small_column_names = [{"if": {"column_id": column}, "min-width": "150px"} for column in self.columns if
+        #                       len(column) <= 15]
 
-        adjusted_columns = long_column_names + med_column_names + small_column_names
+        # adjusted_columns = long_column_names + med_column_names + small_column_names
 
         table = dash_table.DataTable(
 
@@ -235,15 +235,23 @@ class DashDF(DataFrame, ABC):
             # define filter and sort behavior
             filter_action='native',
             sort_action='native',
+            
+            # new styling
+            style_header={'whiteSpace': 'normal'},
+            fixed_rows={'headers': True},
+            style_table={'height': '400px'},
+            virtualization=True,
+            style_cell={'minWidth': cell_width},
+            export_format='csv'
 
             # define table layout
             # style_cell={'minWidth': cell_width,
             #             'width': cell_width,
             #             'maxWidth': cell_width},
-            style_table={'overflowX': 'auto'},
+            # style_table={'overflowX': 'auto'},
             # style_data={''},
 
-            style_cell_conditional=adjusted_columns,
+            # style_cell_conditional=adjusted_columns,
 
             page_size=page_size)
 
