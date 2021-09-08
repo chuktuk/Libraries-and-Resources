@@ -1,0 +1,38 @@
+pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --upgrade ….
+
+navigate to repo.anaconda.com/pkgs/main/win-64/current_repodata.json
+click the lock by the https//
+Click Certificate
+Go to Certification Path tab
+click the top level (santeecooper-MCCERTSRV-CA)
+click view certificate
+click details tab
+click copy to file
+choose base-64 encoding
+save the file somewhere with type=all files as /filename.pem (make sure you add the .pem extension)
+	- repeat for the 2nd level WebsenseMITM
+
+
+open each file with a text editor, copy its contents, and paste onto the end of the cacert.pem file located in c:/users/anaconda3/Lib/site-packages/certifi folder
+
+in anaconda prompt:
+conda config --set ssl_verify C:/users/{name}/appdata/local/continuum/anaconda3/lib/site-packages/certifi/cacert.pem
+set REQUESTS_CA_BUNDLE=C:/users/{name}/appdata/local/continuum/anaconda3/lib/site-packages/certifi/cacert.pem
+
+
+diagnostic commands
+conda info -s
+
+conda config --show
+
+
+in conda prompt:
+conda update --all
+
+then try other commands to see if everything works ok
+
+additions
+in cmd:
+navigate to c:/users/{name}
+mkdir .certificates
+add a file and put all of the certificates you need there
