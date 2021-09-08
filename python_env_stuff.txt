@@ -1,0 +1,121 @@
+Conda environments
+conda create -n env_name python=3.8
+
+environment locations:
+user_dir/appdata/local/continuum/anaconda3/envs
+
+remove a conda environment
+conda env remove --name <env_name>
+check for the env folder and delete it if it still exists
+
+Add environment to ipykernel
+pip install ipykernel
+python -m ipykernel install --user --name=<new_kernel_name>conda
+
+kernel locations:
+user_dir/appdata/roaming/jupyter/kernels
+
+- if the kernel isn't working right, edit the kernel.json file (the terminal lists the location) and change the first argv entry to the python executable in the environment you want to add as a kernel
+
+remove an ipython kernel
+jupyter kernelspec list (to view them)
+jupyter kernelspec uninstall <unwanted_kernel>
+check for the kernel folder and remove it if it still exists
+
+
+VM location:
+c:/users/crtucker/documents/venvs/
+
+Dev/Prod server location
+/etlbase/python/venv
+
+
+Steps
+○ create a folder for the new venv (or not, I think the commands do it if one doesn't exist
+	§ naming convention prefix_venv
+○ (optional) create requirements.txt file with pip requirements and store in the env folder within the
+○ in cmd or anaconda prompt (keep in mind relative paths, may also use absolute paths)
+	§ py -m venv {prefix_venv}
+		○ python3 instead of py for Linux/Mac
+	§ .\{prefix_venv}\Scripts\activate or similar (based on paths)
+	§ python -m pip install --upgrade pip
+	§ install any packages needed (pip install -r {prefix_venv}/env/requirements.txt)
+○ deactivate (to leave virtual environment)
+○ TO USE A SPECIFIC PYTHON VERSION
+replace the py (or python3) with the absolute path to a specific python version to use that version
+	- This may not work though, because this caused problems with ssl verify for pip installs that I could not solve
+	- Use the actual python installed version located in or wherever the python version exists, not another environment's (conda or otherwise) python executable
+		○ <user_folder>\AppData\Local\Programs\Python\Python39
+
+- All of this can be coordinated within a .bat or .sh file
+- See Notes_and_Resources/python_virtual_environments on VM or
+	§ Libraries-and-Resources/python_working_directory on laptop
+
+
+
+Default for my ubuntu
+	- home/users/anaconda3/envs
+
+conda create -n test_env python=3.9
+
+
+
+
+__________________________________________________
+Using virtualenv (RStudio recommended)
+
+could be ssl certificate issues setting up connection to pypi.org on port 443
+
+might be able to avoid conda for rapids if we install docker
+
+Windows
+make sure virtualenv is installed
+	- pip install -U virtualenv
+
+
+
+
+/opt/python/3.9.5/bin/python3
+
+
+	- cd to directory where you want to house the environment
+		○ /rstudiopro/projects/crtucker/venvs
+	- view the content of venvs dir
+		○ ls or ll
+	- virtualenv -p <path_to_python_interpreter> <venv_name>
+		○ virtualenv <venv_name> 
+			§ will use default python version (3.8.1)
+	- to delete a virtual environment
+		○ cd to the venvs folder
+		○ rm -r <venv_name>
+	- cd to bin (Scripts on windows) folder inside and activate
+		○ source ./activate
+	- source activate will activate the base anaconda environment
+	- do any pip/conda installs needed (conda not working)
+		○ notebook
+		○ jupyterlab
+		○ ipykernel 
+		○ rsconnect_jupyter
+	- pip install -r <path_to>/requirements.txt
+
+conda list or pip list
+	- show installed packages
+
+	- add kernel to ipython
+
+Add environment to ipykernel
+pip install ipykernel
+<path_to_python> -m ipykernel install --user --name=<new_kernel_name>
+
+remove an ipython kernel
+jupyter kernelspec list (to view them)
+jupyter kernelspec uninstall <unwanted_kernel>
+
+
+Linux
+	- environment paths
+		○ /rstudiopro/projects/crtucker/venvs
+	- need to activate a conda environment and open conda connections to use conda install or any other conda commands
+	- source <venv_name>/bin/activate
+	- might need to ping or touch the https://repo.anaconda.com link from the command line
+
