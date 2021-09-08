@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1 class="title-text">{% block title %}{{ title }}{% endblock %}</h1>
+{% endblock %}
+
+{% block app_content %}
+    <div>
+        <h3>Home Page</h3>
+        <p>App Content</p>
+    </div>
+{% endblock %}

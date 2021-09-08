@@ -1,0 +1,201 @@
+model.py stuff
+
+# creat the Token object
+token = Token()
+
+# token generation
+@bp.route('/get_token', methods=['POST'])
+def get_token():
+    request_data = request.get_json()
+
+    if isinstance(request_data, dict) and len(request_data) == 1:
+        for key, value in request_data.items():
+            username = value
+    elif isinstance(request_data, str):
+        try:
+            request_data = eval(request_data)
+            if isinstance(request_data, dict) and len(request_data) == 1:
+                for key, value in request_data.items():
+                    username = value
+        except:
+            return bad_request('invalid data submitted for username for api token generation')
+    else:
+        return bad_request('invalid data submitted for username for api token generation')
+
+    if not isinstance(username, str):
+        return bad_request('invalid data submitted for username for api token generation')
+
+    api_key = token.encode_auth_token(username)
+    return jsonify({'api_key': api_key})
+	
+	
+	
+tokens.py stuff
+
+#!/usr/bin/env python3.8
+# -*- coding: utf-8 -*-
+
+
+import jwt
+from datetime import timedelta as td, datetime as dt
+from passlib.hash import sha256_crypt
+from pymongo import MongoClient
+import os
+from flask import current_app as app
+
+
+class Token:
+    def __init__(self):
+        self.__repr__ = 'API Access Token Manager'
+
+    # connect to mongodb apis collection
+    @staticmethod
+    def _get_apis_collection():
+        client = MongoClient(os.getenv('MONGO_URI'))
+        db = client[app.config.get('DATABASE')]
+        col = db[app.config.get('API_COLLECTION')]
+        return col
+
+    # get token
+    def encode_auth_token(self, user_id):
+        try:
+            # get a list of the hashed apis in use
+            col = self._get_apis_collection()
+            docs = col.find({})
+            apis = [doc.get('api_encrypted', 'Nope') for doc in docs]
+
+            payload = {
+                # set API-token expiration
+                'exp': dt.utcnow() + td(days=4000),
+                'iat': dt.utcnow(),
+                'sub': user_id
+            }
+            auth_token = jwt.encode(
+                payload,
+                app.config.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+
+            if not len(apis) == 0 and any([sha256_crypt.verify(auth_token, api) for api in apis]):
+                rerun = True
+                # ensure that no duplicate auth_tokens are in the database
+                while rerun:
+                    payload = {
+                        # set API-token expiration
+                        'exp': dt.utcnow() + td(days=4000),
+                        'iat': dt.utcnow(),
+                        'sub': user_id
+                    }
+
+                    auth_token = jwt.encode(
+                        payload,
+                        app.config.get('SECRET_KEY'),
+                        algorithm='HS256'
+                    )
+
+                    # break the loop if no existing auth_tokens match the current auth_token
+                    if not any([sha256_crypt.verify(auth_token, api) for api in apis]):
+                        rerun = False
+
+            _ = col.insert_one({'user_id': user_id, 'api_encrypted': sha256_crypt.hash(auth_token)})
+
+            return auth_token
+        except Exception as e:
+            return e
+
+    # revoke token
+    def revoke_token(self, auth_token):
+        # get a list of the hashed apis in use
+        col = self._get_apis_collection()
+        docs = col.find({})
+        apis = [doc.get('api_encrypted', 'Nope') for doc in docs]
+
+        # search for the api in the database
+        test_results = [sha256_crypt.verify(auth_token, api) for api in apis]
+        idxs = [idx for idx, value in enumerate(test_results) if value]
+
+        if idxs:
+            # if the api is found, update the record to set revoked as True
+            for idx in idxs:
+                _ = col.update_one({'api_encrypted': apis[idx]}, {'$set': {'revoked': True}}, upsert=False)
+        else:
+            # if the api is not found, create a record and mark it revoked
+            _ = col.insert_one({'api_encrypted': sha256_crypt.hash(auth_token), 'revoked': True})
+
+    # decode a token
+    def decode_auth_token(self, auth_token):
+        try:
+            payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'), algorithms=['HS256'])
+
+            # ensure the api is legit and not revoked
+            col = self._get_apis_collection()
+            docs = col.find({})
+            docs = [doc for doc in docs]
+
+            # if there are no tokens in the db, current token is invalid
+            if not docs:
+                raise jwt.InvalidTokenError
+
+            # search for the api in the db, if verified, check for revoked
+            # if verified but not revoked, return the user_id
+            # if revoked return an appropriate response
+            for doc in docs:
+                if sha256_crypt.verify(auth_token, doc.get('api_encrypted')):
+                    verified = True
+                    revoked = doc.get('revoked')
+                    if revoked:
+                        return False, 'This API token has been revoked.'
+                    if verified:
+                        return True, payload['sub']
+            else:
+                raise jwt.InvalidTokenError
+
+        except jwt.ExpiredSignatureError:
+            return False, 'API Token expired. Please request a new token.'
+        except jwt.InvalidTokenError:
+            return False, 'Invalid API Token. Please request a new token.'
+			
+			
+			
+auth.py stuff
+
+#!/usr/bin/env python3.8
+# -*- coding: utf-8 -*-
+
+
+from flask_httpauth import HTTPTokenAuth, HTTPBasicAuth
+from app.api.errors import error_response
+from app.api.tokens import Token
+
+
+basic_auth = HTTPBasicAuth()
+token_auth = HTTPTokenAuth()
+token = Token()
+
+
+# verify token
+@token_auth.verify_token
+def verify_token(api_token):
+    valid, response = token.decode_auth_token(api_token)
+    return valid if valid else None
+
+
+# error handling of the token_auth
+@token_auth.error_handler
+def token_auth_error(status):
+    return error_response(status)
+
+
+# require a username to be submitted for api key generation
+# implement using the verify_password decorator from basic_auth
+@basic_auth.verify_password
+def verify_password(username, password):
+    if username:
+        return username
+
+
+# error handling for basic_auth
+@basic_auth.error_handler
+def basic_auth_error(status):
+    return error_response(status)
+
