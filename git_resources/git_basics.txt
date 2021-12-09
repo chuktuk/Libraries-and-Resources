@@ -58,13 +58,18 @@ Project level
 
 	- git config --global core.editor "<editor name>"
 		○ set the default text editor
-		○ git config --global core.editor "atom --wait" 
+		○ git config --global core.editor "atom --wait"
 			§ tells git to open atom editor then wait for instructions from git
 		○ additional settings depending on the editor, can look this up
 
 	- git config --global color.ui
 		○ true/false
 			§ let git colorize the ui to help with viewing stuff
+
+	- using git with CLI when PAT is needed
+	  - git config --global url."https://user:token@github.com/".insteadOf "https://github.com/"
+        - user is username, and token is your PAT
+				- you may need to authenticate your PAT in github.com first 
 
 ______________________________________________________
 Git Auto-Completion
@@ -82,9 +87,9 @@ Mac/Linux only autocompletion feature (windows installed already)
 		○ if [ -f ~/.git-completion.bash ]; then
 		  source ~/.git-completion.bash
 		fi
-		
+
 	- using autocompletion
-		○ type 
+		○ type
 			§ git <command>
 				□ start typing then hit tab, if it flashes, hit tab again to pull up your options, type a little more, then hit tab again
 
