@@ -1,0 +1,11 @@
+For git errors related to crlf line endings
+You can force line endings to be lf
+
+Create a .gitattributes file in the repo's root dir
+specify which file types should be lf like below
+
+You may need to backup any of those files and remove from the repo
+commit the changes, then re add the files, and recommit them to
+enforce the new line endings
+
+.sh eol=lf
