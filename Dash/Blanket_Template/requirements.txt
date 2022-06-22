@@ -4,7 +4,7 @@ dash-bootstrap-components==0.11.3
 Flask==1.1.2
 Flask-Bootstrap==3.3.7.1
 JayDeBeApi==1.2.3
-numpy==1.20.1
+numpy==1.22.0
 pandas==1.2.3
 paramiko==2.7.2
 plotly==4.14.3
