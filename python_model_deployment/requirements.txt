@@ -3,7 +3,7 @@ Flask-Bootstrap==3.3.7.1
 JayDeBeApi==1.2.3
 joblib==1.0.1
 PyJWT==2.1.0
-numpy==1.20.3
+numpy==1.22.0
 pandas==1.2.4
 plotly==4.14.3
 pymongo==3.11.4
