@@ -1,7 +1,7 @@
 Flask==2.0.0
 Flask-Bootstrap==3.3.7.1
 JayDeBeApi==1.2.3
-joblib==1.0.1
+joblib==1.2.0
 PyJWT==2.1.0
 numpy==1.20.3
 pandas==1.2.4
