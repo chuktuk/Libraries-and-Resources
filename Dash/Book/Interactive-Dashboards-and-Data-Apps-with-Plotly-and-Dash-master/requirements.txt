@@ -85,4 +85,4 @@ traitlets==5.0.5
 urllib3==1.26.5
 wcwidth==0.2.5
 webencodings==0.5.1
-Werkzeug==1.0.1
+Werkzeug==2.2.3
